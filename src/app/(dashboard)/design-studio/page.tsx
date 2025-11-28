@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Upload, FileBox } from "lucide-react";
 import { useDesignStore } from "@/lib/stores/useDesignStore";
 
+import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
+
 const ModelViewer = dynamic(() => import("@/components/features/design-studio/ModelViewer"), {
   ssr: false,
   loading: () => <div className="w-full h-full bg-slate-950 rounded-lg flex items-center justify-center text-slate-500">Loading 3D Engine...</div>
@@ -51,8 +53,10 @@ export default function DesignStudioPage() {
       {/* Main Content */}
       <div className="flex-1 flex gap-4 min-h-0">
         {/* 3D Viewport */}
-        <div className="flex-1 relative">
-            <ModelViewer />
+        <div className="flex-1 relative bg-slate-950 rounded-lg overflow-hidden">
+            <TileErrorBoundary>
+                <ModelViewer />
+            </TileErrorBoundary>
             
             {/* Mobile Overlay */}
             {isMobile && (
