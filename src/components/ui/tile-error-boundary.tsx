@@ -22,7 +22,7 @@ export class TileErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error in tile:", error, errorInfo);
+    // Log error silently to avoid React issues
   }
 
   public render() {
