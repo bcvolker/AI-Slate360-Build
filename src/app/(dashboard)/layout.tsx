@@ -10,6 +10,7 @@ import {
   Box,
   Video,
   Activity,
+  Users,
   Settings,
   LogOut,
   Menu,
@@ -26,6 +27,7 @@ const navItems = [
   { name: "Design Studio", href: "/design-studio", icon: Box },
   { name: "Virtual Studio", href: "/virtual-studio", icon: Video },
   { name: "Athlete 360", href: "/athlete-360", icon: Activity },
+  { name: "Team", href: "/team", icon: Users },
 ];
 
 import { CreditTopUpModal } from "@/components/features/project-hub/CreditTopUpModal";
@@ -38,18 +40,19 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { entitlements, creditsRemaining, setEntitlements, setCreditsRemaining } = useAuthStore();
+  const { entitlements, creditsRemaining, tier, setEntitlements, setTier, setCreditsRemaining } = useAuthStore();
 
   useEffect(() => {
     fetch('/api/dashboard')
       .then(r => r.json())
       .then((d) => {
         setEntitlements(d.entitlements);
+        setTier(d.tier);
         setCreditsRemaining(d.usage.creditsRemaining);
       });
   }, []);
 
-  const filteredNavItems = navItems.filter(item => entitlements.includes(item.href.slice(1)) || item.href === '/dashboard');
+  const filteredNavItems = navItems.filter(item => entitlements[item.href.slice(1) as keyof typeof entitlements] ?? false || item.href === '/dashboard');
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">

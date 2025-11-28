@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Upload, FileBox } from "lucide-react";
 import { useDesignStore } from "@/lib/stores/useDesignStore";
 
+import { useAuthStore } from "@/lib/stores/useAuthStore";
 import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
 
 const ModelViewer = dynamic(() => import("@/components/features/design-studio/ModelViewer"), {
@@ -25,6 +26,45 @@ export default function DesignStudioPage() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  const { tier } = useAuthStore();
+
+  if (tier === 'creator') {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] p-8 md:p-12 flex flex-col items-center justify-center text-center bg-gradient-to-b from-slate-50 to-slate-100">
+        <div className="max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-black mb-8 bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent drop-shadow-lg">
+            Design Studio
+          </h1>
+          <p className="text-xl md:text-2xl text-slate-600 mb-12 leading-relaxed max-w-lg mx-auto">
+            Upgrade to Modeling Bundle to unlock 3D BIM tools, clash detection, IFC analysis, and robotics exports.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 opacity-80">
+            <div className="p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl">
+              <h3 className="text-2xl font-bold mb-4 text-emerald-700">Lightweight BIM</h3>
+              <ul className="space-y-2 text-left">
+                <li>✅ IFC import/export</li>
+                <li>✅ Basic measurements</li>
+                <li>✅ Material library</li>
+              </ul>
+            </div>
+            <div className="p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl">
+              <h3 className="text-2xl font-bold mb-4 text-blue-700">Advanced Clash</h3>
+              <ul className="space-y-2 text-left">
+                <li>✅ Full clash detection</li>
+                <li>✅ Robotics export</li>
+                <li>✅ OpenDroneMap integration</li>
+              </ul>
+            </div>
+          </div>
+          <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-black px-16 py-8 text-xl shadow-2xl hover:shadow-3xl mx-auto transition-all duration-300">
+            Upgrade Modeling $149/mo
+          </Button>
+          <p className="mt-8 text-sm text-slate-500">14-day free trial • Cancel anytime</p>
+        </div>
+      </div>
+    );
+  }
 
   // Mock loading a model
   const handleUpload = () => {
