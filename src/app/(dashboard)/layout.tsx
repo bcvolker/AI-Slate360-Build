@@ -14,7 +14,10 @@ import {
   Settings,
   LogOut,
   Menu,
-  X
+  X,
+  BarChart3,
+  User,
+  Crown
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/stores/useAuthStore";
@@ -23,10 +26,13 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Project Hub", href: "/project-hub", icon: FolderKanban },
-  { name: "Geospatial", href: "/geospatial", icon: Map },
   { name: "Design Studio", href: "/design-studio", icon: Box },
-  { name: "Virtual Studio", href: "/virtual-studio", icon: Video },
-  { name: "Athlete 360", href: "/athlete-360", icon: Activity },
+  { name: "Geospatial", href: "/geospatial", icon: Map },
+  { name: "360 Tour Builder", href: "/virtual-studio", icon: Video },
+  { name: "Content Studio", href: "/content-studio", icon: Activity },
+  { name: "Reports", href: "/reports", icon: BarChart3 },
+  { name: "My Account", href: "/account", icon: User },
+  { name: "CEO", href: "/ceo", icon: Crown },
   { name: "Team", href: "/team", icon: Users },
 ];
 
