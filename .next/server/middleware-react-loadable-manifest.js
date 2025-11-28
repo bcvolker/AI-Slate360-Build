@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST='{"../node_modules/@react-three/drei/web/FaceLandmarker.js -> @mediapipe/tasks-vision":{"id":null,"files":[]},"app/(dashboard)/design-studio/page.tsx -> @/components/features/design-studio/ModelViewer":{"id":7498,"files":["static/chunks/b536a0f1.77c0c9a52898e518.js","static/chunks/226.82d0875131c7df1a.js","static/chunks/498.28ad5d8617205eeb.js"]}}';
