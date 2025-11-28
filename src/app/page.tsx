@@ -8,8 +8,6 @@ import LiveProjectList from "@/components/homepage/LiveProjectList";
 import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
 import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 // Dynamic Imports for Heavy/Browser-Only Components
 const Hero3D = dynamic(() => import("@/components/homepage/Hero3D"), { ssr: false });
