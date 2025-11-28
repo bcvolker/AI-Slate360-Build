@@ -15,7 +15,8 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuthStore } from "@/lib/stores/useAuthStore";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -37,15 +38,34 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const { entitlements, setEntitlements } = useAuthStore();
+
+  useEffect(() => {
+    setEntitlements(['project-hub', 'design-studio', 'geospatial', 'virtual-studio', 'athlete-360']); // Creator tier entitlements
+  }, []);
+
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
       {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex w-64 flex-col border-r bg-white h-full">
-        <div className="p-6 border-b">
-          <h1 className="text-2xl font-bold tracking-tight">Slate360</h1>
+        <div className="flex items-center justify-between p-6 border-b bg-white">
+          <Link href="/dashboard" className="flex items-center gap-3 hover:no-underline">
+            <h1 className="text-2xl font-bold tracking-tight">Slate360</h1>
+          </Link>
+          <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-1 text-slate-600 font-medium">
+              Credits: <span className="font-bold text-slate-900">1,250</span>
+            </div>
+            <CreditTopUpModal />
+            <Button variant="ghost" size="sm" className="h-8 px-2">
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-          {navItems.map((item) => {
+          const filteredNavItems = navItems.filter(item => entitlements.includes(item.href.slice(1)) || item.href === '/dashboard');
+
+  <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+          {filteredNavItems.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
               <Link

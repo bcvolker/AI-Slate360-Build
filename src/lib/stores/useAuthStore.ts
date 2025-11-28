@@ -6,6 +6,8 @@ interface AuthState {
   setUser: (user: User | null) => void
   isLoading: boolean
   setIsLoading: (isLoading: boolean) => void
+  entitlements: string[]
+  setEntitlements: (entitlements: string[]) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -13,4 +15,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   setUser: (user) => set({ user }),
   isLoading: true,
   setIsLoading: (isLoading) => set({ isLoading }),
+  entitlements: [],
+  setEntitlements: (entitlements) => set({ entitlements }),
 }))
