@@ -55,7 +55,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <Button variant="ghost" size="sm" className="text-slate-500">
             <MoreHorizontal className="h-4 w-4" />
         </Button>
-        <Link href={`/project-hub/${project.id}`}>
+        <Link href={`/dashboard/project-hub/${project.id}`}>
             <Button size="sm" className="gap-2">
             Open <ArrowRight className="h-3 w-3" />
             </Button>

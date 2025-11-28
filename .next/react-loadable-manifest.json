@@ -3,7 +3,7 @@
     "id": null,
     "files": []
   },
-  "app/(dashboard)/design-studio/page.tsx -> @/components/features/design-studio/ModelViewer": {
+  "app/dashboard/design-studio/page.tsx -> @/components/features/design-studio/ModelViewer": {
     "id": 7498,
     "files": [
       "static/chunks/b536a0f1.77c0c9a52898e518.js",
