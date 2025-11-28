@@ -7,7 +7,6 @@ import { CreditTopUpModal } from "@/components/features/project-hub/CreditTopUpM
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Upload, FileBox } from "lucide-react";
-import { Upload, FileBox } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 
 export default function DashboardPage() {

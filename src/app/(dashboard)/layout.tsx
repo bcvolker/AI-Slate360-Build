@@ -52,7 +52,7 @@ export default function DashboardLayout({
       });
   }, []);
 
-  const filteredNavItems = navItems.filter(item => entitlements[item.href.slice(1) as keyof typeof entitlements] ?? false || item.href === '/dashboard');
+  const filteredNavItems = navItems.filter(item => (entitlements[item.href.slice(1) as keyof typeof entitlements] ?? false) || item.href === '/dashboard');
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
