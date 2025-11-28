@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import LiveProjectList from "@/components/homepage/LiveProjectList";
 import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
+import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
 
 // Dynamic Imports for Heavy/Browser-Only Components
 const Hero3D = dynamic(() => import("@/components/homepage/Hero3D"), { ssr: false });
@@ -19,7 +20,9 @@ export default function Home() {
       
       {/* Section 1: Hero (3D) */}
       <section className="h-screen w-full snap-start relative flex items-center justify-center overflow-hidden">
-        <Hero3D />
+        <TileErrorBoundary fallback={<div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black" />}>
+            <Hero3D />
+        </TileErrorBoundary>
         <div className="z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none">
           <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400 drop-shadow-2xl">
             Slate360
@@ -83,7 +86,9 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex-1 relative bg-black">
-            <LiveDesignViewer />
+            <TileErrorBoundary>
+                <LiveDesignViewer />
+            </TileErrorBoundary>
         </div>
       </section>
 
@@ -105,7 +110,9 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex-1 relative h-[50vh] md:h-auto">
-            <LiveMap />
+            <TileErrorBoundary>
+                <LiveMap />
+            </TileErrorBoundary>
         </div>
       </section>
 
@@ -127,7 +134,9 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex-1 relative h-[50vh] md:h-auto">
-            <LiveTour />
+            <TileErrorBoundary>
+                <LiveTour />
+            </TileErrorBoundary>
         </div>
       </section>
 
