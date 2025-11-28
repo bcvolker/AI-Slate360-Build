@@ -1,13 +1,15 @@
+"use client";
+
 import { useEffect, useState } from "react"
 import { LIVE_PROJECTS } from "@/lib/data/ceo-uploads"
-import ProjectCard from "@/components/features/project-hub/ProjectCard"
+import { ProjectCard } from "@/components/features/project-hub/ProjectCard"
 import { CreditTopUpModal } from "@/components/features/project-hub/CreditTopUpModal"
 import { Button } from "@/components/ui/button"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 
 export default function DashboardPage() {
-  const [data, setData] = useState(null)
-  const { setEntitlements } = useAuthStore()
+  const [data, setData] = useState<any | null>(null)
+  const { setEntitlements, setCreditsRemaining } = useAuthStore()
 
   useEffect(() => {
     fetch('/api/dashboard')
@@ -15,6 +17,7 @@ export default function DashboardPage() {
       .then((d) => {
         setData(d)
         setEntitlements(d.entitlements)
+        setCreditsRemaining(d.usage.creditsRemaining)
       })
   }, [])
 
@@ -24,8 +27,8 @@ export default function DashboardPage() {
     </div>
   }
 
-  const activeProjects = LIVE_PROJECTS.filter(p => p.status === 'active').length
-  const tier = 'creator' // Mock from user or data
+  const activeProjects = data.projects.length
+
 
   return (
     <div className="space-y-6 p-6">
@@ -61,10 +64,10 @@ export default function DashboardPage() {
       </div>
 
       {/* Tier Banner */}
-      {tier === 'free' && (
+      {!data.entitlements?.includes('geospatial') && (
         <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-8 rounded-2xl text-center">
-          <h3 className="text-2xl font-bold mb-4">Upgrade to Creator Bundle</h3>
-          <p className="text-lg mb-6">$79/mo — Unlock 360 Tours + Unlimited Processing</p>
+          <h3 className="text-2xl font-bold mb-4">Creator Bundle</h3>
+          <p className="text-lg mb-6">$79/mo — Unlock Geospatial & Design Studio</p>
           <Button size="lg" className="bg-white text-orange-600 hover:bg-slate-100 font-bold px-8">
             Upgrade Now
           </Button>

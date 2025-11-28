@@ -38,11 +38,18 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { entitlements, setEntitlements } = useAuthStore();
+  const { entitlements, creditsRemaining, setEntitlements, setCreditsRemaining } = useAuthStore();
 
   useEffect(() => {
-    setEntitlements(['project-hub', 'design-studio', 'geospatial', 'virtual-studio', 'athlete-360']); // Creator tier entitlements
+    fetch('/api/dashboard')
+      .then(r => r.json())
+      .then((d) => {
+        setEntitlements(d.entitlements);
+        setCreditsRemaining(d.usage.creditsRemaining);
+      });
   }, []);
+
+  const filteredNavItems = navItems.filter(item => entitlements.includes(item.href.slice(1)) || item.href === '/dashboard');
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
@@ -54,7 +61,7 @@ export default function DashboardLayout({
           </Link>
           <div className="flex items-center gap-4 text-sm">
             <div className="flex items-center gap-1 text-slate-600 font-medium">
-              Credits: <span className="font-bold text-slate-900">1,250</span>
+              Credits: <span className="font-bold text-slate-900">{creditsRemaining ?? 1250}</span>
             </div>
             <CreditTopUpModal />
             <Button variant="ghost" size="sm" className="h-8 px-2">
@@ -62,7 +69,7 @@ export default function DashboardLayout({
             </Button>
           </div>
         </div>
-          const filteredNavItems = navItems.filter(item => entitlements.includes(item.href.slice(1)) || item.href === '/dashboard');
+
 
   <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           {filteredNavItems.map((item) => {
@@ -85,9 +92,7 @@ export default function DashboardLayout({
           })}
         </nav>
         <div className="p-4 border-t bg-slate-50">
-          <div className="mb-4 px-3 py-2 bg-blue-50 rounded-md border border-blue-100 lg:hidden">
-             {/* Mobile/Tablet Credit Display moved to Header/Modal */}
-          </div>
+
           <Button variant="ghost" className="w-full justify-start gap-3 text-slate-600">
             <Settings className="h-4 w-4" />
             Settings
@@ -125,7 +130,7 @@ export default function DashboardLayout({
                 </Button>
              </div>
              <nav className="space-y-2">
-                {navItems.map((item) => (
+                {filteredNavItems.map((item) => (
                     <Link
                         key={item.href}
                         href={item.href}
@@ -152,7 +157,7 @@ export default function DashboardLayout({
 
         {/* Bottom Nav - Mobile Only (<= 640px) */}
         <nav className="sm:hidden border-t bg-white flex justify-around items-center h-16 shrink-0 pb-safe">
-            {navItems.slice(0, 4).map((item) => (
+            {filteredNavItems.slice(0, 4).map((item) => (
                 <Link key={item.href} href={item.href} className={cn("flex flex-col items-center justify-center w-full h-full", pathname.startsWith(item.href) ? "text-blue-600" : "text-slate-400")}>
                     <item.icon className="h-5 w-5" />
                     <span className="text-[10px] mt-1">{item.name.split(' ')[0]}</span>

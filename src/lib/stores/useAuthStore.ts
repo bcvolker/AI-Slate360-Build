@@ -8,6 +8,8 @@ interface AuthState {
   setIsLoading: (isLoading: boolean) => void
   entitlements: string[]
   setEntitlements: (entitlements: string[]) => void
+  creditsRemaining: number
+  setCreditsRemaining: (creditsRemaining: number) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -17,4 +19,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   setIsLoading: (isLoading) => set({ isLoading }),
   entitlements: [],
   setEntitlements: (entitlements) => set({ entitlements }),
+  creditsRemaining: 1250,
+  setCreditsRemaining: (creditsRemaining) => set({ creditsRemaining }),
 }))
