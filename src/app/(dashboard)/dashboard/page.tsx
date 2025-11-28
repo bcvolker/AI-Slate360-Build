@@ -78,7 +78,7 @@ export default function DashboardPage() {
       <div>
         <h2 className="text-2xl font-bold mb-6">Recent Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.projects.map((project) => (
+          {data.projects.map((project: any) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
