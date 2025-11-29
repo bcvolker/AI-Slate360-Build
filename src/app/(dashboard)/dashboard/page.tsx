@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Upload, FileBox, Box, Layers, Video, FileText, Activity, Map, Zap, TrendingUp, BarChart3 } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function DashboardPage() {
   const [data, setData] = useState<any | null>(null)
@@ -704,6 +705,10 @@ export default function DashboardPage() {
                 <div>
                   <label className="block text-sm font-medium mb-2">Name</label>
                   <input type="text" className="w-full p-2 border rounded" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Theme</label>
+                  <ThemeToggle />
                 </div>
                 <Button>Save Changes</Button>
               </div>
