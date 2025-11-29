@@ -94,7 +94,7 @@ export default function Home() {
               <li>✅ AI-powered model optimization</li>
               <li>✅ Export to multiple formats</li>
             </ul>
-            <Link href="/features/design-studio">
+            <Link href="/learn/design-studio">
               <Button size="lg" className="bg-cyan text-obsidian hover:bg-cyan-500 border-none">
                   Learn More
               </Button>
@@ -118,7 +118,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               Your single source of truth. Manage your building projects, documents, schedules, photos, tasks, and field reports in one clean workspace everyone on your team can actually use.
             </p>
-            <Link href="/features/project-hub">
+            <Link href="/learn/project-hub">
               <Button size="lg" variant="outline" className="border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-slate-50">
                   Learn More
               </Button>
@@ -143,7 +143,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               Turn your standard and 360 video footage, site walkthroughs, and photos into polished videos and reels — fast, beautiful, no extra software.
             </p>
-            <Link href="/features/content-studio">
+            <Link href="/learn/content-studio">
               <Button size="lg" className="bg-emerald-500 text-slate-50 hover:bg-emerald-600 border-none">
                   Learn More
               </Button>
@@ -172,7 +172,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               Drag-and-drop immersive tours with hotspots, floorplans, and progress comparisons. Share with anyone, anywhere, on any device.
             </p>
-            <Link href="/features/360-tour-builder">
+            <Link href="/learn/tour-builder">
               <Button size="lg" variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-50">
                   Learn More
               </Button>
@@ -196,7 +196,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               Plan drone missions, monitor robots, overlay drawings on maps, measure volumes — everything in one intelligent map interface.
             </p>
-            <Link href="/features/geospatial-robotics">
+            <Link href="/learn/geospatial-robotics">
               <Button size="lg" variant="outline" className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white">
                   Learn More
               </Button>
@@ -220,7 +220,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               Transform designs into cinematic walkthroughs. Adjust lighting, materials, and camera paths, then export stunning videos for presentations.
             </p>
-            <Link href="/features/virtual-studio">
+            <Link href="/learn/virtual-studio">
               <Button size="lg" className="bg-cyan text-obsidian hover:bg-cyan-500 border-none">
                   Learn More
               </Button>
@@ -244,7 +244,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-md">
               See real progress, not guesses. Automated dashboards, trend forecasting, and custom reports built from all your project data.
             </p>
-            <Link href="/features/reports-analytics">
+            <Link href="/learn/analytics-reports">
               <Button size="lg" className="bg-emerald-500 text-slate-50 hover:bg-emerald-600 border-none">
                   Learn More
               </Button>
