@@ -65,8 +65,8 @@ export const learnPages = {
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
       starter: { price: 19, features: ["Basic project management", "10 projects", "File sharing"] },
-      pro: { price: 49, features: ["Advanced workflows", "Unlimited projects", "Time tracking", "Reporting"] },
-      enterprise: { price: 129, features: ["Custom workflows", "API access", "Advanced security", "Dedicated support"] }
+      pro: { price: 79, features: ["Advanced workflows", "Unlimited projects", "Time tracking", "Reporting"] },
+      enterprise: { price: 199, features: ["Custom workflows", "API access", "Advanced security", "Dedicated support"] }
     }
   },
   "content-studio": {
@@ -100,8 +100,8 @@ export const learnPages = {
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
       starter: { price: 39, features: ["Basic editing", "1080p export", "Watermark"] },
-      pro: { price: 89, features: ["Advanced editing", "4K export", "No watermark", "Stock assets"] },
-      enterprise: { price: 229, features: ["Custom branding", "API access", "Bulk processing", "Priority rendering"] }
+      pro: { price: 79, features: ["Advanced editing", "4K export", "No watermark", "Stock assets"] },
+      enterprise: { price: 199, features: ["Custom branding", "API access", "Bulk processing", "Priority rendering"] }
     }
   },
   "tour-builder": {
@@ -135,8 +135,8 @@ export const learnPages = {
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
       starter: { price: 49, features: ["5 tours", "Basic hotspots", "Standard sharing"] },
-      pro: { price: 99, features: ["Unlimited tours", "Advanced hotspots", "Custom branding", "Analytics"] },
-      enterprise: { price: 249, features: ["White-label", "Custom domains", "API integration", "Advanced analytics"] }
+      pro: { price: 79, features: ["Unlimited tours", "Advanced hotspots", "Custom branding", "Analytics"] },
+      enterprise: { price: 199, features: ["White-label", "Custom domains", "API integration", "Advanced analytics"] }
     }
   },
   "geospatial-robotics": {
@@ -169,8 +169,8 @@ export const learnPages = {
     ],
     tiersHighlight: ["Modeling", "God Mode", "Enterprise"],
     pricing: {
-      pro: { price: 149, features: ["Drone integration", "Basic robotics", "Map overlays", "Volume measurement"] },
-      enterprise: { price: 399, features: ["Advanced robotics", "Custom integrations", "Real-time monitoring", "API access"] }
+      pro: { price: 199, features: ["Drone integration", "Basic robotics", "Map overlays", "Volume measurement"] },
+      enterprise: { price: 499, features: ["Advanced robotics", "Custom integrations", "Real-time monitoring", "API access"] }
     }
   },
   "virtual-studio": {
@@ -236,8 +236,8 @@ export const learnPages = {
     ],
     tiersHighlight: ["Modeling", "God Mode", "Enterprise"],
     pricing: {
-      pro: { price: 79, features: ["Basic dashboards", "Standard reports", "Data export"] },
-      enterprise: { price: 199, features: ["Advanced analytics", "Custom reports", "API access", "Real-time alerts"] }
+      pro: { price: 199, features: ["Basic dashboards", "Standard reports", "Data export"] },
+      enterprise: { price: 499, features: ["Advanced analytics", "Custom reports", "API access", "Real-time alerts"] }
     }
   }
 };

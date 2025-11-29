@@ -30,9 +30,9 @@ interface LearnLayoutProps {
 
 export function LearnLayout({ page }: LearnLayoutProps) {
   return (
-    <div className="min-h-screen bg-obsidian text-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50">
       {/* Header */}
-      <header className="border-b border-obsidian-600 bg-obsidian/80 backdrop-blur-md">
+      <header className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-slate-50 hover:text-cyan-400 transition-colors">
             <ArrowLeft className="h-4 w-4" />
@@ -40,12 +40,12 @@ export function LearnLayout({ page }: LearnLayoutProps) {
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/pricing">
-              <Button variant="outline" className="border-obsidian-600 text-slate-50 hover:bg-cyan-400/10">
+              <Button variant="outline" className="border-slate-600 text-slate-50 hover:bg-cyan-400/10">
                 View Pricing
               </Button>
             </Link>
             <Link href="/login">
-              <Button className="bg-cyan text-obsidian hover:bg-cyan-500">
+              <Button className="bg-cyan text-slate-900 hover:bg-cyan-500">
                 Try Free
               </Button>
             </Link>
@@ -93,7 +93,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {page.features.map((feature, index) => (
-            <Card key={index} className="bg-obsidian-800 border-obsidian-700 hover:bg-obsidian-700 transition-colors">
+            <Card key={index} className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 backdrop-blur-sm">
               <CardHeader>
                 <div className="w-12 h-12 bg-cyan-400/10 rounded-lg flex items-center justify-center mb-4">
                   <Check className="h-6 w-6 text-cyan-400" />
@@ -115,7 +115,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
             <h2 className="text-3xl font-bold text-center mb-12 text-slate-50">Choose Your Plan</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {page.pricing.starter && (
-                <Card className="bg-obsidian-800 border-obsidian-700">
+                <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle className="text-slate-50">Starter</CardTitle>
                     <div className="text-3xl font-bold text-cyan-400">${page.pricing.starter.price}<span className="text-lg text-slate-400">/month</span></div>
@@ -134,9 +134,9 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               )}
 
               {page.pricing.pro && (
-                <Card className="bg-obsidian-700 border-cyan-400 relative">
+                <Card className="bg-slate-800/50 border-cyan-400/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/30 hover:-translate-y-2 backdrop-blur-sm relative">
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-cyan-400 text-obsidian px-3 py-1 rounded-full text-sm font-medium">
+                    <div className="bg-cyan-400 text-slate-900 px-3 py-1 rounded-full text-sm font-medium">
                       Most Popular
                     </div>
                   </div>
@@ -158,7 +158,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               )}
 
               {page.pricing.enterprise && (
-                <Card className="bg-obsidian-800 border-obsidian-700">
+                <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle className="text-slate-50">Enterprise</CardTitle>
                     <div className="text-3xl font-bold text-cyan-400">${page.pricing.enterprise.price}<span className="text-lg text-slate-400">/month</span></div>
@@ -180,14 +180,14 @@ export function LearnLayout({ page }: LearnLayoutProps) {
         )}
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-obsidian-800 to-obsidian-900 rounded-2xl p-12">
+        <div className="text-center bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl p-12 border border-slate-700/50">
           <h2 className="text-3xl font-bold mb-4 text-slate-50">Ready to Get Started?</h2>
           <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
             Join thousands of teams already using Slate360 to streamline their workflows and boost productivity.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/login">
-              <Button size="lg" className="bg-cyan text-obsidian hover:bg-cyan-500 px-8 py-3">
+              <Button size="lg" className="bg-cyan text-slate-900 hover:bg-cyan-500 px-8 py-3">
                 Start Free Trial
               </Button>
             </Link>
