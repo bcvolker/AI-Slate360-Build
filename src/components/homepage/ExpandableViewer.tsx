@@ -43,20 +43,12 @@ export default function ExpandableViewer({ children, className }: ExpandableView
       {/* Overlay hint (only when not expanded) */}
       {!isExpanded && (
         <div 
-            className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer pointer-events-none"
+            className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
         >
             <span className="text-white/80 text-sm font-medium tracking-widest uppercase bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">
-                Click to Expand
+                Expand
             </span>
         </div>
-      )}
-      
-      {/* Click handler for the whole container if not expanded */}
-      {!isExpanded && (
-          <div 
-            className="absolute inset-0 cursor-pointer z-0"
-            onClick={() => setIsExpanded(true)}
-          />
       )}
     </div>
   );

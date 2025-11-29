@@ -8,7 +8,7 @@ import { RotateCw, ZoomIn, Move, Play, Pause } from "lucide-react";
 
 function Model() {
   const { scene } = useGLTF(CEO_UPLOADS.heroModel);
-  return <primitive object={scene} scale={0.5} />;
+  return <primitive object={scene} scale={0.6} position={[0.4, 0, 0]} />;
 }
 
 function Fallback() {
@@ -60,44 +60,9 @@ export default function Hero3D() {
           </Suspense>
         </Canvas>
         
-        {/* Navigation Text */}
-        <div className="absolute -bottom-8 left-0 w-full text-center text-slate-400 text-xs font-mono tracking-wider">
+        {/* Navigation Text - Moved closer to model */}
+        <div className="absolute bottom-[-60px] left-0 w-full text-center text-slate-400 text-xs font-mono tracking-wider">
           DRAG TO ROTATE • SCROLL TO ZOOM
-        </div>
-      </div>
-
-      {/* HUD Icon Bar - Fixed position on the right */}
-      <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10 flex flex-col gap-3 hidden lg:flex">
-        <div className="bg-slate-900/80 backdrop-blur-md rounded-lg p-3 shadow-[0_0_15px_rgba(0,245,255,0.1)] border border-slate-700/50">
-          <div className="flex flex-col gap-3 text-slate-300">
-            {/* Reset View */}
-            <button 
-              onClick={handleReset}
-              className="p-2 hover:bg-cyan-500/20 hover:text-cyan-400 rounded transition-all duration-300" 
-              title="Reset View"
-            >
-              <RotateCw className="w-5 h-5" />
-            </button>
-
-            {/* Zoom Hint (Static) */}
-            <button className="p-2 hover:bg-cyan-500/20 hover:text-cyan-400 rounded transition-all duration-300 cursor-default" title="Zoom">
-              <ZoomIn className="w-5 h-5" />
-            </button>
-
-            {/* Pan Hint (Static) */}
-            <button className="p-2 hover:bg-cyan-500/20 hover:text-cyan-400 rounded transition-all duration-300 cursor-default" title="Pan">
-              <Move className="w-5 h-5" />
-            </button>
-
-            {/* Auto Rotate Toggle */}
-            <button 
-              onClick={() => setAutoRotate(!autoRotate)}
-              className={`p-2 rounded transition-all duration-300 ${autoRotate ? 'bg-cyan-500/20 text-cyan-400' : 'hover:bg-cyan-500/20 hover:text-cyan-400'}`} 
-              title={autoRotate ? "Pause Rotation" : "Start Rotation"}
-            >
-              {autoRotate ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-            </button>
-          </div>
         </div>
       </div>
     </>

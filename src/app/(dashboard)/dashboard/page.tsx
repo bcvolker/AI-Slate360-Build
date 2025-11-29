@@ -14,7 +14,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function DashboardPage() {
   const [data, setData] = useState<any | null>(null)
-  const { tier, entitlements, user, isLoading } = useAuthStore()
+  const { tier, entitlements, user, isLoading, _hasHydrated } = useAuthStore()
   const router = useRouter()
   const [showCreateProject, setShowCreateProject] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
@@ -46,6 +46,8 @@ export default function DashboardPage() {
   }
 
   useEffect(() => {
+    if (!_hasHydrated) return // Wait for hydration
+
     if (!isLoading && !user) {
       router.push('/login')
       return
@@ -58,17 +60,17 @@ export default function DashboardPage() {
           setData(d)
         })
     }
-  }, [user, isLoading, router])
+  }, [user, isLoading, _hasHydrated, router])
 
-  if (isLoading) {
+  if (!_hasHydrated || isLoading) {
     return <div className="p-6 flex items-center justify-center h-64">
-      <div className="text-slate-500 animate-pulse">Loading dashboard...</div>
+      <div className="text-slate-400 animate-pulse">Loading dashboard...</div>
     </div>
   }
 
   if (!user) {
     return <div className="p-6 flex items-center justify-center h-64">
-      <div className="text-slate-500 animate-pulse">Redirecting to login...</div>
+      <div className="text-slate-400 animate-pulse">Redirecting to login...</div>
     </div>
   }
 
@@ -83,12 +85,12 @@ export default function DashboardPage() {
   const hasAthleteAccess = entitlements['athlete360'] || isCEO
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background text-foreground">
       <div className="space-y-6 p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-50">Dashboard</h1>
-          <p className="text-slate-400">Welcome back. Here's what's happening with your projects.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground">Welcome back. Here's what's happening with your projects.</p>
         </div>
         <CreditTopUpModal />
         </div>
@@ -96,17 +98,17 @@ export default function DashboardPage() {
 
       <Tabs defaultValue="project-hub" className="w-full">
         <div className="overflow-x-auto mb-6">
-          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-slate-800/50 border border-slate-700/50 p-1 text-slate-300 w-max min-w-full backdrop-blur-sm">
-            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Project Hub</TabsTrigger>}
-            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Design Studio</TabsTrigger>}
-            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Content Studio</TabsTrigger>}
-            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">360 Tour Builder</TabsTrigger>}
-            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Geospatial & Robotics</TabsTrigger>}
-            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Virtual Studio</TabsTrigger>}
-            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Analytics & Reports</TabsTrigger>}
-            <TabsTrigger value="my-account" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">My Account</TabsTrigger>
-            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">CEO</TabsTrigger>}
-            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Athlete360</TabsTrigger>}
+          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-muted/50 border border-border p-1 text-muted-foreground w-max min-w-full backdrop-blur-sm">
+            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Project Hub</TabsTrigger>}
+            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Design Studio</TabsTrigger>}
+            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Content Studio</TabsTrigger>}
+            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">360 Tour Builder</TabsTrigger>}
+            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Geospatial & Robotics</TabsTrigger>}
+            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Virtual Studio</TabsTrigger>}
+            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Analytics & Reports</TabsTrigger>}
+            <TabsTrigger value="my-account" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">My Account</TabsTrigger>
+            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">CEO</TabsTrigger>}
+            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Athlete360</TabsTrigger>}
           </TabsList>
         </div>
 
@@ -114,32 +116,32 @@ export default function DashboardPage() {
           <TabsContent value="project-hub" className="space-y-6 mt-8">
             {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-slate-400 mb-2">Active Projects</h3>
-                <p className="text-3xl font-bold text-slate-50">{activeProjects}</p>
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Active Projects</h3>
+                <p className="text-3xl font-bold text-foreground">{activeProjects}</p>
               </div>
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-slate-400 mb-2">Credits Remaining</h3>
-                <p className="text-3xl font-bold text-slate-50">{data.usage.creditsRemaining}</p>
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Credits Remaining</h3>
+                <p className="text-3xl font-bold text-foreground">{data.usage.creditsRemaining}</p>
               </div>
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-slate-400 mb-2">Tier</h3>
-                <Badge variant="outline" className="text-lg px-3 py-1 bg-cyan-400/10 text-cyan-400 border-cyan-400/50">{tier}</Badge>
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Tier</h3>
+                <Badge variant="outline" className="text-lg px-3 py-1 bg-primary/10 text-primary border-primary/50">{tier}</Badge>
               </div>
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-slate-400 mb-2">Storage Used</h3>
-                <p className="text-3xl font-bold text-slate-50">{data.usage.storageUsed}GB</p>
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Storage Used</h3>
+                <p className="text-3xl font-bold text-foreground">{data.usage.storageUsed}GB</p>
               </div>
             </div>
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
-                  <Upload className="h-5 w-5 text-cyan-400" />
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <Upload className="h-5 w-5 text-primary" />
                   Upload Files
                 </h3>
-                <p className="text-slate-400 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   Upload CAD files, images, or documents to start a new project.
                 </p>
                 <input
@@ -151,36 +153,36 @@ export default function DashboardPage() {
                   onChange={handleFileUpload}
                 />
                 <label htmlFor="file-upload">
-                  <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
                     <Upload className="h-4 w-4 mr-2" />
                     Choose Files
                   </Button>
                 </label>
               </div>
 
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
-                  <FileBox className="h-5 w-5 text-cyan-400" />
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <FileBox className="h-5 w-5 text-primary" />
                   New Project
                 </h3>
-                <p className="text-slate-400 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   Create a new project from scratch with templates.
                 </p>
-                <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
+                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
                   <FileBox className="h-4 w-4 mr-2" />
                   Create Project
                 </Button>
               </div>
 
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
-                  <Activity className="h-5 w-5 text-cyan-400" />
+              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <Activity className="h-5 w-5 text-primary" />
                   Recent Activity
                 </h3>
-                <p className="text-slate-400 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   View processing status and recent uploads.
                 </p>
-                <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700 shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
+                <Button variant="outline" className="w-full border-border text-muted-foreground hover:bg-muted shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
                   <Activity className="h-4 w-4 mr-2" />
                   View Activity
                 </Button>

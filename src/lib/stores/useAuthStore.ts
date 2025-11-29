@@ -13,6 +13,7 @@ interface AuthState {
   setTier: (tier: string) => void
   creditsRemaining: number
   setCreditsRemaining: (creditsRemaining: number) => void
+  _hasHydrated: boolean
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -28,6 +29,7 @@ export const useAuthStore = create<AuthState>()(
       setTier: (tier) => set({ tier }),
       creditsRemaining: 1250,
       setCreditsRemaining: (creditsRemaining) => set({ creditsRemaining }),
+      _hasHydrated: false,
     }),
     {
       name: 'auth-storage',
@@ -37,6 +39,11 @@ export const useAuthStore = create<AuthState>()(
         tier: state.tier,
         creditsRemaining: state.creditsRemaining,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hasHydrated = true
+        }
+      },
     }
   )
 )

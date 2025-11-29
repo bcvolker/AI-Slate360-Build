@@ -116,10 +116,10 @@ export default function Home() {
         </section>
 
         {/* Section 2: Design Studio */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-slate-100 text-slate-950 overflow-hidden relative border-t border-slate-200">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
                 <div className="flex items-center gap-3 mb-4 text-cyan">
                   <Box className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Design Studio</span>
@@ -140,58 +140,84 @@ export default function Home() {
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black">
-              <ExpandableViewer>
-                <TileErrorBoundary>
-                    <LiveDesignViewer />
-                </TileErrorBoundary>
-              </ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-slate-200">
+                <ExpandableViewer>
+                  <TileErrorBoundary>
+                      <LiveDesignViewer />
+                  </TileErrorBoundary>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-slate-200">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-600 text-white">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">📁</div>
+                      <p className="text-lg font-semibold">Upload Pending</p>
+                      <p className="text-sm opacity-90">Click to expand and upload</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 3: Project Hub */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
-                <div className="flex items-center gap-3 mb-4 text-purple-400">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
+                <div className="flex items-center gap-3 mb-4 text-purple-600">
                   <Layers className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Project Hub</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Project Hub</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">Project Hub</h2>
+                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
                   Your single source of truth. Manage your building projects, documents, schedules, photos, tasks, and field reports in one clean workspace.
                 </p>
                 <div className="flex flex-wrap gap-6 mb-8">
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Centralized management</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Document collaboration</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Task tracking</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-purple-600" /> Centralized management</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-purple-600" /> Document collaboration</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-purple-600" /> Task tracking</div>
                 </div>
                 <Link href="/learn/project-hub">
-                  <Button variant="outline" className="border-purple-400 text-purple-400 hover:bg-purple-400/10">
+                  <Button variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-600/10">
                       Learn More
                   </Button>
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black flex items-center justify-center">
-              <ExpandableViewer>
-                 <div className="w-full h-full flex items-center justify-center bg-obsidian-950">
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                 <div className="w-full h-full flex items-center justify-center bg-slate-300">
                     <div className="w-full max-w-2xl p-6">
                         <LiveProjectList />
                     </div>
                  </div>
-              </ExpandableViewer>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-300 text-slate-700">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">📊</div>
+                      <p className="text-lg font-semibold">Analytics Pending</p>
+                      <p className="text-sm opacity-90">Click to expand and view</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 4: Content Studio */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
                 <div className="flex items-center gap-3 mb-4 text-emerald-400">
                   <FileText className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Content Studio</span>
@@ -212,9 +238,10 @@ export default function Home() {
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black">
-              <ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
                   <video
                       src={CEO_UPLOADS.demoVideo}
                       autoPlay
@@ -223,85 +250,123 @@ export default function Home() {
                       playsInline
                       className="w-full h-full object-cover opacity-80"
                   />
-              </ExpandableViewer>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-600 text-white">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🎬</div>
+                      <p className="text-lg font-semibold">Video Editor</p>
+                      <p className="text-sm opacity-90">Click to expand and edit</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 5: 360 Tour Builder */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
-                <div className="flex items-center gap-3 mb-4 text-amber-400">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
+                <div className="flex items-center gap-3 mb-4 text-amber-500">
                   <Video className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">360 Tour Builder</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">360 Tour Builder</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">360 Tour Builder</h2>
+                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
                   Drag-and-drop immersive tours with hotspots, floorplans, and progress comparisons. Share with anyone, anywhere, on any device.
                 </p>
                 <div className="flex flex-wrap gap-6 mb-8">
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Interactive hotspots</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Floorplan integration</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Progress tracking</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-amber-500" /> Interactive hotspots</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-amber-500" /> Floorplan integration</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-amber-500" /> Progress tracking</div>
                 </div>
                 <Link href="/learn/tour-builder">
-                  <Button variant="outline" className="border-amber-400 text-amber-400 hover:bg-amber-400/10">
+                  <Button variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500/10">
                       Learn More
                   </Button>
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black">
-              <ExpandableViewer>
-                <TileErrorBoundary>
-                    <LiveTour />
-                </TileErrorBoundary>
-              </ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <TileErrorBoundary>
+                      <LiveTour />
+                  </TileErrorBoundary>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-300 text-slate-700">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🏠</div>
+                      <p className="text-lg font-semibold">Tour Preview</p>
+                      <p className="text-sm opacity-90">Click to expand and navigate</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 6: Geospatial & Robotics */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
-                <div className="flex items-center gap-3 mb-4 text-red-400">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
+                <div className="flex items-center gap-3 mb-4 text-red-500">
                   <Map className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Geospatial & Robotics</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Geospatial & Robotics</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">Geospatial & Robotics</h2>
+                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
                   Plan drone missions, monitor robots, overlay drawings on maps, measure volumes — everything in one intelligent map interface.
                 </p>
                 <div className="flex flex-wrap gap-6 mb-8">
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Drone mission planning</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Robot monitoring</div>
-                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Map overlay tools</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-red-500" /> Drone mission planning</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-red-500" /> Robot monitoring</div>
+                   <div className="flex items-center gap-2 text-slate-600"><Check className="h-4 w-4 text-red-500" /> Map overlay tools</div>
                 </div>
                 <Link href="/learn/geospatial-robotics">
-                  <Button variant="outline" className="border-red-400 text-red-400 hover:bg-red-400/10">
+                  <Button variant="outline" className="border-red-500 text-red-500 hover:bg-red-500/10">
                       Learn More
                   </Button>
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black">
-              <ExpandableViewer>
-                <TileErrorBoundary>
-                    <LiveMap />
-                </TileErrorBoundary>
-              </ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <TileErrorBoundary>
+                      <LiveMap />
+                  </TileErrorBoundary>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-300 text-slate-700">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🚁</div>
+                      <p className="text-lg font-semibold">Drone Control</p>
+                      <p className="text-sm opacity-90">Click to expand and monitor</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 7: Virtual Studio */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
                 <div className="flex items-center gap-3 mb-4 text-blue-400">
                   <Zap className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Virtual Studio</span>
@@ -322,21 +387,34 @@ export default function Home() {
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black">
-              <ExpandableViewer>
-                <TileErrorBoundary>
-                    <LiveTour />
-                </TileErrorBoundary>
-              </ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <TileErrorBoundary>
+                      <LiveTour />
+                  </TileErrorBoundary>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-600 text-white">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🎥</div>
+                      <p className="text-lg font-semibold">Video Renderer</p>
+                      <p className="text-sm opacity-90">Click to expand and render</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 
         {/* Section 8: Reports & Analytics */}
-        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
           {/* Content Half */}
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
-             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
+            <div className="max-w-4xl mx-auto w-full">
                 <div className="flex items-center gap-3 mb-4 text-emerald-400">
                   <TrendingUp className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Reports & Analytics</span>
@@ -357,9 +435,10 @@ export default function Home() {
                 </Link>
              </div>
           </div>
-          {/* Viewer Half */}
-          <div className="flex-1 relative bg-black flex items-center justify-center">
-              <ExpandableViewer>
+          {/* Viewer Half - Split into two */}
+          <div className="flex-1 flex flex-col">
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
                   <div className="w-full h-full flex items-center justify-center bg-obsidian-950">
                     <div className="bg-obsidian-900/50 backdrop-blur-md p-8 rounded-lg border border-white/10 w-full max-w-2xl">
                         <div className="flex items-center gap-2 text-slate-300 mb-6">
@@ -374,7 +453,19 @@ export default function Home() {
                         </div>
                     </div>
                   </div>
-              </ExpandableViewer>
+                </ExpandableViewer>
+              </div>
+              <div className="flex-[0.45] bg-black">
+                <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-slate-600 text-white">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">📈</div>
+                      <p className="text-lg font-semibold">Report Builder</p>
+                      <p className="text-sm opacity-90">Click to expand and customize</p>
+                    </div>
+                  </div>
+                </ExpandableViewer>
+              </div>
           </div>
         </section>
 

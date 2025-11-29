@@ -239,15 +239,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-background z-0"></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background opacity-50 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/20 via-slate-950 to-slate-950 opacity-50 z-0"></div>
       
       {/* Navigation Buttons */}
       <div className="absolute top-6 left-6 z-20">
         <Link href="/">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground flex items-center gap-2">
+          <Button variant="ghost" className="text-slate-400 hover:text-slate-50 flex items-center gap-2">
             <ArrowLeft className="h-5 w-5" />
             Back
           </Button>
@@ -256,18 +256,18 @@ export default function Login() {
       
       <div className="absolute top-6 right-6 z-20">
         <Link href="/">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+          <Button variant="ghost" size="icon" className="text-slate-400 hover:text-slate-50">
             <Home className="h-6 w-6" />
           </Button>
         </Link>
       </div>
 
-      <Card className="w-full max-w-md z-10 backdrop-blur-md bg-card/50 border-border/50 shadow-2xl">
+      <Card className="w-full max-w-md z-10 backdrop-blur-md bg-slate-800/50 border-slate-700/50 shadow-2xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-50 to-slate-300 bg-clip-text text-transparent">
             Welcome to Slate360
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardDescription className="text-slate-400">
             {isSignUp ? 'Create your account' : 'Sign in to access your dashboard'}
           </CardDescription>
         </CardHeader>
@@ -280,7 +280,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-background/50 border-border/50 focus:ring-primary"
+                className="bg-slate-700/50 border-slate-600/50 focus:ring-cyan-500 text-slate-50 placeholder-slate-400"
               />
             </div>
             <div>
@@ -290,7 +290,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-background/50 border-border/50 focus:ring-primary"
+                className="bg-slate-700/50 border-slate-600/50 focus:ring-cyan-500 text-slate-50 placeholder-slate-400"
               />
             </div>
             
@@ -301,33 +301,33 @@ export default function Login() {
                   id="terms"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="mt-1 rounded border-gray-300 text-primary focus:ring-primary"
+                  className="mt-1 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500 bg-slate-700"
                 />
-                <label htmlFor="terms" className="text-xs text-muted-foreground">
-                  I agree to the <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>. Data rates may apply.
+                <label htmlFor="terms" className="text-xs text-slate-400">
+                  I agree to the <Link href="/terms" className="text-cyan-400 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-cyan-400 hover:underline">Privacy Policy</Link>. Data rates may apply.
                 </label>
               </div>
             )}
 
-            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-lg shadow-cyan-500/20" disabled={isLoading}>
               {isLoading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </form>
 
           <div className="mt-4 text-center">
-            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-muted-foreground hover:text-primary">
+            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-slate-400 hover:text-cyan-400">
               {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
             </Button>
           </div>
-          <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/30">
-            <p className="text-sm font-medium text-foreground mb-2">Demo Accounts:</p>
-            <div className="space-y-1 text-xs text-muted-foreground">
-              <p><strong className="text-primary">Creator:</strong> creator@slate360.com</p>
-              <p><strong className="text-primary">Modeling:</strong> modeling@slate360.com</p>
-              <p><strong className="text-primary">God Mode:</strong> godmode@slate360.com</p>
-              <p><strong className="text-primary">CEO:</strong> ceo@slate360.com</p>
+          <div className="mt-6 p-4 bg-slate-800/30 rounded-lg border border-slate-700/30">
+            <p className="text-sm font-medium text-slate-50 mb-2">Demo Accounts:</p>
+            <div className="space-y-1 text-xs text-slate-400">
+              <p><strong className="text-cyan-400">Creator:</strong> creator@slate360.com</p>
+              <p><strong className="text-cyan-400">Modeling:</strong> modeling@slate360.com</p>
+              <p><strong className="text-cyan-400">God Mode:</strong> godmode@slate360.com</p>
+              <p><strong className="text-cyan-400">CEO:</strong> ceo@slate360.com</p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2 italic">Any password works for demo</p>
+            <p className="text-[10px] text-slate-500 mt-2 italic">Any password works for demo</p>
           </div>
         </CardContent>
       </Card>
