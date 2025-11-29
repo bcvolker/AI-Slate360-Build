@@ -33,11 +33,30 @@ export default function Login() {
         // Demo mode - simulate authentication
         await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
 
-        // Mock user object
+        // Mock user object that matches Supabase User type
         const mockUser = {
-          id: 'demo-user',
+          id: 'demo-user-' + Date.now(),
+          app_metadata: {},
+          user_metadata: { name: email.split('@')[0] },
+          aud: 'authenticated',
+          confirmation_sent_at: new Date().toISOString(),
+          recovery_sent_at: undefined,
+          email_change_sent_at: undefined,
+          new_email: undefined,
+          new_confirmation_sent_at: undefined,
+          invited_at: undefined,
+          action_link: undefined,
           email: email,
-          user_metadata: { name: email.split('@')[0] }
+          phone: undefined,
+          created_at: new Date().toISOString(),
+          confirmed_at: new Date().toISOString(),
+          email_confirmed_at: new Date().toISOString(),
+          phone_confirmed_at: undefined,
+          last_sign_in_at: new Date().toISOString(),
+          role: 'authenticated' as const,
+          updated_at: new Date().toISOString(),
+          identities: [],
+          factors: [],
         };
 
         // Mock tier and entitlements based on email for demo
