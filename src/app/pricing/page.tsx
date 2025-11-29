@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       {/* Header */}
       <header className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -35,7 +35,7 @@ export default function PricingPage() {
           <div className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 backdrop-blur-sm rounded-xl p-6">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold mb-2 text-slate-50">Creator</h2>
-              <div className="text-4xl font-bold text-cyan-400 mb-1">$79<span className="text-lg text-slate-400">/month</span></div>
+              <div className="text-4xl font-bold text-cyan-400 mb-1">$49<span className="text-lg text-slate-400">/month</span></div>
               <p className="text-slate-400 text-sm">Perfect for small teams</p>
             </div>
             <ul className="space-y-3 mb-8">
@@ -81,7 +81,7 @@ export default function PricingPage() {
             </div>
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold mb-2 text-slate-50">Modeling</h2>
-              <div className="text-4xl font-bold text-cyan-400 mb-1">$199<span className="text-lg text-slate-400">/month</span></div>
+              <div className="text-4xl font-bold text-cyan-400 mb-1">$149<span className="text-lg text-slate-400">/month</span></div>
               <p className="text-slate-400 text-sm">For growing businesses</p>
             </div>
             <ul className="space-y-3 mb-8">
@@ -122,7 +122,7 @@ export default function PricingPage() {
           <div className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 backdrop-blur-sm rounded-xl p-6">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold mb-2 text-slate-50">God Mode</h2>
-              <div className="text-4xl font-bold text-cyan-400 mb-1">$499<span className="text-lg text-slate-400">/month</span></div>
+              <div className="text-4xl font-bold text-cyan-400 mb-1">$399<span className="text-lg text-slate-400">/month</span></div>
               <p className="text-slate-400 text-sm">Everything included</p>
             </div>
             <ul className="space-y-3 mb-8">
