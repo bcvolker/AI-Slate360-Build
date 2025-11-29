@@ -20,19 +20,32 @@ export default function Pricing() {
             <h2 className="text-2xl font-bold mb-4">Creator</h2>
             <p className="text-3xl font-bold mb-4">$79/mo</p>
             <ul className="space-y-2 mb-6">
-              <li>Content Studio</li>
-              <li>360 Tour Builder</li>
-              <li>Basic Analytics</li>
+              <li>✅ Project Hub</li>
+              <li>✅ Design Studio</li>
+              <li>✅ Content Studio</li>
+              <li>✅ 360 Tour Builder</li>
+              <li>❌ Geospatial & Robotics</li>
+              <li>❌ Virtual Studio</li>
+              <li>❌ Analytics & Reports</li>
+              <li>❌ Athlete360</li>
             </ul>
             <button className="w-full bg-blue-600 text-white py-2 rounded">Subscribe</button>
           </div>
-          <div className="p-6 bg-white rounded-lg shadow-md border">
+          <div className="p-6 bg-white rounded-lg shadow-md border border-blue-500 relative">
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
+              Most Popular
+            </div>
             <h2 className="text-2xl font-bold mb-4">Modeling</h2>
             <p className="text-3xl font-bold mb-4">$199/mo</p>
             <ul className="space-y-2 mb-6">
-              <li>All Creator features</li>
-              <li>Design Studio</li>
-              <li>Geospatial & Robotics</li>
+              <li>✅ Project Hub</li>
+              <li>✅ Design Studio</li>
+              <li>✅ Content Studio</li>
+              <li>✅ 360 Tour Builder</li>
+              <li>✅ Geospatial & Robotics</li>
+              <li>❌ Virtual Studio</li>
+              <li>✅ Analytics & Reports</li>
+              <li>❌ Athlete360</li>
             </ul>
             <button className="w-full bg-blue-600 text-white py-2 rounded">Subscribe</button>
           </div>
@@ -40,9 +53,14 @@ export default function Pricing() {
             <h2 className="text-2xl font-bold mb-4">God Mode</h2>
             <p className="text-3xl font-bold mb-4">$499/mo</p>
             <ul className="space-y-2 mb-6">
-              <li>All Modeling features</li>
-              <li>Virtual Studio</li>
-              <li>Full Procore Integration</li>
+              <li>✅ Project Hub</li>
+              <li>✅ Design Studio</li>
+              <li>✅ Content Studio</li>
+              <li>✅ 360 Tour Builder</li>
+              <li>✅ Geospatial & Robotics</li>
+              <li>✅ Virtual Studio</li>
+              <li>✅ Analytics & Reports</li>
+              <li>✅ Athlete360</li>
             </ul>
             <button className="w-full bg-blue-600 text-white py-2 rounded">Subscribe</button>
           </div>
@@ -50,9 +68,11 @@ export default function Pricing() {
             <h2 className="text-2xl font-bold mb-4">Enterprise</h2>
             <p className="text-3xl font-bold mb-4">Custom</p>
             <ul className="space-y-2 mb-6">
-              <li>All features</li>
-              <li>Custom permissions</li>
-              <li>Dedicated support</li>
+              <li>✅ All features</li>
+              <li>✅ Custom permissions</li>
+              <li>✅ Dedicated support</li>
+              <li>✅ White-label options</li>
+              <li>✅ API access</li>
             </ul>
             <button className="w-full bg-blue-600 text-white py-2 rounded">Contact Sales</button>
           </div>

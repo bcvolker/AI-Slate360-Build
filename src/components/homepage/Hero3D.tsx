@@ -35,10 +35,10 @@ function Fallback() {
 
 export default function Hero3D() {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none">
+    <div className="absolute right-0 top-0 w-1/2 h-screen z-0 pointer-events-none">
       <Canvas
         camera={{ position: [5, 5, 5], fov: 50 }}
-        style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)" }}
+        style={{ background: "transparent" }}
         onCreated={({ gl }) => {
           gl.domElement.style.pointerEvents = 'none';
         }}
@@ -52,28 +52,21 @@ export default function Hero3D() {
 
           <Environment preset="city" />
           <OrbitControls
-            enablePan={true}
-            enableZoom={true}
-            enableRotate={true}
-            minDistance={2}
-            maxDistance={20}
-            enableDamping={true}
-            dampingFactor={0.05}
+            enablePan={false}
+            enableZoom={false}
+            enableRotate={false}
+            autoRotate={true}
+            autoRotateSpeed={0.5}
           />
         </Suspense>
       </Canvas>
 
       {/* HUD Controls */}
-      <div className="absolute bottom-4 left-4 z-10 pointer-events-auto">
-        <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white/80 text-sm">
-          <div className="flex items-center gap-2 mb-1">
+      <div className="absolute bottom-8 right-8 z-10 pointer-events-auto">
+        <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2 text-white/60 text-xs">
+          <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-            <span className="font-medium">Interactive 3D</span>
-          </div>
-          <div className="text-xs text-white/60 space-y-1">
-            <div>🖱️ Drag to rotate</div>
-            <div>🔍 Scroll to zoom</div>
-            <div>👆 Right-click to pan</div>
+            <span>Auto-rotating 3D model</span>
           </div>
         </div>
       </div>

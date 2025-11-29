@@ -50,21 +50,21 @@ export default function Home() {
       <main className="min-h-screen w-full bg-obsidian text-slate-50" data-scroll-container>
         
         {/* Section 1: Hero (3D) */}
-        <section className="h-screen w-full snap-start relative flex items-center justify-center overflow-hidden">
+        <section className="h-screen w-full snap-start relative flex items-center overflow-hidden">
           <TileErrorBoundary fallback={<div className="absolute inset-0 bg-gradient-to-b from-obsidian to-obsidian-800" />}>
               <Hero3D />
           </TileErrorBoundary>
-          <div className="z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none">
+          <div className="z-10 text-left px-4 max-w-4xl mx-0 ml-8 lg:ml-16 pointer-events-none">
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-slate-50 to-slate-400 drop-shadow-2xl">
               Slate360
             </h1>
-            <p className="text-xl md:text-3xl text-slate-400 mb-10 max-w-3xl mx-auto font-light drop-shadow-md">
+            <p className="text-xl md:text-3xl text-slate-400 mb-10 max-w-3xl font-light drop-shadow-md">
               From raw data to finished reality — one unified platform.
             </p>
-            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-4xl mx-auto font-light drop-shadow-md">
+            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-4xl font-light drop-shadow-md">
               Turn site photos, video, 360 camera captures, drawings, and notes into models, tours, videos, and insights — all of your work, perfectly connected.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pointer-events-auto">
+            <div className="flex flex-col sm:flex-row gap-6 justify-start pointer-events-auto">
               <Link href="/dashboard">
                 <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-500 transition-all shadow-[0_0_40px_-10px_rgba(0,245,255,0.5)]">
                   Enter Dashboard <ArrowRight className="ml-2 h-5 w-5" />
@@ -72,7 +72,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="absolute bottom-10 left-0 right-0 text-center animate-bounce text-slate-400">
+          <div className="absolute bottom-10 left-8 text-left animate-bounce text-slate-400">
               <p className="text-sm uppercase tracking-widest">Scroll to Explore</p>
           </div>
         </section>
