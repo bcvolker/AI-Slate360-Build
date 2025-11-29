@@ -60,12 +60,37 @@ export default function Hero3D() {
         </Suspense>
       </Canvas>
 
-      {/* HUD Controls */}
-      <div className="absolute bottom-8 right-8 z-10">
-        <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2 text-white/60 text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-            <span>Interactive 3D model - drag to rotate, scroll to zoom</span>
+      {/* HUD Icon Bar - Vertical on the right */}
+      <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10 flex flex-col gap-3">
+        <div className="bg-black/40 backdrop-blur-md rounded-lg p-3 shadow-lg border border-white/10">
+          <div className="flex flex-col gap-3 text-white/80">
+            {/* Rotate Icon */}
+            <button className="p-2 hover:bg-white/10 rounded transition-colors" title="Rotate">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+
+            {/* Zoom Icon */}
+            <button className="p-2 hover:bg-white/10 rounded transition-colors" title="Zoom">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+            </button>
+
+            {/* Pan Icon */}
+            <button className="p-2 hover:bg-white/10 rounded transition-colors" title="Pan">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+
+            {/* Auto Rotate Toggle */}
+            <button className="p-2 hover:bg-white/10 rounded transition-colors" title="Auto Rotate">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l.707.707A1 1 0 0012.414 11H13m-4 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

@@ -83,12 +83,12 @@ export default function DashboardPage() {
   const hasAthleteAccess = entitlements['athlete360'] || isCEO
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <div className="space-y-6 p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back. Here's what's happening with your projects.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-50">Dashboard</h1>
+          <p className="text-slate-400">Welcome back. Here's what's happening with your projects.</p>
         </div>
         <CreditTopUpModal />
         </div>
@@ -96,17 +96,17 @@ export default function DashboardPage() {
 
       <Tabs defaultValue="project-hub" className="w-full">
         <div className="overflow-x-auto mb-6">
-          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-card/50 border border-border/50 p-1 text-muted-foreground w-max min-w-full backdrop-blur-sm">
-            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Project Hub</TabsTrigger>}
-            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Design Studio</TabsTrigger>}
-            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Content Studio</TabsTrigger>}
-            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">360 Tour Builder</TabsTrigger>}
-            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Geospatial & Robotics</TabsTrigger>}
-            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Virtual Studio</TabsTrigger>}
-            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Analytics & Reports</TabsTrigger>}
-            <TabsTrigger value="my-account" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">My Account</TabsTrigger>
-            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">CEO</TabsTrigger>}
-            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Athlete360</TabsTrigger>}
+          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-slate-800/50 border border-slate-700/50 p-1 text-slate-300 w-max min-w-full backdrop-blur-sm">
+            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Project Hub</TabsTrigger>}
+            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Design Studio</TabsTrigger>}
+            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Content Studio</TabsTrigger>}
+            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">360 Tour Builder</TabsTrigger>}
+            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Geospatial & Robotics</TabsTrigger>}
+            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Virtual Studio</TabsTrigger>}
+            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Analytics & Reports</TabsTrigger>}
+            <TabsTrigger value="my-account" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">My Account</TabsTrigger>
+            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">CEO</TabsTrigger>}
+            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-slate-900">Athlete360</TabsTrigger>}
           </TabsList>
         </div>
 
@@ -114,32 +114,32 @@ export default function DashboardPage() {
           <TabsContent value="project-hub" className="space-y-6 mt-8">
             {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Active Projects</h3>
-                <p className="text-3xl font-bold text-foreground">{activeProjects}</p>
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-slate-400 mb-2">Active Projects</h3>
+                <p className="text-3xl font-bold text-slate-50">{activeProjects}</p>
               </div>
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Credits Remaining</h3>
-                <p className="text-3xl font-bold text-foreground">{data.usage.creditsRemaining}</p>
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-slate-400 mb-2">Credits Remaining</h3>
+                <p className="text-3xl font-bold text-slate-50">{data.usage.creditsRemaining}</p>
               </div>
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Tier</h3>
-                <Badge variant="outline" className="text-lg px-3 py-1 bg-primary/10 text-primary border-primary/50">{tier}</Badge>
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-slate-400 mb-2">Tier</h3>
+                <Badge variant="outline" className="text-lg px-3 py-1 bg-cyan-400/10 text-cyan-400 border-cyan-400/50">{tier}</Badge>
               </div>
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Storage Used</h3>
-                <p className="text-3xl font-bold text-foreground">{data.usage.storageUsed}GB</p>
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-slate-400 mb-2">Storage Used</h3>
+                <p className="text-3xl font-bold text-slate-50">{data.usage.storageUsed}GB</p>
               </div>
             </div>
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <Upload className="h-5 w-5 text-primary" />
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
+                  <Upload className="h-5 w-5 text-cyan-400" />
                   Upload Files
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4">
+                <p className="text-slate-400 text-sm mb-4">
                   Upload CAD files, images, or documents to start a new project.
                 </p>
                 <input
@@ -151,36 +151,36 @@ export default function DashboardPage() {
                   onChange={handleFileUpload}
                 />
                 <label htmlFor="file-upload">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
+                  <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
                     <Upload className="h-4 w-4 mr-2" />
                     Choose Files
                   </Button>
                 </label>
               </div>
 
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <FileBox className="h-5 w-5 text-primary" />
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
+                  <FileBox className="h-5 w-5 text-cyan-400" />
                   New Project
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4">
+                <p className="text-slate-400 text-sm mb-4">
                   Create a new project from scratch with templates.
                 </p>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
+                <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
                   <FileBox className="h-4 w-4 mr-2" />
                   Create Project
                 </Button>
               </div>
 
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <Activity className="h-5 w-5 text-primary" />
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-slate-50">
+                  <Activity className="h-5 w-5 text-cyan-400" />
                   Recent Activity
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4">
+                <p className="text-slate-400 text-sm mb-4">
                   View processing status and recent uploads.
                 </p>
-                <Button variant="outline" className="w-full border-border text-foreground hover:bg-accent shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
+                <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700 shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
                   <Activity className="h-4 w-4 mr-2" />
                   View Activity
                 </Button>
@@ -188,15 +188,15 @@ export default function DashboardPage() {
             </div>
 
             {/* Projects */}
-            <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-foreground">Recent Projects</h2>
+                <h2 className="text-xl font-semibold text-slate-50">Recent Projects</h2>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-accent shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
+                  <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700 shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
                     <FileText className="h-4 w-4 mr-2" />
                     Templates
                   </Button>
-                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
+                  <Button size="sm" className="bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
                     <Upload className="h-4 w-4 mr-2" />
                     New Project
                   </Button>
@@ -210,54 +210,54 @@ export default function DashboardPage() {
             </div>
 
             {/* Processing Queue */}
-            <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-              <h2 className="text-xl font-semibold mb-4 text-foreground">Processing Queue</h2>
+            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+              <h2 className="text-xl font-semibold mb-4 text-slate-50">Processing Queue</h2>
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                    <span className="font-medium text-foreground">Processing 3D model: office-building.obj</span>
+                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                    <span className="font-medium text-slate-50">Processing 3D model: office-building.obj</span>
                   </div>
-                  <span className="text-sm text-muted-foreground">45% complete</span>
+                  <span className="text-sm text-slate-400">45% complete</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    <span className="font-medium text-foreground">Completed: site-survey.pdf</span>
+                    <span className="font-medium text-slate-50">Completed: site-survey.pdf</span>
                   </div>
-                  <span className="text-sm text-muted-foreground">Ready for review</span>
+                  <span className="text-sm text-slate-400">Ready for review</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Uploads */}
             {uploadedFiles.length > 0 && (
-              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h2 className="text-xl font-semibold mb-4 text-foreground">Recent Uploads</h2>
+              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h2 className="text-xl font-semibold mb-4 text-slate-50">Recent Uploads</h2>
                 <div className="space-y-3">
                   {uploadedFiles.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/30">
-                          <FileText className="h-4 w-4 text-primary" />
+                        <div className="w-8 h-8 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-400/30">
+                          <FileText className="h-4 w-4 text-cyan-400" />
                         </div>
                         <div>
-                          <p className="font-medium text-foreground">{file.name}</p>
-                          <p className="text-sm text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="font-medium text-slate-50">{file.name}</p>
+                          <p className="text-sm text-slate-400">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         {uploadProgress[file.name] < 100 ? (
-                          <div className="w-20 bg-muted rounded-full h-2">
+                          <div className="w-20 bg-slate-600 rounded-full h-2">
                             <div
-                              className="bg-primary h-2 rounded-full transition-all duration-300"
+                              className="bg-cyan-400 h-2 rounded-full transition-all duration-300"
                               style={{ width: `${uploadProgress[file.name] || 0}%` }}
                             ></div>
                           </div>
                         ) : (
                           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                         )}
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-slate-400">
                           {uploadProgress[file.name] === 100 ? 'Complete' : `${Math.round(uploadProgress[file.name] || 0)}%`}
                         </span>
                       </div>
@@ -274,65 +274,59 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Tools Panel */}
               <div className="lg:col-span-1 space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Design Tools</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Design Tools</h2>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <Box className="h-4 w-4 mr-2" />
                       Import Model
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <Layers className="h-4 w-4 mr-2" />
                       Add Primitive
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <FileBox className="h-4 w-4 mr-2" />
                       Boolean Operations
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <Activity className="h-4 w-4 mr-2" />
                       Measurements
                     </Button>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Materials</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Materials</h2>
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="aspect-square bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg cursor-pointer hover:ring-2 ring-blue-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg cursor-pointer hover:ring-2 ring-blue-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-lg cursor-pointer hover:ring-2 ring-blue-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg cursor-pointer hover:ring-2 ring-blue-500"></div>
+                    <div className="aspect-square bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
+                    <div className="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
+                    <div className="aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
+                    <div className="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Export</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Export</h2>
                   <div className="space-y-2">
-                    <Button className="w-full" size="sm">
-                      Export STL (3D Print)
-                    </Button>
-                    <Button variant="outline" className="w-full" size="sm">
-                      Export OBJ
-                    </Button>
-                    <Button variant="outline" className="w-full" size="sm">
-                      Export GLTF
-                    </Button>
+                    <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">Export STL (3D Print)</Button>
+                    <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700">Export OBJ</Button>
+                    <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700">Export GLTF</Button>
                   </div>
                 </div>
               </div>
 
               {/* 3D Viewer */}
               <div className="lg:col-span-2">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-semibold">3D Workspace</h2>
+                    <h2 className="text-xl font-semibold text-slate-50">3D Workspace</h2>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
                         <Box className="h-4 w-4 mr-2" />
                         Wireframe
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
                         <Activity className="h-4 w-4 mr-2" />
                         Render
                       </Button>
@@ -340,32 +334,32 @@ export default function DashboardPage() {
                   </div>
 
                   {/* 3D Canvas Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-300">
+                  <div className="aspect-video bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-600">
                     <div className="text-center">
                       <div className="text-6xl mb-4">🎨</div>
-                      <p className="text-lg font-semibold text-slate-700">3D Design Canvas</p>
-                      <p className="text-slate-500">Interactive 3D modeling workspace</p>
-                      <p className="text-sm text-slate-400 mt-2">Drag & drop models or use tools to create</p>
+                      <p className="text-lg font-semibold text-slate-50">3D Design Canvas</p>
+                      <p className="text-slate-400">Interactive 3D modeling workspace</p>
+                      <p className="text-sm text-slate-500 mt-2">Drag & drop models or use tools to create</p>
                     </div>
                   </div>
 
                   {/* Model Properties */}
                   <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-900">0</p>
-                      <p className="text-sm text-slate-500">Vertices</p>
+                      <p className="text-2xl font-bold text-slate-50">0</p>
+                      <p className="text-sm text-slate-400">Vertices</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-900">0</p>
-                      <p className="text-sm text-slate-500">Faces</p>
+                      <p className="text-2xl font-bold text-slate-50">0</p>
+                      <p className="text-sm text-slate-400">Faces</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-900">0MB</p>
-                      <p className="text-sm text-slate-500">File Size</p>
+                      <p className="text-2xl font-bold text-slate-50">0MB</p>
+                      <p className="text-sm text-slate-400">File Size</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-900">--</p>
-                      <p className="text-sm text-slate-500">Material</p>
+                      <p className="text-2xl font-bold text-slate-50">--</p>
+                      <p className="text-sm text-slate-400">Material</p>
                     </div>
                   </div>
                 </div>
@@ -378,61 +372,61 @@ export default function DashboardPage() {
           <TabsContent value="content-studio" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Content Studio</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Content Studio</h2>
+                  <p className="text-slate-400 mb-6">
                     AI-powered content creation and editing tools for immersive experiences.
                     Create, edit, and enhance media content with professional tools.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-green-600" />
+                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
+                        <Video className="h-4 w-4 text-green-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Video Editor</h3>
-                        <p className="text-sm text-slate-500">Professional video editing</p>
+                        <h3 className="font-medium text-slate-50">Video Editor</h3>
+                        <p className="text-sm text-slate-400">Professional video editing</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-green-600" />
+                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
+                        <FileText className="h-4 w-4 text-green-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Photo Editor</h3>
-                        <p className="text-sm text-slate-500">Advanced image processing</p>
+                        <h3 className="font-medium text-slate-50">Photo Editor</h3>
+                        <p className="text-sm text-slate-400">Advanced image processing</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-green-600" />
+                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
+                        <Activity className="h-4 w-4 text-green-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">AI Enhancement</h3>
-                        <p className="text-sm text-slate-500">Smart content improvement</p>
+                        <h3 className="font-medium text-slate-50">AI Enhancement</h3>
+                        <p className="text-sm text-slate-400">Smart content improvement</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h3 className="font-semibold mb-4">Media Library</h3>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h3 className="font-semibold mb-4 text-slate-50">Media Library</h3>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start">
+                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Files
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <FileBox className="h-4 w-4 mr-2" />
                       Create Project
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🎬</div>
-                  <p className="text-lg font-semibold text-slate-700">Content Creation Suite</p>
-                  <p className="text-slate-500">Professional media tools</p>
+                  <p className="text-lg font-semibold text-slate-50">Content Creation Suite</p>
+                  <p className="text-slate-400">Professional media tools</p>
                 </div>
               </div>
             </div>
@@ -443,61 +437,61 @@ export default function DashboardPage() {
           <TabsContent value="360-tour-builder" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">360° Tour Builder</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">360° Tour Builder</h2>
+                  <p className="text-slate-400 mb-6">
                     Create interactive 360-degree tours with drag-and-drop simplicity.
                     Build immersive virtual experiences for real estate, construction, and more.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-cyan-600" />
+                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
+                        <Video className="h-4 w-4 text-cyan-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Tour Editor</h3>
-                        <p className="text-sm text-slate-500">Visual tour creation</p>
+                        <h3 className="font-medium text-slate-50">Tour Editor</h3>
+                        <p className="text-sm text-slate-400">Visual tour creation</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
-                        <Map className="h-4 w-4 text-cyan-600" />
+                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
+                        <Map className="h-4 w-4 text-cyan-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Hotspots</h3>
-                        <p className="text-sm text-slate-500">Interactive navigation</p>
+                        <h3 className="font-medium text-slate-50">Hotspots</h3>
+                        <p className="text-sm text-slate-400">Interactive navigation</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-cyan-600" />
+                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
+                        <FileText className="h-4 w-4 text-cyan-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Export Options</h3>
-                        <p className="text-sm text-slate-500">Multiple formats</p>
+                        <h3 className="font-medium text-slate-50">Export Options</h3>
+                        <p className="text-sm text-slate-400">Multiple formats</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h3 className="font-semibold mb-4">Tour Projects</h3>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h3 className="font-semibold mb-4 text-slate-50">Tour Projects</h3>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start">
+                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload 360° Images
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <FileBox className="h-4 w-4 mr-2" />
                       New Tour
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🏠</div>
-                  <p className="text-lg font-semibold text-slate-700">360° Tour Builder</p>
-                  <p className="text-slate-500">Immersive virtual tours</p>
+                  <p className="text-lg font-semibold text-slate-50">360° Tour Builder</p>
+                  <p className="text-slate-400">Immersive virtual tours</p>
                 </div>
               </div>
             </div>
@@ -508,61 +502,61 @@ export default function DashboardPage() {
           <TabsContent value="geospatial-robotics" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Geospatial & Robotics</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Geospatial & Robotics</h2>
+                  <p className="text-slate-400 mb-6">
                     Track assets, missions, and robotics on interactive maps with AI insights.
                     Manage drone operations, geospatial data, and robotic automation.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                        <Map className="h-4 w-4 text-emerald-600" />
+                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
+                        <Map className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Live Maps</h3>
-                        <p className="text-sm text-slate-500">Real-time asset tracking</p>
+                        <h3 className="font-medium text-slate-50">Live Maps</h3>
+                        <p className="text-sm text-slate-400">Real-time asset tracking</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-emerald-600" />
+                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
+                        <Activity className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Drone Control</h3>
-                        <p className="text-sm text-slate-500">Flight planning & monitoring</p>
+                        <h3 className="font-medium text-slate-50">Drone Control</h3>
+                        <p className="text-sm text-slate-400">Flight planning & monitoring</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                        <Zap className="h-4 w-4 text-emerald-600" />
+                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
+                        <Zap className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Robotics</h3>
-                        <p className="text-sm text-slate-500">Automated systems</p>
+                        <h3 className="font-medium text-slate-50">Robotics</h3>
+                        <p className="text-sm text-slate-400">Automated systems</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h3 className="font-semibold mb-4">Mission Control</h3>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h3 className="font-semibold mb-4 text-slate-50">Mission Control</h3>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start">
+                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Geospatial Data
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <FileBox className="h-4 w-4 mr-2" />
                       Plan Mission
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🗺️</div>
-                  <p className="text-lg font-semibold text-slate-700">Geospatial Intelligence</p>
-                  <p className="text-slate-500">Live asset & robotics tracking</p>
+                  <p className="text-lg font-semibold text-slate-50">Geospatial Intelligence</p>
+                  <p className="text-slate-400">Live asset & robotics tracking</p>
                 </div>
               </div>
             </div>
@@ -573,61 +567,61 @@ export default function DashboardPage() {
           <TabsContent value="virtual-studio" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Virtual Studio</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Virtual Studio</h2>
+                  <p className="text-slate-400 mb-6">
                     Immersive virtual reality experiences with haptic feedback.
                     Step inside your designs and sites in full VR.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Zap className="h-4 w-4 text-blue-600" />
+                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
+                        <Zap className="h-4 w-4 text-blue-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">VR Viewer</h3>
-                        <p className="text-sm text-slate-500">Full immersion experience</p>
+                        <h3 className="font-medium text-slate-50">VR Viewer</h3>
+                        <p className="text-sm text-slate-400">Full immersion experience</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-blue-600" />
+                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
+                        <Activity className="h-4 w-4 text-blue-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Haptic Feedback</h3>
-                        <p className="text-sm text-slate-500">Tactile interactions</p>
+                        <h3 className="font-medium text-slate-50">Haptic Feedback</h3>
+                        <p className="text-sm text-slate-400">Tactile interactions</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-blue-600" />
+                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
+                        <Video className="h-4 w-4 text-blue-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Multi-user Sessions</h3>
-                        <p className="text-sm text-slate-500">Collaborative VR</p>
+                        <h3 className="font-medium text-slate-50">Multi-user Sessions</h3>
+                        <p className="text-sm text-slate-400">Collaborative VR</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h3 className="font-semibold mb-4">VR Sessions</h3>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h3 className="font-semibold mb-4 text-slate-50">VR Sessions</h3>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start">
+                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload VR Content
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <FileBox className="h-4 w-4 mr-2" />
                       Start Session
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🥽</div>
-                  <p className="text-lg font-semibold text-slate-700">Virtual Reality Studio</p>
-                  <p className="text-slate-500">Immersive experiences</p>
+                  <p className="text-lg font-semibold text-slate-50">Virtual Reality Studio</p>
+                  <p className="text-slate-400">Immersive experiences</p>
                 </div>
               </div>
             </div>
@@ -638,65 +632,65 @@ export default function DashboardPage() {
           <TabsContent value="analytics-reports" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Reports & Analytics</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Reports & Analytics</h2>
+                  <p className="text-slate-400 mb-6">
                     Comprehensive reporting and analytics for project performance and ROI.
                     Generate professional reports and analyze project data.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="h-4 w-4 text-orange-600" />
+                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
+                        <TrendingUp className="h-4 w-4 text-orange-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Report Builder</h3>
-                        <p className="text-sm text-slate-500">Custom report templates</p>
+                        <h3 className="font-medium text-slate-50">Report Builder</h3>
+                        <p className="text-sm text-slate-400">Custom report templates</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="h-4 w-4 text-orange-600" />
+                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
+                        <BarChart3 className="h-4 w-4 text-orange-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Data Analytics</h3>
-                        <p className="text-sm text-slate-500">Performance insights</p>
+                        <h3 className="font-medium text-slate-50">Data Analytics</h3>
+                        <p className="text-sm text-slate-400">Performance insights</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-orange-600" />
+                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
+                        <FileText className="h-4 w-4 text-orange-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Export Options</h3>
-                        <p className="text-sm text-slate-500">Professional formats</p>
+                        <h3 className="font-medium text-slate-50">Export Options</h3>
+                        <p className="text-sm text-slate-400">Professional formats</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h3 className="font-semibold mb-4">Report Templates</h3>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h3 className="font-semibold mb-4 text-slate-50">Report Templates</h3>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start">
+                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <FileText className="h-4 w-4 mr-2" />
                       Project Status Report
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <BarChart3 className="h-4 w-4 mr-2" />
                       ROI Analysis
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
                       <TrendingUp className="h-4 w-4 mr-2" />
                       Custom Report
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">📊</div>
-                  <p className="text-lg font-semibold text-slate-700">Analytics Dashboard</p>
-                  <p className="text-slate-500">Data-driven insights</p>
+                  <p className="text-lg font-semibold text-slate-50">Analytics Dashboard</p>
+                  <p className="text-slate-400">Data-driven insights</p>
                 </div>
               </div>
             </div>
@@ -705,32 +699,32 @@ export default function DashboardPage() {
 
         <TabsContent value="my-account" className="space-y-6 mt-6">
           <div className="max-w-2xl space-y-6">
-            <div className="bg-white rounded-xl border shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
+            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+              <h2 className="text-xl font-semibold mb-4 text-slate-50">Account Settings</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input type="email" className="w-full p-2 border rounded" defaultValue={user?.email} />
+                  <label className="block text-sm font-medium mb-2 text-slate-300">Email</label>
+                  <input type="email" className="w-full p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50 placeholder-slate-400" defaultValue={user?.email} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <input type="text" className="w-full p-2 border rounded" />
+                  <label className="block text-sm font-medium mb-2 text-slate-300">Name</label>
+                  <input type="text" className="w-full p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50 placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Theme</label>
+                  <label className="block text-sm font-medium mb-2 text-slate-300">Theme</label>
                   <ThemeToggle />
                 </div>
-                <Button>Save Changes</Button>
+                <Button className="bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">Save Changes</Button>
               </div>
             </div>
-            <div className="bg-white rounded-xl border shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">Subscription</h2>
+            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+              <h2 className="text-xl font-semibold mb-4 text-slate-50">Subscription</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span>Current Plan:</span>
-                  <Badge variant="outline">{tier}</Badge>
+                  <span className="text-slate-300">Current Plan:</span>
+                  <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">{tier}</Badge>
                 </div>
-                <Button variant="outline">Manage Subscription</Button>
+                <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700">Manage Subscription</Button>
               </div>
             </div>
           </div>
@@ -741,54 +735,54 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Business Overview */}
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Business Overview</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Business Overview</h2>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <p className="text-2xl font-bold text-green-600">$12,450</p>
-                      <p className="text-sm text-green-700">Monthly Revenue</p>
+                    <div className="text-center p-4 bg-green-400/10 rounded-lg border border-green-400/30">
+                      <p className="text-2xl font-bold text-green-400">$12,450</p>
+                      <p className="text-sm text-green-300">Monthly Revenue</p>
                     </div>
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <p className="text-2xl font-bold text-blue-600">247</p>
-                      <p className="text-sm text-blue-700">Active Users</p>
+                    <div className="text-center p-4 bg-blue-400/10 rounded-lg border border-blue-400/30">
+                      <p className="text-2xl font-bold text-blue-400">247</p>
+                      <p className="text-sm text-blue-300">Active Users</p>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <p className="text-2xl font-bold text-purple-600">89%</p>
-                      <p className="text-sm text-purple-700">Retention Rate</p>
+                    <div className="text-center p-4 bg-purple-400/10 rounded-lg border border-purple-400/30">
+                      <p className="text-2xl font-bold text-purple-400">89%</p>
+                      <p className="text-sm text-purple-300">Retention Rate</p>
                     </div>
-                    <div className="text-center p-4 bg-orange-50 rounded-lg">
-                      <p className="text-2xl font-bold text-orange-600">1,203</p>
-                      <p className="text-sm text-orange-700">Credits Used</p>
+                    <div className="text-center p-4 bg-orange-400/10 rounded-lg border border-orange-400/30">
+                      <p className="text-2xl font-bold text-orange-400">1,203</p>
+                      <p className="text-sm text-orange-300">Credits Used</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">User Management</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">User Management</h2>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                       <div>
-                        <p className="font-medium">creator@slate360.com</p>
-                        <p className="text-sm text-slate-500">Creator Tier - Active</p>
+                        <p className="font-medium text-slate-50">creator@slate360.com</p>
+                        <p className="text-sm text-slate-400">Creator Tier - Active</p>
                       </div>
-                      <Badge variant="outline">Creator</Badge>
+                      <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">Creator</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                       <div>
-                        <p className="font-medium">modeling@slate360.com</p>
-                        <p className="text-sm text-slate-500">Modeling Tier - Active</p>
+                        <p className="font-medium text-slate-50">modeling@slate360.com</p>
+                        <p className="text-sm text-slate-400">Modeling Tier - Active</p>
                       </div>
-                      <Badge variant="outline">Modeling</Badge>
+                      <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">Modeling</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
                       <div>
-                        <p className="font-medium">godmode@slate360.com</p>
-                        <p className="text-sm text-slate-500">God Mode Tier - Active</p>
+                        <p className="font-medium text-slate-50">godmode@slate360.com</p>
+                        <p className="text-sm text-slate-400">God Mode Tier - Active</p>
                       </div>
-                      <Badge variant="outline">God Mode</Badge>
+                      <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">God Mode</Badge>
                     </div>
                   </div>
-                  <Button className="w-full mt-4" variant="outline">
+                  <Button className="w-full mt-4 bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]" variant="outline">
                     <Activity className="h-4 w-4 mr-2" />
                     Manage All Users
                   </Button>
@@ -797,53 +791,53 @@ export default function DashboardPage() {
 
               {/* Controls */}
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">System Controls</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">System Controls</h2>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Creator Tier Price</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-300">Creator Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border rounded" defaultValue="79" />
-                        <span className="p-2 bg-slate-100 rounded">USD/month</span>
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="79" />
+                        <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Modeling Tier Price</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-300">Modeling Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border rounded" defaultValue="199" />
-                        <span className="p-2 bg-slate-100 rounded">USD/month</span>
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="199" />
+                        <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">God Mode Tier Price</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-300">God Mode Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border rounded" defaultValue="499" />
-                        <span className="p-2 bg-slate-100 rounded">USD/month</span>
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="499" />
+                        <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
-                    <Button className="w-full">
+                    <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       <FileText className="h-4 w-4 mr-2" />
                       Update Pricing
                     </Button>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Content Management</h2>
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Content Management</h2>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Homepage Content
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <FileText className="h-4 w-4 mr-2" />
                       Manage Feature Descriptions
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <BarChart3 className="h-4 w-4 mr-2" />
                       View Analytics Dashboard
                     </Button>
-                    <Button className="w-full justify-start" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <TrendingUp className="h-4 w-4 mr-2" />
                       Generate Revenue Report
                     </Button>
@@ -858,48 +852,48 @@ export default function DashboardPage() {
           <TabsContent value="athlete360" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-white rounded-xl border shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">Athlete360 (Experimental)</h2>
-                  <p className="text-slate-600 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Athlete360 (Experimental)</h2>
+                  <p className="text-slate-400 mb-6">
                     Advanced performance analytics for athletes and sports professionals.
                     Biomechanical analysis and movement tracking.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-red-600" />
+                      <div className="w-8 h-8 bg-red-400/10 rounded-lg flex items-center justify-center">
+                        <Activity className="h-4 w-4 text-red-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Motion Analysis</h3>
-                        <p className="text-sm text-slate-500">Biomechanical tracking</p>
+                        <h3 className="font-medium text-slate-50">Motion Analysis</h3>
+                        <p className="text-sm text-slate-400">Biomechanical tracking</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-red-600" />
+                      <div className="w-8 h-8 bg-red-400/10 rounded-lg flex items-center justify-center">
+                        <Video className="h-4 w-4 text-red-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Video Analysis</h3>
-                        <p className="text-sm text-slate-500">Performance recording</p>
+                        <h3 className="font-medium text-slate-50">Video Analysis</h3>
+                        <p className="text-sm text-slate-400">Performance recording</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="h-4 w-4 text-red-600" />
+                      <div className="w-8 h-8 bg-red-400/10 rounded-lg flex items-center justify-center">
+                        <BarChart3 className="h-4 w-4 text-red-400" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Performance Metrics</h3>
-                        <p className="text-sm text-slate-500">Data visualization</p>
+                        <h3 className="font-medium text-slate-50">Performance Metrics</h3>
+                        <p className="text-sm text-slate-400">Data visualization</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
+              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
                 <div className="text-center">
                   <div className="text-6xl mb-4">⚽</div>
-                  <p className="text-lg font-semibold text-slate-700">Athlete Performance</p>
-                  <p className="text-slate-500">Sports analytics (Beta)</p>
+                  <p className="text-lg font-semibold text-slate-50">Athlete Performance</p>
+                  <p className="text-slate-400">Sports analytics (Beta)</p>
                 </div>
               </div>
             </div>

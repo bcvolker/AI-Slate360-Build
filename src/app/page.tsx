@@ -117,7 +117,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-transparent to-blue-500/8 animate-pulse" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(0,245,255,0.05),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/10 hover:to-white/6 transition-all duration-500 hover:shadow-cyan-500/10 hover:border-cyan-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-cyan">
@@ -129,25 +129,25 @@ export default function Home() {
                   Create and edit 2D and 3D projects, upload your visual data to be processed into digital twins, open complex 3D files instantly in the browser. Review, mark up, measure, and collaborate in real time — no installs, no lag.
                 </p>
                 <ul className="space-y-2 mb-8 text-slate-200">
-                  <li className="flex items-center gap-2 hover:text-cyan-300 transition-colors">
+                  <li className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-cyan-400" />
                     Drag-and-drop 3D model uploads
                   </li>
-                  <li className="flex items-center gap-2 hover:text-cyan-300 transition-colors">
+                  <li className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-cyan-400" />
                     Real-time collaboration
                   </li>
-                  <li className="flex items-center gap-2 hover:text-cyan-300 transition-colors">
+                  <li className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-cyan-400" />
                     AI-powered model optimization
                   </li>
-                  <li className="flex items-center gap-2 hover:text-cyan-300 transition-colors">
+                  <li className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-cyan-400" />
                     Export to multiple formats
                   </li>
                 </ul>
                 <Link href="/learn/design-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600 border-none shadow-lg hover:shadow-cyan-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       Learn More
                   </Button>
                 </Link>
@@ -166,7 +166,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-slate-100/60 via-transparent to-slate-200/60" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(100,116,139,0.08),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/25 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/90 hover:to-white/80 transition-all duration-500 hover:shadow-slate-500/10 hover:border-slate-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/25 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-cyan">
@@ -177,8 +177,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
                   Your single source of truth. Manage your building projects, documents, schedules, photos, tasks, and field reports in one clean workspace everyone on your team can actually use.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-500">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-slate-700" />
+                    Centralized project management
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-slate-700" />
+                    Document collaboration
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-slate-700" />
+                    Task tracking & scheduling
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-slate-700" />
+                    Field report integration
+                  </li>
+                </ul>
                 <Link href="/learn/project-hub">
-                  <Button size="lg" variant="outline" className="border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-slate-50 shadow-lg hover:shadow-slate-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" variant="outline" className="border-slate-950 text-slate-950 shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
                       Learn More
                   </Button>
                 </Link>
@@ -198,7 +216,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-transparent to-green-500/8 animate-pulse" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(16,185,129,0.06),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/10 hover:to-white/6 transition-all duration-500 hover:shadow-emerald-500/10 hover:border-emerald-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-emerald-500">
@@ -209,8 +227,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
                   Turn your standard and 360 video footage, site walkthroughs, and photos into polished videos and reels — fast, beautiful, no extra software.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-200">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Video editing & enhancement
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    360° video processing
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Automated content creation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Multi-format export
+                  </li>
+                </ul>
                 <Link href="/learn/content-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 hover:from-emerald-600 hover:to-green-600 border-none shadow-lg hover:shadow-emerald-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 border-none shadow-[0_4px_14px_0_rgba(16,185,129,0.3)]">
                       Learn More
                   </Button>
                 </Link>
@@ -234,7 +270,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 via-transparent to-yellow-100/40" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(245,158,11,0.08),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/75 to-white/65 border border-white/35 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/80 hover:to-white/70 transition-all duration-500 hover:shadow-amber-500/10 hover:border-amber-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/75 to-white/65 border border-white/35 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-amber-500">
@@ -245,8 +281,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
                   Drag-and-drop immersive tours with hotspots, floorplans, and progress comparisons. Share with anyone, anywhere, on any device.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-500">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-amber-600" />
+                    Interactive hotspot creation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-amber-600" />
+                    Floorplan integration
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-amber-600" />
+                    Progress tracking
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-amber-600" />
+                    Cross-platform sharing
+                  </li>
+                </ul>
                 <Link href="/learn/tour-builder">
-                  <Button size="lg" variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-50 shadow-lg hover:shadow-amber-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" variant="outline" className="border-amber-500 text-amber-500 shadow-[0_4px_14px_0_rgba(245,158,11,0.2)]">
                       Learn More
                   </Button>
                 </Link>
@@ -263,7 +317,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-red-50/40 via-transparent to-pink-50/40" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_40%,rgba(239,68,68,0.06),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/35 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/90 hover:to-white/80 transition-all duration-500 hover:shadow-red-500/10 hover:border-red-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/35 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-red-500">
@@ -274,8 +328,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
                   Plan drone missions, monitor robots, overlay drawings on maps, measure volumes — everything in one intelligent map interface.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-500">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-red-600" />
+                    Drone mission planning
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-red-600" />
+                    Robot monitoring
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-red-600" />
+                    Map overlay tools
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-red-600" />
+                    Volume measurements
+                  </li>
+                </ul>
                 <Link href="/learn/geospatial-robotics">
-                  <Button size="lg" variant="outline" className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white shadow-lg hover:shadow-red-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" variant="outline" className="border-red-500 text-red-500 shadow-[0_4px_14px_0_rgba(239,68,68,0.2)]">
                       Learn More
                   </Button>
                 </Link>
@@ -294,7 +366,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-transparent to-blue-500/8 animate-pulse" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_50%,rgba(0,245,255,0.05),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/10 hover:to-white/6 transition-all duration-500 hover:shadow-cyan-500/10 hover:border-cyan-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-cyan">
@@ -305,8 +377,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
                   Transform designs into cinematic walkthroughs. Adjust lighting, materials, and camera paths, then export stunning videos for presentations.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-200">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-cyan-400" />
+                    Cinematic walkthroughs
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-cyan-400" />
+                    Lighting & material control
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-cyan-400" />
+                    Camera path animation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-cyan-400" />
+                    High-quality video export
+                  </li>
+                </ul>
                 <Link href="/learn/virtual-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600 border-none shadow-lg hover:shadow-cyan-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                       Learn More
                   </Button>
                 </Link>
@@ -323,7 +413,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-transparent to-green-500/8 animate-pulse" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_60%,rgba(16,185,129,0.05),transparent_50%)]" />
           <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl hover:bg-gradient-to-br hover:from-white/10 hover:to-white/6 transition-all duration-500 hover:shadow-emerald-500/10 hover:border-emerald-500/20 hover:scale-[1.005] hover:shadow-xl relative overflow-hidden">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4 text-emerald-500">
@@ -334,8 +424,26 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
                   See real progress, not guesses. Automated dashboards, trend forecasting, and custom reports built from all your project data.
                 </p>
+                <ul className="space-y-2 mb-8 text-slate-200">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Automated dashboards
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Trend forecasting
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Custom report builder
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                    Real-time insights
+                  </li>
+                </ul>
                 <Link href="/learn/analytics-reports">
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 hover:from-emerald-600 hover:to-green-600 border-none shadow-lg hover:shadow-emerald-500/15 transition-all duration-300 hover:scale-[1.02]">
+                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 border-none shadow-[0_4px_14px_0_rgba(16,185,129,0.3)]">
                       Learn More
                   </Button>
                 </Link>
