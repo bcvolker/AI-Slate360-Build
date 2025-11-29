@@ -83,61 +83,63 @@ export default function DashboardPage() {
   const hasAthleteAccess = entitlements['athlete360'] || isCEO
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="space-y-6 p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-slate-500">Welcome back. Here's what's happening with your projects.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground">Welcome back. Here's what's happening with your projects.</p>
         </div>
         <CreditTopUpModal />
+        </div>
       </div>
 
       <Tabs defaultValue="project-hub" className="w-full">
-        <div className="overflow-x-auto">
-          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-slate-100 p-1 text-slate-500 w-max min-w-full">
-            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap">Project Hub</TabsTrigger>}
-            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap">Design Studio</TabsTrigger>}
-            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap">Content Studio</TabsTrigger>}
-            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap">360 Tour Builder</TabsTrigger>}
-            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap">Geospatial & Robotics</TabsTrigger>}
-            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap">Virtual Studio</TabsTrigger>}
-            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap">Analytics & Reports</TabsTrigger>}
-            <TabsTrigger value="my-account" className="whitespace-nowrap">My Account</TabsTrigger>
-            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap">CEO</TabsTrigger>}
-            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap">Athlete360</TabsTrigger>}
+        <div className="overflow-x-auto mb-6">
+          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-card/50 border border-border/50 p-1 text-muted-foreground w-max min-w-full backdrop-blur-sm">
+            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Project Hub</TabsTrigger>}
+            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Design Studio</TabsTrigger>}
+            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Content Studio</TabsTrigger>}
+            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">360 Tour Builder</TabsTrigger>}
+            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Geospatial & Robotics</TabsTrigger>}
+            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Virtual Studio</TabsTrigger>}
+            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Analytics & Reports</TabsTrigger>}
+            <TabsTrigger value="my-account" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">My Account</TabsTrigger>
+            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">CEO</TabsTrigger>}
+            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Athlete360</TabsTrigger>}
           </TabsList>
         </div>
 
         {entitlements['project-hub'] && (
-          <TabsContent value="project-hub" className="space-y-6 mt-6">
+          <TabsContent value="project-hub" className="space-y-6 mt-8">
             {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-6 bg-white rounded-xl border shadow-sm">
-                <h3 className="font-semibold text-slate-500 mb-2">Active Projects</h3>
-                <p className="text-3xl font-bold text-slate-900">{activeProjects}</p>
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Active Projects</h3>
+                <p className="text-3xl font-bold text-foreground">{activeProjects}</p>
               </div>
-              <div className="p-6 bg-white rounded-xl border shadow-sm">
-                <h3 className="font-semibold text-slate-500 mb-2">Credits Remaining</h3>
-                <p className="text-3xl font-bold text-slate-900">{data.usage.creditsRemaining}</p>
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Credits Remaining</h3>
+                <p className="text-3xl font-bold text-foreground">{data.usage.creditsRemaining}</p>
               </div>
-              <div className="p-6 bg-white rounded-xl border shadow-sm">
-                <h3 className="font-semibold text-slate-500 mb-2">Tier</h3>
-                <Badge variant="outline" className="text-lg px-3 py-1">{tier}</Badge>
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Tier</h3>
+                <Badge variant="outline" className="text-lg px-3 py-1 bg-primary/10 text-primary border-primary/50">{tier}</Badge>
               </div>
-              <div className="p-6 bg-white rounded-xl border shadow-sm">
-                <h3 className="font-semibold text-slate-500 mb-2">Storage Used</h3>
-                <p className="text-3xl font-bold text-slate-900">{data.usage.storageUsed}GB</p>
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold text-muted-foreground mb-2">Storage Used</h3>
+                <p className="text-3xl font-bold text-foreground">{data.usage.storageUsed}GB</p>
               </div>
             </div>
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl border shadow-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <Upload className="h-5 w-5" />
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <Upload className="h-5 w-5 text-primary" />
                   Upload Files
                 </h3>
-                <p className="text-slate-600 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   Upload CAD files, images, or documents to start a new project.
                 </p>
                 <input
@@ -149,36 +151,36 @@ export default function DashboardPage() {
                   onChange={handleFileUpload}
                 />
                 <label htmlFor="file-upload">
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
                     <Upload className="h-4 w-4 mr-2" />
                     Choose Files
                   </Button>
                 </label>
               </div>
 
-              <div className="bg-white rounded-xl border shadow-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <FileBox className="h-5 w-5" />
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <FileBox className="h-5 w-5 text-primary" />
                   New Project
                 </h3>
-                <p className="text-slate-600 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   Create a new project from scratch with templates.
                 </p>
-                <Button className="w-full" onClick={() => setShowCreateProject(true)}>
+                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
                   <FileBox className="h-4 w-4 mr-2" />
                   Create Project
                 </Button>
               </div>
 
-              <div className="bg-white rounded-xl border shadow-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <Activity className="h-5 w-5" />
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                  <Activity className="h-5 w-5 text-primary" />
                   Recent Activity
                 </h3>
-                <p className="text-slate-600 text-sm mb-4">
+                <p className="text-muted-foreground text-sm mb-4">
                   View processing status and recent uploads.
                 </p>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full border-border text-foreground hover:bg-accent shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
                   <Activity className="h-4 w-4 mr-2" />
                   View Activity
                 </Button>
@@ -186,15 +188,15 @@ export default function DashboardPage() {
             </div>
 
             {/* Projects */}
-            <div className="bg-white rounded-xl border shadow-sm p-6">
+            <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold">Recent Projects</h2>
+                <h2 className="text-xl font-semibold text-foreground">Recent Projects</h2>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-accent shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
                     <FileText className="h-4 w-4 mr-2" />
                     Templates
                   </Button>
-                  <Button size="sm">
+                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105">
                     <Upload className="h-4 w-4 mr-2" />
                     New Project
                   </Button>
@@ -208,54 +210,54 @@ export default function DashboardPage() {
             </div>
 
             {/* Processing Queue */}
-            <div className="bg-white rounded-xl border shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">Processing Queue</h2>
+            <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+              <h2 className="text-xl font-semibold mb-4 text-foreground">Processing Queue</h2>
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                    <span className="font-medium">Processing 3D model: office-building.obj</span>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <span className="font-medium text-foreground">Processing 3D model: office-building.obj</span>
                   </div>
-                  <span className="text-sm text-slate-500">45% complete</span>
+                  <span className="text-sm text-muted-foreground">45% complete</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="font-medium">Completed: site-survey.pdf</span>
+                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <span className="font-medium text-foreground">Completed: site-survey.pdf</span>
                   </div>
-                  <span className="text-sm text-slate-500">Ready for review</span>
+                  <span className="text-sm text-muted-foreground">Ready for review</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Uploads */}
             {uploadedFiles.length > 0 && (
-              <div className="bg-white rounded-xl border shadow-sm p-6">
-                <h2 className="text-xl font-semibold mb-4">Recent Uploads</h2>
+              <div className="bg-card/50 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <h2 className="text-xl font-semibold mb-4 text-foreground">Recent Uploads</h2>
                 <div className="space-y-3">
                   {uploadedFiles.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <FileText className="h-4 w-4 text-blue-600" />
+                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/30">
+                          <FileText className="h-4 w-4 text-primary" />
                         </div>
                         <div>
-                          <p className="font-medium">{file.name}</p>
-                          <p className="text-sm text-slate-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="font-medium text-foreground">{file.name}</p>
+                          <p className="text-sm text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         {uploadProgress[file.name] < 100 ? (
-                          <div className="w-20 bg-slate-200 rounded-full h-2">
+                          <div className="w-20 bg-muted rounded-full h-2">
                             <div
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                              className="bg-primary h-2 rounded-full transition-all duration-300"
                               style={{ width: `${uploadProgress[file.name] || 0}%` }}
                             ></div>
                           </div>
                         ) : (
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                         )}
-                        <span className="text-sm text-slate-500">
+                        <span className="text-sm text-muted-foreground">
                           {uploadProgress[file.name] === 100 ? 'Complete' : `${Math.round(uploadProgress[file.name] || 0)}%`}
                         </span>
                       </div>

@@ -29,9 +29,9 @@ export const learnPages = {
     ],
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
-      starter: { price: 29, features: ["Basic 3D viewing", "5GB storage", "Standard exports"] },
-      pro: { price: 79, features: ["Advanced editing", "25GB storage", "All export formats", "Collaboration tools"] },
-      enterprise: { price: 199, features: ["Unlimited storage", "Custom integrations", "Priority support", "White-label options"] }
+      starter: { price: 79, features: ["Project Hub", "Design Studio", "Content Studio", "360 Tour Builder", "Basic support"] },
+      pro: { price: 199, features: ["All Creator features", "Geospatial & Robotics", "Analytics & Reports", "Priority support"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   },
   "project-hub": {
@@ -64,9 +64,9 @@ export const learnPages = {
     ],
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
-      starter: { price: 19, features: ["Basic project management", "10 projects", "File sharing"] },
-      pro: { price: 79, features: ["Advanced workflows", "Unlimited projects", "Time tracking", "Reporting"] },
-      enterprise: { price: 199, features: ["Custom workflows", "API access", "Advanced security", "Dedicated support"] }
+      starter: { price: 79, features: ["Project Hub", "Design Studio", "Content Studio", "360 Tour Builder", "Basic support"] },
+      pro: { price: 199, features: ["All Creator features", "Geospatial & Robotics", "Analytics & Reports", "Priority support"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   },
   "content-studio": {
@@ -99,9 +99,9 @@ export const learnPages = {
     ],
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
-      starter: { price: 39, features: ["Basic editing", "1080p export", "Watermark"] },
-      pro: { price: 79, features: ["Advanced editing", "4K export", "No watermark", "Stock assets"] },
-      enterprise: { price: 199, features: ["Custom branding", "API access", "Bulk processing", "Priority rendering"] }
+      starter: { price: 79, features: ["Project Hub", "Design Studio", "Content Studio", "360 Tour Builder", "Basic support"] },
+      pro: { price: 199, features: ["All Creator features", "Geospatial & Robotics", "Analytics & Reports", "Priority support"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   },
   "tour-builder": {
@@ -134,9 +134,9 @@ export const learnPages = {
     ],
     tiersHighlight: ["Creator", "Modeling", "God Mode", "Enterprise"],
     pricing: {
-      starter: { price: 49, features: ["5 tours", "Basic hotspots", "Standard sharing"] },
-      pro: { price: 79, features: ["Unlimited tours", "Advanced hotspots", "Custom branding", "Analytics"] },
-      enterprise: { price: 199, features: ["White-label", "Custom domains", "API integration", "Advanced analytics"] }
+      starter: { price: 79, features: ["Project Hub", "Design Studio", "Content Studio", "360 Tour Builder", "Basic support"] },
+      pro: { price: 199, features: ["All Creator features", "Geospatial & Robotics", "Analytics & Reports", "Priority support"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   },
   "geospatial-robotics": {
@@ -169,8 +169,8 @@ export const learnPages = {
     ],
     tiersHighlight: ["Modeling", "God Mode", "Enterprise"],
     pricing: {
-      pro: { price: 199, features: ["Drone integration", "Basic robotics", "Map overlays", "Volume measurement"] },
-      enterprise: { price: 499, features: ["Advanced robotics", "Custom integrations", "Real-time monitoring", "API access"] }
+      pro: { price: 199, features: ["Geospatial & Robotics access", "Drone integration", "Map overlays", "Volume measurement"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   },
   "virtual-studio": {
@@ -203,7 +203,7 @@ export const learnPages = {
     ],
     tiersHighlight: ["God Mode", "Enterprise"],
     pricing: {
-      enterprise: { price: 499, features: ["Full VR suite", "4K video export", "Custom lighting", "Advanced camera controls"] }
+      enterprise: { price: 499, features: ["Virtual Studio access", "All other features", "White-label", "Dedicated support"] }
     }
   },
   "analytics-reports": {
@@ -236,8 +236,8 @@ export const learnPages = {
     ],
     tiersHighlight: ["Modeling", "God Mode", "Enterprise"],
     pricing: {
-      pro: { price: 199, features: ["Basic dashboards", "Standard reports", "Data export"] },
-      enterprise: { price: 499, features: ["Advanced analytics", "Custom reports", "API access", "Real-time alerts"] }
+      pro: { price: 199, features: ["Analytics & Reports access", "Geospatial & Robotics", "Priority support"] },
+      enterprise: { price: 499, features: ["All features", "Virtual Studio", "Athlete360", "White-label", "Dedicated support"] }
     }
   }
 };
