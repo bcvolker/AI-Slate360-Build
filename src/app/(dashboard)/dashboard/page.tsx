@@ -14,7 +14,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function DashboardPage() {
   const [data, setData] = useState<any | null>(null)
-  const { tier, entitlements, user } = useAuthStore()
+  const { tier, entitlements, user, isLoading } = useAuthStore()
   const router = useRouter()
   const [showCreateProject, setShowCreateProject] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
@@ -46,17 +46,25 @@ export default function DashboardPage() {
   }
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.push('/login')
       return
     }
 
-    fetch('/api/dashboard')
-      .then(r => r.json())
-      .then((d) => {
-        setData(d)
-      })
-  }, [user, router])
+    if (user) {
+      fetch('/api/dashboard')
+        .then(r => r.json())
+        .then((d) => {
+          setData(d)
+        })
+    }
+  }, [user, isLoading, router])
+
+  if (isLoading) {
+    return <div className="p-6 flex items-center justify-center h-64">
+      <div className="text-slate-500 animate-pulse">Loading dashboard...</div>
+    </div>
+  }
 
   if (!user) {
     return <div className="p-6 flex items-center justify-center h-64">

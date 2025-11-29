@@ -35,10 +35,13 @@ function Fallback() {
 
 export default function Hero3D() {
   return (
-    <div className="absolute inset-0 z-0">
+    <div className="absolute inset-0 z-0 pointer-events-none">
       <Canvas
         camera={{ position: [5, 5, 5], fov: 50 }}
         style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)" }}
+        onCreated={({ gl }) => {
+          gl.domElement.style.pointerEvents = 'none';
+        }}
       >
         <Suspense fallback={null}>
           <ambientLight intensity={0.4} />
@@ -54,21 +57,23 @@ export default function Hero3D() {
             enableRotate={true}
             minDistance={2}
             maxDistance={20}
+            enableDamping={true}
+            dampingFactor={0.05}
           />
         </Suspense>
       </Canvas>
 
-      {/* Overlay content */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="text-center text-white/90">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
-            Slate360
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/70">
-            The Operating System for the Physical World
-          </p>
-          <div className="text-sm text-white/50">
-            Interactive 3D visualization • Drag to rotate • Scroll to zoom
+      {/* HUD Controls */}
+      <div className="absolute bottom-4 left-4 z-10 pointer-events-auto">
+        <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white/80 text-sm">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+            <span className="font-medium">Interactive 3D</span>
+          </div>
+          <div className="text-xs text-white/60 space-y-1">
+            <div>🖱️ Drag to rotate</div>
+            <div>🔍 Scroll to zoom</div>
+            <div>👆 Right-click to pan</div>
           </div>
         </div>
       </div>
