@@ -8,6 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +25,96 @@ export default function Login() {
     setIsLoading(true);
 
     try {
+      // Check if we're using placeholder Supabase credentials
+      const isDemoMode = process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder') ||
+                        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder');
+
+      if (isDemoMode) {
+        // Demo mode - simulate authentication
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+
+        // Mock user object
+        const mockUser = {
+          id: 'demo-user',
+          email: email,
+          user_metadata: { name: email.split('@')[0] }
+        };
+
+        // Mock tier and entitlements based on email for demo
+        let tier = 'free';
+        let entitlements: Record<string, boolean> = {};
+
+        if (email === 'creator@slate360.com') {
+          tier = 'creator';
+          entitlements = {
+            'project-hub': true,
+            'design-studio': true,
+            'content-studio': true,
+            '360-tour-builder': true,
+            'geospatial-robotics': false,
+            'virtual-studio': false,
+            'analytics-reports': false,
+            'athlete360': false,
+          };
+        } else if (email === 'modeling@slate360.com') {
+          tier = 'modeling';
+          entitlements = {
+            'project-hub': true,
+            'design-studio': true,
+            'content-studio': true,
+            '360-tour-builder': true,
+            'geospatial-robotics': true,
+            'virtual-studio': false,
+            'analytics-reports': true,
+            'athlete360': false,
+          };
+        } else if (email === 'godmode@slate360.com') {
+          tier = 'godmode';
+          entitlements = {
+            'project-hub': true,
+            'design-studio': true,
+            'content-studio': true,
+            '360-tour-builder': true,
+            'geospatial-robotics': true,
+            'virtual-studio': true,
+            'analytics-reports': true,
+            'athlete360': true,
+          };
+        } else if (email === 'ceo@slate360.com') {
+          tier = 'enterprise';
+          entitlements = {
+            'project-hub': true,
+            'design-studio': true,
+            'content-studio': true,
+            '360-tour-builder': true,
+            'geospatial-robotics': true,
+            'virtual-studio': true,
+            'analytics-reports': true,
+            'athlete360': true,
+          };
+        } else {
+          // Default to creator tier for demo
+          tier = 'creator';
+          entitlements = {
+            'project-hub': true,
+            'design-studio': true,
+            'content-studio': true,
+            '360-tour-builder': true,
+            'geospatial-robotics': false,
+            'virtual-studio': false,
+            'analytics-reports': false,
+            'athlete360': false,
+          };
+        }
+
+        setUser(mockUser);
+        setTier(tier);
+        setEntitlements(entitlements);
+        router.push('/dashboard');
+        return;
+      }
+
+      // Real Supabase authentication
       if (isSignUp) {
         const { data, error } = await supabase.auth.signUp({
           email,

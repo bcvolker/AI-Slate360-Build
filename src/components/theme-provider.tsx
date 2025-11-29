@@ -10,5 +10,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     updateResolvedTheme()
   }, [updateResolvedTheme])
 
-  return <>{children}</>
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            try {
+              const theme = localStorage.getItem('theme-storage');
+              const parsed = theme ? JSON.parse(theme) : null;
+              const userTheme = parsed?.state?.theme || 'system';
+              const resolved = userTheme === 'system'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : userTheme;
+              document.documentElement.classList.add(resolved);
+            } catch (e) {
+              document.documentElement.classList.add('light');
+            }
+          `,
+        }}
+      />
+      {children}
+    </>
+  )
 }
