@@ -3,11 +3,12 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { Suspense } from "react";
+import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
 
 function Model() {
   try {
     // Try to load a 3D model - will fallback gracefully if not found
-    const { scene } = useGLTF("/models/sample-building.glb");
+    const { scene } = useGLTF(CEO_UPLOADS.heroModel);
     return <primitive object={scene} scale={0.5} />;
   } catch (error) {
     // Fallback to a simple geometric shape
