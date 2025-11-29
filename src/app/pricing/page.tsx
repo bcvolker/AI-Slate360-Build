@@ -69,7 +69,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button className="w-full bg-cyan text-slate-900 hover:bg-cyan-500 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
-              Start Free Trial
+              <a href="/learn/project-hub">Start Free Trial</a>
             </Button>
           </div>
 
@@ -115,7 +115,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button className="w-full bg-cyan text-slate-900 hover:bg-cyan-500 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
-              Start Free Trial
+              <a href="/learn/design-studio">Start Free Trial</a>
             </Button>
           </div>
 
@@ -160,7 +160,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button className="w-full bg-cyan text-slate-900 hover:bg-cyan-500 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
-              Start Free Trial
+              <a href="/learn/virtual-studio">Start Free Trial</a>
             </Button>
           </div>
 

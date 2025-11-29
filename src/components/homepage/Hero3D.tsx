@@ -35,13 +35,10 @@ function Fallback() {
 
 export default function Hero3D() {
   return (
-    <div className="absolute right-0 top-0 w-1/2 h-screen z-0 pointer-events-none">
+    <div className="absolute right-0 top-0 w-2/5 h-screen z-0">
       <Canvas
         camera={{ position: [5, 5, 5], fov: 50 }}
         style={{ background: "transparent" }}
-        onCreated={({ gl }) => {
-          gl.domElement.style.pointerEvents = 'none';
-        }}
       >
         <Suspense fallback={null}>
           <ambientLight intensity={0.4} />
@@ -52,21 +49,23 @@ export default function Hero3D() {
 
           <Environment preset="city" />
           <OrbitControls
-            enablePan={false}
-            enableZoom={false}
-            enableRotate={false}
+            enablePan={true}
+            enableZoom={true}
+            enableRotate={true}
             autoRotate={true}
             autoRotateSpeed={0.5}
+            minDistance={3}
+            maxDistance={10}
           />
         </Suspense>
       </Canvas>
 
       {/* HUD Controls */}
-      <div className="absolute bottom-8 right-8 z-10 pointer-events-auto">
+      <div className="absolute bottom-8 right-8 z-10">
         <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2 text-white/60 text-xs">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-            <span>Auto-rotating 3D model</span>
+            <span>Interactive 3D model - drag to rotate, scroll to zoom</span>
           </div>
         </div>
       </div>
