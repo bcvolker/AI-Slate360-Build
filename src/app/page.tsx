@@ -2,20 +2,20 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { ArrowRight, Box, Layers, Map, Video, Activity, BarChart3, FileText, Zap, TrendingUp, Check } from "lucide-react";
+import { ArrowRight, Box, Layers, Map, Video, BarChart3, FileText, Zap, TrendingUp, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import LiveProjectList from "@/components/homepage/LiveProjectList";
 import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
 import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useAuthStore } from "@/lib/stores/useAuthStore";
+import ExpandableViewer from "@/components/homepage/ExpandableViewer";
 
 // Dynamic Imports for Heavy/Browser-Only Components
 const Hero3D = dynamic(() => import("@/components/homepage/Hero3D"), { ssr: false });
-const LiveMap = dynamic(() => import("@/components/homepage/LiveMap"), { ssr: false, loading: () => <div className="w-full h-full bg-slate-200 animate-pulse" /> });
-const LiveTour = dynamic(() => import("@/components/homepage/LiveTour"), { ssr: false, loading: () => <div className="w-full h-full bg-slate-900 animate-pulse" /> });
-const LiveDesignViewer = dynamic(() => import("@/components/homepage/LiveDesignViewer"), { ssr: false, loading: () => <div className="w-full h-full bg-slate-900 animate-pulse" /> });
+const LiveMap = dynamic(() => import("@/components/homepage/LiveMap"), { ssr: false, loading: () => <div className="w-full h-full bg-obsidian-900 animate-pulse" /> });
+const LiveTour = dynamic(() => import("@/components/homepage/LiveTour"), { ssr: false, loading: () => <div className="w-full h-full bg-obsidian-900 animate-pulse" /> });
+const LiveDesignViewer = dynamic(() => import("@/components/homepage/LiveDesignViewer"), { ssr: false, loading: () => <div className="w-full h-full bg-obsidian-900 animate-pulse" /> });
 
 export default function Home() {
   const { user } = useAuthStore();
@@ -25,7 +25,7 @@ export default function Home() {
       const sections = document.querySelectorAll('section');
       const scrollY = window.scrollY;
 
-      sections.forEach((section, index) => {
+      sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
 
@@ -39,11 +39,14 @@ export default function Home() {
           });
 
           // Add fade-in animation to content
-          const contentElements = section.querySelectorAll('.backdrop-blur-xl');
+          const contentElements = section.querySelectorAll('.animate-on-scroll');
           contentElements.forEach((element, i) => {
-            setTimeout(() => {
-              element.classList.add('animate-in', 'fade-in-0', 'slide-in-from-bottom-4');
-            }, i * 200);
+             // Simple check to add class if not present
+             if (!element.classList.contains('animate-in')) {
+                setTimeout(() => {
+                  element.classList.add('animate-in', 'fade-in-0', 'slide-in-from-bottom-4', 'duration-700');
+                }, i * 100);
+             }
           });
         }
       });
@@ -56,24 +59,24 @@ export default function Home() {
   return (
     <>
       {/* Sticky Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-obsidian/80 backdrop-blur-md border-b border-obsidian-600">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-obsidian/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-slate-50">Slate360</Link>
           <div className="flex items-center gap-4">
             <Link href="/pricing">
-              <Button variant="outline" className="border-obsidian-600 text-obsidian hover:bg-cyan-400/10">
+              <Button variant="outline" className="border-white/20 text-slate-200 hover:bg-white/10 hover:text-white">
                 Subscribe
               </Button>
             </Link>
             {user ? (
               <Link href="/dashboard">
-                <Button className="bg-cyan text-obsidian hover:bg-cyan-500">
+                <Button className="bg-cyan text-obsidian hover:bg-cyan-400">
                   Dashboard
                 </Button>
               </Link>
             ) : (
               <Link href="/login">
-                <Button className="bg-cyan text-obsidian hover:bg-cyan-500">
+                <Button className="bg-cyan text-obsidian hover:bg-cyan-400">
                   Login
                 </Button>
               </Link>
@@ -101,7 +104,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-start pointer-events-auto">
               <Link href="/dashboard">
-                <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-500 transition-all shadow-[0_0_40px_-10px_rgba(0,245,255,0.5)]">
+                <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-400 transition-all shadow-[0_0_40px_-10px_rgba(0,245,255,0.5)]">
                   Enter Dashboard <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -113,361 +116,270 @@ export default function Home() {
         </section>
 
         {/* Section 2: Design Studio */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian-800 text-slate-50 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-transparent to-blue-500/8 animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(0,245,255,0.05),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
                 <div className="flex items-center gap-3 mb-4 text-cyan">
                   <Box className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Design Studio</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">Design Studio</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
-                  Create and edit 2D and 3D projects, upload your visual data to be processed into digital twins, open complex 3D files instantly in the browser. Review, mark up, measure, and collaborate in real time — no installs, no lag.
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Design Studio</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                  Create and edit 2D and 3D projects, upload your visual data to be processed into digital twins, open complex 3D files instantly in the browser.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Drag-and-drop 3D model uploads
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Real-time collaboration
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    AI-powered model optimization
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Export to multiple formats
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-cyan" /> Drag-and-drop 3D uploads</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-cyan" /> Real-time collaboration</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-cyan" /> AI-powered optimization</div>
+                </div>
                 <Link href="/learn/design-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
+                  <Button variant="outline" className="border-cyan text-cyan hover:bg-cyan/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative bg-obsidian">
-              <TileErrorBoundary>
-                  <LiveDesignViewer />
-              </TileErrorBoundary>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black">
+              <ExpandableViewer>
+                <TileErrorBoundary>
+                    <LiveDesignViewer />
+                </TileErrorBoundary>
+              </ExpandableViewer>
           </div>
         </section>
 
         {/* Section 3: Project Hub */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-slate-50 text-slate-950 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-100/60 via-transparent to-slate-200/60" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(100,116,139,0.08),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/25 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-cyan">
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-purple-400">
                   <Layers className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Project Hub</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Project Hub</h2>
-                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
-                  Your single source of truth. Manage your building projects, documents, schedules, photos, tasks, and field reports in one clean workspace everyone on your team can actually use.
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Project Hub</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                  Your single source of truth. Manage your building projects, documents, schedules, photos, tasks, and field reports in one clean workspace.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-500">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-slate-700" />
-                    Centralized project management
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-slate-700" />
-                    Document collaboration
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-slate-700" />
-                    Task tracking & scheduling
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-slate-700" />
-                    Field report integration
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Centralized management</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Document collaboration</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-purple-400" /> Task tracking</div>
+                </div>
                 <Link href="/learn/project-hub">
-                  <Button size="lg" variant="outline" className="border-slate-950 text-slate-950 shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
+                  <Button variant="outline" className="border-purple-400 text-purple-400 hover:bg-purple-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 bg-slate-200 flex items-center justify-center relative">
-             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-             <div className="w-full max-w-md p-6">
-                  <LiveProjectList />
              </div>
+          </div>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black flex items-center justify-center">
+              <ExpandableViewer>
+                 <div className="w-full h-full flex items-center justify-center bg-obsidian-950">
+                    <div className="w-full max-w-2xl p-6">
+                        <LiveProjectList />
+                    </div>
+                 </div>
+              </ExpandableViewer>
           </div>
         </section>
 
         {/* Section 4: Content Studio */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian-700 text-slate-50 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-transparent to-green-500/8 animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(16,185,129,0.06),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-emerald-500">
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-emerald-400">
                   <FileText className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Content Studio</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">Content Studio</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Content Studio</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
                   Turn your standard and 360 video footage, site walkthroughs, and photos into polished videos and reels — fast, beautiful, no extra software.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Video editing & enhancement
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    360° video processing
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Automated content creation
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Multi-format export
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> Video editing</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> 360° processing</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> Automated creation</div>
+                </div>
                 <Link href="/learn/content-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 border-none shadow-[0_4px_14px_0_rgba(16,185,129,0.3)]">
+                  <Button variant="outline" className="border-emerald-400 text-emerald-400 hover:bg-emerald-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative bg-obsidian flex items-center justify-center">
-              <video
-                  src={CEO_UPLOADS.demoVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover opacity-80"
-              />
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black">
+              <ExpandableViewer>
+                  <video
+                      src={CEO_UPLOADS.demoVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover opacity-80"
+                  />
+              </ExpandableViewer>
           </div>
         </section>
 
         {/* Section 5: 360 Tour Builder */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-slate-100 text-slate-950 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 via-transparent to-yellow-100/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(245,158,11,0.08),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/75 to-white/65 border border-white/35 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-amber-500">
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-amber-400">
                   <Video className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">360 Tour Builder</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-amber-700 bg-clip-text text-transparent">360 Tour Builder</h2>
-                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">360 Tour Builder</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
                   Drag-and-drop immersive tours with hotspots, floorplans, and progress comparisons. Share with anyone, anywhere, on any device.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-500">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-amber-600" />
-                    Interactive hotspot creation
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-amber-600" />
-                    Floorplan integration
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-amber-600" />
-                    Progress tracking
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-amber-600" />
-                    Cross-platform sharing
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Interactive hotspots</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Floorplan integration</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-amber-400" /> Progress tracking</div>
+                </div>
                 <Link href="/learn/tour-builder">
-                  <Button size="lg" variant="outline" className="border-amber-500 text-amber-500 shadow-[0_4px_14px_0_rgba(245,158,11,0.2)]">
+                  <Button variant="outline" className="border-amber-400 text-amber-400 hover:bg-amber-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative h-[50vh] md:h-auto">
-              <TileErrorBoundary>
-                  <LiveTour />
-              </TileErrorBoundary>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black">
+              <ExpandableViewer>
+                <TileErrorBoundary>
+                    <LiveTour />
+                </TileErrorBoundary>
+              </ExpandableViewer>
           </div>
-        </section>        {/* Section 6: Geospatial & Robotics */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-white text-slate-950 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-red-50/40 via-transparent to-pink-50/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_40%,rgba(239,68,68,0.06),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/85 to-white/75 border border-white/35 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-red-500">
+        </section>
+
+        {/* Section 6: Geospatial & Robotics */}
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-red-400">
                   <Map className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Geospatial & Robotics</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-red-700 bg-clip-text text-transparent">Geospatial & Robotics</h2>
-                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Geospatial & Robotics</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
                   Plan drone missions, monitor robots, overlay drawings on maps, measure volumes — everything in one intelligent map interface.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-500">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-red-600" />
-                    Drone mission planning
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-red-600" />
-                    Robot monitoring
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-red-600" />
-                    Map overlay tools
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-red-600" />
-                    Volume measurements
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Drone mission planning</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Robot monitoring</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-red-400" /> Map overlay tools</div>
+                </div>
                 <Link href="/learn/geospatial-robotics">
-                  <Button size="lg" variant="outline" className="border-red-500 text-red-500 shadow-[0_4px_14px_0_rgba(239,68,68,0.2)]">
+                  <Button variant="outline" className="border-red-400 text-red-400 hover:bg-red-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative h-[50vh] md:h-auto">
-              <TileErrorBoundary>
-                  <LiveMap />
-              </TileErrorBoundary>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black">
+              <ExpandableViewer>
+                <TileErrorBoundary>
+                    <LiveMap />
+                </TileErrorBoundary>
+              </ExpandableViewer>
           </div>
         </section>
 
         {/* Section 7: Virtual Studio */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row bg-obsidian-700 text-slate-50 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-transparent to-blue-500/8 animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_50%,rgba(0,245,255,0.05),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-cyan">
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-blue-400">
                   <Zap className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Virtual Studio</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">Virtual Studio</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Virtual Studio</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
                   Transform designs into cinematic walkthroughs. Adjust lighting, materials, and camera paths, then export stunning videos for presentations.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Cinematic walkthroughs
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Lighting & material control
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    Camera path animation
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-cyan-400" />
-                    High-quality video export
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-blue-400" /> Cinematic walkthroughs</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-blue-400" /> Lighting control</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-blue-400" /> Camera path animation</div>
+                </div>
                 <Link href="/learn/virtual-studio">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
+                  <Button variant="outline" className="border-blue-400 text-blue-400 hover:bg-blue-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative h-[50vh] md:h-auto">
-              <TileErrorBoundary>
-                  <LiveTour />
-              </TileErrorBoundary>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black">
+              <ExpandableViewer>
+                <TileErrorBoundary>
+                    <LiveTour />
+                </TileErrorBoundary>
+              </ExpandableViewer>
           </div>
-        </section>        {/* Section 8: Reports & Analytics */}
-        <section className="h-screen w-full snap-start flex flex-col md:flex-row-reverse bg-obsidian-800 text-slate-50 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-transparent to-green-500/8 animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_60%,rgba(16,185,129,0.05),transparent_50%)]" />
-          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative">
-            <div className="backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/4 border border-white/15 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 text-emerald-500">
+        </section>
+
+        {/* Section 8: Reports & Analytics */}
+        <section className="h-screen w-full snap-start flex flex-col bg-obsidian text-slate-50 overflow-hidden relative border-t border-white/5">
+          {/* Content Half */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-16 z-10 relative bg-gradient-to-b from-obsidian to-obsidian-900">
+             <div className="max-w-4xl mx-auto w-full animate-on-scroll opacity-0">
+                <div className="flex items-center gap-3 mb-4 text-emerald-400">
                   <TrendingUp className="h-8 w-8" />
                   <span className="text-xl font-semibold uppercase tracking-widest">Reports & Analytics</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">Analytics & Reports</h2>
-                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Analytics & Reports</h2>
+                <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
                   See real progress, not guesses. Automated dashboards, trend forecasting, and custom reports built from all your project data.
                 </p>
-                <ul className="space-y-2 mb-8 text-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Automated dashboards
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Trend forecasting
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Custom report builder
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    Real-time insights
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-6 mb-8">
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> Automated dashboards</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> Trend forecasting</div>
+                   <div className="flex items-center gap-2 text-slate-300"><Check className="h-4 w-4 text-emerald-400" /> Custom report builder</div>
+                </div>
                 <Link href="/learn/analytics-reports">
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-green-500 text-slate-50 border-none shadow-[0_4px_14px_0_rgba(16,185,129,0.3)]">
+                  <Button variant="outline" className="border-emerald-400 text-emerald-400 hover:bg-emerald-400/10">
                       Learn More
                   </Button>
                 </Link>
-              </div>
-            </div>
+             </div>
           </div>
-          <div className="flex-1 relative flex items-center justify-center bg-obsidian">
-              <div className="absolute bottom-8 left-8 right-8 bg-obsidian-700/50 backdrop-blur-md p-4 rounded-lg border border-obsidian-600">
-                  <div className="flex items-center gap-2 text-slate-300 mb-2">
-                      <BarChart3 className="h-4 w-4" />
-                      <span className="text-sm font-medium">Live Analytics</span>
+          {/* Viewer Half */}
+          <div className="flex-1 relative bg-black flex items-center justify-center">
+              <ExpandableViewer>
+                  <div className="w-full h-full flex items-center justify-center bg-obsidian-950">
+                    <div className="bg-obsidian-900/50 backdrop-blur-md p-8 rounded-lg border border-white/10 w-full max-w-2xl">
+                        <div className="flex items-center gap-2 text-slate-300 mb-6">
+                            <BarChart3 className="h-6 w-6" />
+                            <span className="text-lg font-medium">Live Analytics</span>
+                        </div>
+                        {/* Simple CSS Chart */}
+                        <div className="flex items-end gap-2 h-64">
+                            {[40, 65, 30, 80, 55, 90, 45, 70, 35, 60].map((h, i) => (
+                                <div key={i} className="flex-1 bg-cyan/80 rounded-t-sm hover:bg-cyan transition-colors" style={{ height: `${h}%` }} />
+                            ))}
+                        </div>
+                    </div>
                   </div>
-                  {/* Simple CSS Chart */}
-                  <div className="flex items-end gap-1 h-16">
-                      {[40, 65, 30, 80, 55, 90, 45, 70, 35, 60].map((h, i) => (
-                          <div key={i} className="flex-1 bg-cyan/80 rounded-t-sm hover:bg-cyan transition-colors" style={{ height: `${h}%` }} />
-                      ))}
-                  </div>
-              </div>
+              </ExpandableViewer>
           </div>
         </section>
 
         {/* Final CTA Section */}
-        <section className="h-screen w-full snap-start flex items-center justify-center bg-gradient-to-b from-obsidian to-obsidian-800 text-slate-50">
+        <section className="h-screen w-full snap-start flex items-center justify-center bg-gradient-to-b from-obsidian to-obsidian-950 text-slate-50">
           <div className="text-center px-4 max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold mb-6">Ready to replace 7 tools with 1?</h2>
             <p className="text-xl md:text-2xl text-slate-400 mb-10">
@@ -475,12 +387,12 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/pricing">
-                <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-500 transition-all">
+                <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-400 transition-all">
                   Subscribe Now <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/login">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full border-obsidian-600 text-obsidian hover:bg-cyan hover:text-obsidian">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full border-white/20 text-slate-200 hover:bg-white/10 hover:text-white">
                   Login
                 </Button>
               </Link>

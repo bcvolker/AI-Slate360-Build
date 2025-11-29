@@ -1,0 +1,40 @@
+
+> slate360-build@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.0.3
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1554ms
+ ○ Compiling / ...
+ ✓ Compiled / in 13.1s (1870 modules)
+ GET / 200 in 13542ms
+ ✓ Compiled in 946ms (925 modules)
+ ✓ Compiled in 1394ms (1870 modules)
+ ✓ Compiled in 635ms (1870 modules)
+ ✓ Compiled in 520ms (1870 modules)
+ ✓ Compiled in 561ms (1870 modules)
+ ✓ Compiled in 413ms (1870 modules)
+ ✓ Compiled in 479ms (1870 modules)
+ ✓ Compiled in 462ms (1870 modules)
+ ✓ Compiled in 390ms (1870 modules)
+ ✓ Compiled in 419ms (1870 modules)
+ ✓ Compiled in 3.5s (1870 modules)
+ ✓ Compiled in 307ms (925 modules)
+ ✓ Compiled in 1218ms (925 modules)
+ ✓ Compiled in 703ms (925 modules)
+ ✓ Compiled in 619ms (925 modules)
+ ✓ Compiled in 278ms (925 modules)
+ ✓ Compiled in 255ms (925 modules)
+ ✓ Compiled in 252ms (925 modules)
+ ✓ Compiled in 236ms (925 modules)
+ ✓ Compiled in 537ms (925 modules)
+ ✓ Compiled in 339ms (925 modules)
+ ✓ Compiled in 399ms (925 modules)
+ ✓ Compiled in 264ms (925 modules)
+ ✓ Compiled in 257ms (925 modules)
+ ✓ Compiled in 251ms (925 modules)
+ ✓ Compiled in 587ms (925 modules)
+ ✓ Compiled in 690ms (925 modules)
