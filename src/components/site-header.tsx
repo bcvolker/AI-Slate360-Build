@@ -43,9 +43,9 @@ export function SiteHeader() {
           <Image 
             src="/slate360newlogo.png" 
             alt="Slate360" 
-            width={600} 
-            height={150} 
-            className="h-32 w-auto object-contain" 
+            width={240} 
+            height={60} 
+            className="h-14 w-auto object-contain" 
             priority
           />
         </Link>

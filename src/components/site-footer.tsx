@@ -18,9 +18,9 @@ export function SiteFooter() {
             <Image 
                 src="/slate360newlogo.png" 
                 alt="Slate360" 
-                width={600} 
-                height={150} 
-                className="h-32 w-auto object-contain" 
+                width={160} 
+                height={45} 
+                className="h-10 w-auto object-contain" 
             />
           </Link>
           <p className="text-sm text-zinc-500 leading-relaxed">

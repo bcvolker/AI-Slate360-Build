@@ -13,9 +13,9 @@ export default function PricingPage() {
             <Image 
                 src="/slate360newlogo.png" 
                 alt="Slate360" 
-                width={600} 
-                height={150} 
-                className="h-32 w-auto object-contain" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
             />
           </Link>
           <div className="flex items-center gap-4">
