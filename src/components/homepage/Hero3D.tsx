@@ -32,39 +32,39 @@ export default function Hero3D() {
   };
 
   return (
-    <>
-      {/* 3D Model Container - Moved left and capped size */}
-      <div className="absolute right-[120px] top-1/2 transform -translate-y-1/2 w-[500px] h-[500px] z-0 hidden lg:block">
-        <Canvas
-          camera={{ position: [5, 5, 5], fov: 50 }}
-          style={{ background: "transparent" }}
-        >
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <pointLight position={[-10, -10, -5]} intensity={0.5} />
+    <div className="w-full h-full relative group">
+      <Canvas
+        camera={{ position: [4, 2, 5], fov: 45 }}
+        style={{ background: "transparent" }}
+        className="cursor-move"
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} />
 
-            <Model />
+          <Model />
 
-            <Environment preset="city" />
-            <OrbitControls
-              ref={controlsRef}
-              enablePan={true}
-              enableZoom={true}
-              enableRotate={true}
-              autoRotate={autoRotate}
-              autoRotateSpeed={0.5}
-              minDistance={3}
-              maxDistance={10}
-            />
-          </Suspense>
-        </Canvas>
-        
-        {/* Navigation Text - Moved closer to model */}
-        <div className="absolute bottom-[-60px] left-0 w-full text-center text-slate-400 text-xs font-mono tracking-wider">
-          DRAG TO ROTATE • SCROLL TO ZOOM
-        </div>
+          <Environment preset="city" />
+          <OrbitControls
+            ref={controlsRef}
+            enablePan={false}
+            enableZoom={true}
+            enableRotate={true}
+            autoRotate={true}
+            autoRotateSpeed={1}
+            minDistance={2}
+            maxDistance={8}
+          />
+        </Suspense>
+      </Canvas>
+      
+      {/* Interactive Hint Overlay */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+        <p className="text-[10px] text-white font-mono uppercase tracking-widest flex items-center gap-2">
+            <Move className="h-3 w-3" /> Interactive 3D
+        </p>
       </div>
-    </>
+    </div>
   );
 }

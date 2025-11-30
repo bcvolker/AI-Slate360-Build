@@ -12,6 +12,10 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 // Loading State
 const LoadingState = () => <div className="w-full h-full bg-white/5 animate-pulse min-h-[300px]" />;
 
+import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
+
+// ... existing imports ...
+
 // Dynamic Imports
 const LiveMap = dynamic(() => import("@/components/homepage/LiveMap"), { ssr: false, loading: LoadingState });
 const LiveTour = dynamic(() => import("@/components/homepage/LiveTour"), { ssr: false, loading: LoadingState });
@@ -178,10 +182,19 @@ export function FeatureGrid() {
         link="/features/content-studio"
         cta="Explore Content Studio"
         viewer={
-            <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                <div className="text-center">
-                    <div className="text-5xl mb-4 animate-pulse">🎬</div>
-                    <p className="text-zinc-400">AI Video Editor Preview</p>
+            <div className="w-full h-full relative bg-zinc-900 group">
+                <video 
+                    src={CEO_UPLOADS.demoVideo}
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-500"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/50 backdrop-blur-sm p-4 rounded-full border border-white/20">
+                        <div className="text-white text-2xl">▶</div>
+                    </div>
                 </div>
             </div>
         }
