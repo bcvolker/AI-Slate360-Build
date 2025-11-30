@@ -16,7 +16,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-4 max-w-xs">
           <Link href="/" className="flex items-center gap-2">
             <Image 
-                src="/logo.png" 
+                src="/slate360newlogo.png" 
                 alt="Slate360" 
                 width={160} 
                 height={45} 

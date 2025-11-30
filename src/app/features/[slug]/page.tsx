@@ -47,7 +47,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <Image 
-                src="/logo.png" 
+                src="/slate360newlogo.png" 
                 alt="Slate360" 
                 width={200} 
                 height={55} 

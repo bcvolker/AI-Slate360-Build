@@ -80,7 +80,7 @@ export default function DashboardLayout({
         <div className="h-20 px-6 flex items-center border-b border-white/10 bg-slate-900">
           <Link href="/" className="flex items-center gap-2">
             <Image 
-                src="/logo.png" 
+                src="/slate360newlogo.png" 
                 alt="Slate360" 
                 width={200} 
                 height={55} 

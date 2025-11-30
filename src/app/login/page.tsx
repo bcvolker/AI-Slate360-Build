@@ -283,7 +283,7 @@ export default function Login() {
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Image 
-                src="/logo.png" 
+                src="/slate360newlogo.png" 
                 alt="Slate360" 
                 width={240} 
                 height={60} 

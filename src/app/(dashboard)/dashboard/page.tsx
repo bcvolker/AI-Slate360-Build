@@ -307,7 +307,7 @@ function DashboardContent() {
 
         {entitlements['design-studio'] && (
           <TabsContent value="design-studio" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">Design Studio</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 Interactive 3D design workspace. This view is being rebuilt for the new dashboard shell.
@@ -321,7 +321,7 @@ function DashboardContent() {
 
         {entitlements['content-studio'] && (
           <TabsContent value="content-studio" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">Content Studio</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 AI-assisted video and media tools. This tab is parked while we finalize the new dashboard design.
@@ -335,7 +335,7 @@ function DashboardContent() {
 
         {entitlements['360-tour-builder'] && (
           <TabsContent value="360-tour-builder" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">360 Tour Builder</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 Drag-and-drop tour creation. The final layout will keep a single-screen canvas with hotspots and scenes.
@@ -349,7 +349,7 @@ function DashboardContent() {
 
         {entitlements['geospatial-robotics'] && (
           <TabsContent value="geospatial-robotics" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">Geospatial & Robotics</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 Mission planning, live maps, and asset tracking will live here in a compact control surface.
@@ -363,7 +363,7 @@ function DashboardContent() {
 
         {entitlements['virtual-studio'] && (
           <TabsContent value="virtual-studio" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">Virtual Studio</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 VR walkthroughs and cinematic views. This tab will become a focused staging area for scenes and camera paths.
@@ -377,7 +377,7 @@ function DashboardContent() {
 
         {entitlements['analytics-reports'] && (
           <TabsContent value="analytics-reports" className="mt-2">
-            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4">
               <h2 className="text-lg font-semibold text-foreground mb-1">Analytics & Reports</h2>
               <p className="text-sm text-muted-foreground mb-2">
                 High-level metrics and exportable reports. This will be a single-screen overview with drill-down options.
@@ -390,7 +390,7 @@ function DashboardContent() {
         )}
 
         <TabsContent value="my-account" className="mt-2">
-          <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4 space-y-3">
+          <div className="max-w-3xl rounded-xl border border-border/70 bg-slate-900 p-4 space-y-3">
             <h2 className="text-lg font-semibold text-foreground">My Account</h2>
             <p className="text-sm text-muted-foreground">
               Account settings and theme controls will live here in a compact layout.
@@ -406,7 +406,7 @@ function DashboardContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Business Overview */}
               <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
+                <div className="bg-slate-800 border border-slate-700 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">Business Overview</h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 bg-green-400/10 rounded-lg border border-green-400/30">
@@ -428,24 +428,24 @@ function DashboardContent() {
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
+                <div className="bg-slate-800 border border-slate-700 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">User Management</h2>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                    <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                       <div>
                         <p className="font-medium text-slate-50">creator@slate360.com</p>
                         <p className="text-sm text-slate-400">Creator Tier - Active</p>
                       </div>
                       <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">Creator</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                    <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                       <div>
                         <p className="font-medium text-slate-50">modeling@slate360.com</p>
                         <p className="text-sm text-slate-400">Modeling Tier - Active</p>
                       </div>
                       <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">Modeling</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                    <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                       <div>
                         <p className="font-medium text-slate-50">godmode@slate360.com</p>
                         <p className="text-sm text-slate-400">God Mode Tier - Active</p>
@@ -462,27 +462,27 @@ function DashboardContent() {
 
               {/* Controls */}
               <div className="space-y-4">
-                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
+                <div className="bg-slate-800 border border-slate-700 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">System Controls</h2>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium mb-2 text-slate-300">Creator Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="79" />
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700 text-slate-50" defaultValue="79" />
                         <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 text-slate-300">Modeling Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="199" />
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700 text-slate-50" defaultValue="199" />
                         <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 text-slate-300">God Mode Tier Price</label>
                       <div className="flex gap-2">
-                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50" defaultValue="499" />
+                        <input type="number" className="flex-1 p-2 border border-slate-600 rounded bg-slate-700 text-slate-50" defaultValue="499" />
                         <span className="p-2 bg-slate-600 rounded text-slate-300">USD/month</span>
                       </div>
                     </div>
@@ -493,22 +493,22 @@ function DashboardContent() {
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
+                <div className="bg-slate-800 border border-slate-700 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">Content Management</h2>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Homepage Content
                     </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <FileText className="h-4 w-4 mr-2" />
                       Manage Feature Descriptions
                     </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <BarChart3 className="h-4 w-4 mr-2" />
                       View Analytics Dashboard
                     </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
+                    <Button className="w-full justify-start bg-slate-700 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
                       <TrendingUp className="h-4 w-4 mr-2" />
                       Generate Revenue Report
                     </Button>
@@ -523,7 +523,7 @@ function DashboardContent() {
           <TabsContent value="athlete360" className="space-y-6 mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <div className="bg-slate-800 border border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">Athlete360 (Experimental)</h2>
                   <p className="text-slate-400 mb-6">
                     Advanced performance analytics for athletes and sports professionals.
@@ -560,7 +560,7 @@ function DashboardContent() {
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
+              <div className="bg-slate-700 rounded-xl p-6 flex items-center justify-center border border-slate-600">
                 <div className="text-center">
                   <div className="text-6xl mb-4">⚽</div>
                   <p className="text-lg font-semibold text-slate-50">Athlete Performance</p>

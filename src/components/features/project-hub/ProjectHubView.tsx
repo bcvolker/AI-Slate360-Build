@@ -150,10 +150,10 @@ export function ProjectHubView({ onNewProject }: ProjectHubViewProps) {
       </div>
 
       {/* Bottom Section: Tabbed Panel */}
-      <div className="h-36 flex-shrink-0 bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-sm ring-1 ring-white/5">
+      <div className="h-36 flex-shrink-0 bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-sm ring-1 ring-white/5">
         <Tabs defaultValue="queue" className="flex-1 flex flex-col">
-          <div className="border-b border-white/5 px-4 py-2.5 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between">
-            <TabsList className="h-9 bg-slate-950/50 p-1 rounded-xl inline-flex">
+          <div className="border-b border-white/5 px-4 py-2.5 bg-slate-900 backdrop-blur-sm flex items-center justify-between">
+            <TabsList className="h-9 bg-slate-950 p-1 rounded-xl inline-flex">
               <TabsTrigger 
                 value="queue" 
                 className="h-7 rounded-lg px-4 text-xs font-semibold data-[state=active]:bg-slate-800 data-[state=active]:text-blue-400 data-[state=active]:shadow-sm transition-all text-slate-500 hover:text-slate-300"

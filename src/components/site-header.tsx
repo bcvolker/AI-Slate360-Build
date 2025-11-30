@@ -41,7 +41,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image 
-            src="/logo.png" 
+            src="/slate360newlogo.png" 
             alt="Slate360" 
             width={240} 
             height={60} 
