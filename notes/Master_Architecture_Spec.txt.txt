@@ -1,0 +1,191 @@
+This is the final piece of the puzzle.
+
+I have combined the Database Schema (with RLS), the Dependency Manifest, and the Folder Structure into one master specification file.
+
+Action: Save the text block below as Master_Architecture_Spec.txt.
+
+This file acts as the "Constitution" for your project. When you start your session with Copilot, upload this file first and say: "This is the strict architectural standard for the project. All code you generate must adhere to these dependency versions, database structures, and folder patterns."
+
+Plaintext
+
+FILE: Master_Architecture_Spec.txt
+TITLE: Slate360 Technical Constitution (Security, Data & Structure)
+VERSION: 1.0 (Tri-AI Consensus)
+
+==============================================================================
+SECTION 1: THE "GOD MODE" DATABASE SCHEMA (Supabase / Postgres)
+==============================================================================
+CRITICAL REQUIREMENT: Row Level Security (RLS) must be enabled on ALL tables.
+Every query must filter by `org_id`.
+
+-- 1. CORE IDENTITY & ACCESS
+TABLE organizations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  plan_id TEXT REFERENCES plans(id),
+  stripe_customer_id TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  settings JSONB -- { branding: { color: string }, region: 'us-east-1' }
+);
+
+TABLE user_profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id), -- Links to Supabase Auth
+  org_id UUID REFERENCES organizations(id),
+  role TEXT CHECK (role IN ('owner', 'admin', 'member', 'viewer')),
+  entitlements_override JSONB, -- e.g. { "canAccessGeospatial": false }
+  full_name TEXT,
+  email TEXT
+);
+
+-- 2. THE GLOBAL CONTEXT LAYER (Solving the Data Silo)
+TABLE projects (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id), -- RLS Key
+  name TEXT NOT NULL,
+  status TEXT CHECK (status IN ('active', 'archived', 'hold')),
+  metadata JSONB, -- { address: string, client_info: string }
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. FEATURE DATA (Must link to Project AND Org)
+TABLE geospatial_missions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id), -- Security
+  project_id UUID REFERENCES projects(id),           -- Context
+  name TEXT,
+  type TEXT CHECK (type IN ('photogrammetry', 'lidar', 'robotics')),
+  status TEXT CHECK (status IN ('planning', 'processing', 'complete')),
+  data_url TEXT, -- S3 Path
+  config JSONB   -- { altitude: 120, overlap: 70 }
+);
+
+TABLE design_models (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  project_id UUID REFERENCES projects(id),
+  name TEXT,
+  format TEXT CHECK (format IN ('glb', 'ifc', 'usdz')),
+  storage_path TEXT,
+  version INT DEFAULT 1
+);
+
+TABLE virtual_scenes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  project_id UUID REFERENCES projects(id),
+  name TEXT,
+  config JSONB -- { pannellum_json: {...}, hotspots: [...] }
+);
+
+-- 4. ROW LEVEL SECURITY (RLS) POLICIES
+-- Example Policy for 'projects' table:
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Org Isolation Policy" ON projects
+FOR ALL
+USING (
+  org_id IN (
+    SELECT org_id FROM user_profiles WHERE id = auth.uid()
+  )
+);
+
+==============================================================================
+SECTION 2: DEPENDENCY MANIFEST (Package.json Logic)
+==============================================================================
+CRITICAL REQUIREMENT: Strict version pinning to prevent "Canvas Collisions".
+Do not upgrade these specific libraries unless explicitly tested.
+
+{
+  "project_type": "Next.js 15 App Router",
+  "package_manager": "npm",
+  
+  "visualization_lock": {
+    "DESCRIPTION": "These versions are tested to work together without WebGL context conflicts.",
+    "three": "0.160.0",
+    "@react-three/fiber": "8.15.12",
+    "@react-three/drei": "9.99.0",
+    "leaflet": "1.9.4",
+    "react-leaflet": "4.2.1",
+    "pannellum-react": "1.2.4"
+  },
+
+  "core_dependencies": {
+    "next": "15.0.x",
+    "react": "18.3.x",      // Stick to 18.3 until Three.js ecosystem fully supports React 19
+    "react-dom": "18.3.x",
+    "typescript": "5.x",
+    "tailwindcss": "3.4.x",
+    "lucide-react": "latest",
+    "framer-motion": "latest",
+    "zustand": "latest",
+    "clsx": "latest",
+    "tailwind-merge": "latest"
+  },
+
+  "backend_integration": {
+    "@supabase/supabase-js": "2.x",
+    "@supabase/ssr": "latest",
+    "stripe": "latest"
+  }
+}
+
+==============================================================================
+SECTION 3: MODULAR FOLDER STRUCTURE (Feature-Sliced)
+==============================================================================
+CRITICAL REQUIREMENT: Isolate features to prevent regression. 
+Do not put all components in a single /components folder.
+
+/src
+  /app
+    /(public)               --> Landing page, pricing, auth screens
+    /(dashboard)            --> Protected App Shell (Sidebar, Header)
+      /layout.tsx           --> Checks Auth & Hydrates User Store
+      /dashboard            --> Main widgets
+      /project-hub          --> [Page] Tier 1 View
+      /design-studio        --> [Page] 3D View
+      /geospatial           --> [Page] Map View
+      /api                  --> Next.js Route Handlers (Strictly Zod Validated)
+
+  /components
+    /ui                     --> Atomic Design (Button, Card, Input) - Generic & Reusable
+    /shared                 --> Logic shared across tabs (e.g., ThreeCanvasWrapper.tsx)
+    
+    /features               --> DOMAIN LOGIC (The Isolation Layer)
+      /project-hub          --> ProjectCard, ProjectTable, RFIForm
+      /geospatial           --> MissionList, MapDrawTools, ProcessingDrawer
+      /design-studio        --> ModelViewer, PrintSettings, VersionHistory
+      /virtual-studio       --> HotspotEditor, TourPlayer
+      /athlete-360          --> MotionPlayer, ComparisonTool
+
+  /lib
+    /stores                 --> Zustand Stores (useProjectStore, useGeospatialStore)
+    /supabase               --> Client & Server utilities
+    /types                  --> Shared TypeScript Interfaces (The "Contracts")
+    /utils                  --> Formatters, Calculations
+
+==============================================================================
+SECTION 4: GLOBAL CONTEXT LOGIC
+==============================================================================
+When a user navigates to `/project-hub/[id]`:
+1. The URL ID is captured.
+2. It is set in a global Zustand store: `useGlobalStore.setState({ activeProjectId: id })`.
+3. When the user clicks "Geospatial":
+   - The Geospatial component checks `useGlobalStore.activeProjectId`.
+   - If present, it fetches: `SELECT * FROM geospatial_missions WHERE project_id = activeProjectId`.
+   - If null, it fetches all missions for the org.
+
+This ensures the "Project" feels like a container for all other tools.
+How to Use This File
+You are now ready to build. Here is your launch sequence:
+
+Upload Master_Architecture_Spec.txt to your Copilot session.
+
+Say: "Initialize the project structure based exactly on Section 3 of this file. Then, create the package.json using the versions in Section 2. Do not install anything yet, just show me the file structure and package.json."
+
+Verify: Check that the versions match and the folders are correct.
+
+Say: "Now, write the Supabase SQL migration script based on Section 1. Include the RLS policies."
+
+Proceed: Once the database and folders are set, you can start feeding in the individual tab files (projecthub3.txt, etc.) one by one.
+
+You have closed the gaps. The foundation is solid. Go build Slate360.

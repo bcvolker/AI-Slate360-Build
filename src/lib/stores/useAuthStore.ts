@@ -14,6 +14,7 @@ interface AuthState {
   creditsRemaining: number
   setCreditsRemaining: (creditsRemaining: number) => void
   _hasHydrated: boolean
+  clear: () => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -30,6 +31,13 @@ export const useAuthStore = create<AuthState>()(
       creditsRemaining: 1250,
       setCreditsRemaining: (creditsRemaining) => set({ creditsRemaining }),
       _hasHydrated: false,
+      clear: () =>
+        set({
+          user: null,
+          entitlements: {},
+          tier: 'free',
+          creditsRemaining: 1250,
+        }),
     }),
     {
       name: 'auth-storage',

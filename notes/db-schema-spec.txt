@@ -1,0 +1,76 @@
+/* SLATE360 MASTER SCHEMA SPEC
+Strict RLS (Row Level Security) for Gov/Edu Compliance.
+All tables must include org_id.
+*/
+
+-- 1. CORE IDENTITY & ACCESS
+CREATE TABLE organizations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  plan_id TEXT, -- Link to hardcoded plan types ('starter', 'pro')
+  stripe_customer_id TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  settings JSONB -- { branding: { color: string }, region: 'us-east-1' }
+);
+
+CREATE TABLE user_profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id), -- Links to Supabase Auth
+  org_id UUID REFERENCES organizations(id),
+  role TEXT CHECK (role IN ('owner', 'admin', 'member', 'viewer')),
+  entitlements_override JSONB, -- e.g. { "canAccessGeospatial": false }
+  full_name TEXT,
+  email TEXT
+);
+
+-- 2. THE GLOBAL CONTEXT LAYER (Solving the Data Silo)
+CREATE TABLE projects (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id), -- RLS Key
+  name TEXT NOT NULL,
+  status TEXT CHECK (status IN ('active', 'archived', 'hold')),
+  metadata JSONB, -- { address: string, client_info: string }
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. FEATURE DATA (Must link to Project AND Org)
+CREATE TABLE geospatial_missions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id), -- Security
+  project_id UUID REFERENCES projects(id),           -- Context
+  name TEXT,
+  type TEXT CHECK (type IN ('photogrammetry', 'lidar', 'robotics')),
+  status TEXT CHECK (status IN ('planning', 'processing', 'complete')),
+  data_url TEXT, -- S3 Path
+  config JSONB   -- { altitude: 120, overlap: 70 }
+);
+
+CREATE TABLE design_models (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  project_id UUID REFERENCES projects(id),
+  name TEXT,
+  format TEXT CHECK (format IN ('glb', 'ifc', 'usdz')),
+  storage_path TEXT,
+  version INT DEFAULT 1
+);
+
+CREATE TABLE virtual_scenes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  project_id UUID REFERENCES projects(id),
+  name TEXT,
+  config JSONB -- { pannellum_json: {...}, hotspots: [...] }
+);
+
+-- 4. ROW LEVEL SECURITY (RLS) POLICIES
+-- Example Policy for 'projects' table:
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Org Isolation Policy" ON projects
+FOR ALL
+USING (
+  org_id IN (
+    SELECT org_id FROM user_profiles WHERE id = auth.uid()
+  )
+);
+-- (Copilot will generate the rest based on this pattern)

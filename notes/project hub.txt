@@ -1,0 +1,450 @@
+"Review this Slate360 project and code (Next.js frontend, Express backend) for Procore-like features in Project Hub tab (daily logs, timecards, observations, punch lists, RFIs, submittals, photos/forms, map/markup/PDF, global data sharing). Check for bugs, dependency conflicts (e.g., WebGL, React versions), performance issues (e.g., loading times, memory leaks), security (auth, quotas), and UI usability (modular, responsive). Suggest additions (e.g., more Procore features like bidding) or changes to improve functionality, scalability, or user experience. Provide updated code if needed. Here is the summary and code:    "Overall Project SummarySlate360 is a subscription-based web platform for building industry professionals, inspired by The Boring Company's site, with a dark, minimalistic design using Next.js for frontend and Node.js/Express for backend. The migration from CRA to Next.js is complete for the homepage (scroll-snapping tiles with 3D canvas, sidebar, modal, animations) and dynamic routes (/tours/[slug], /embed/[slug] for 360 tours). To close the 80-85% gap with Procore, we've added GC-focused features to the Project Hub dashboard tab: daily logs, timecards, observations, punch lists, RFIs, submittals, photos/forms, map location/markup with PDF download, and global data sharing across tabs. Features are modular, role-based (admin, creator, viewer, trial), with UI in sub-tabs for clean navigation. Backend uses APIs for CRUD, S3 for uploads (with quotas), MongoDB for data, Cognito for auth. This makes Slate360 a Procore replacement for basics while excelling in tech (AR/VR, geospatial), with easy UI (forms, tables, modals) and cost controls.Recommended Tech StackFrontend: Next.js 15.3.1 (routing/SSR), React 18.3.1 (components), CSS Modules (scoped styling), framer-motion 11.3.28 (animations), aos 2.3.4 (fade-ups), @react-three/fiber 8.16.8 & @react-three/drei 9.108.0 (3D), react-photo-sphere-viewer 6.2.3 (360), next-seo 6.6.0 (SEO), @googlemaps/react-wrapper 1.1.35 (maps), html2canvas 1.4.1 & jsPDF 2.5.1 (PDF/markup), Redux 5.0.1 (global state sharing), SWR 2.2.5 (data fetching/caching).Backend: Node.js 20.x, Express 4.18.2 (APIs), MongoDB Atlas (data storage, schemas for logs/RFIs), AWS S3 (uploads, pre-signed URLs for quotas), AWS Cognito (auth, roles), Nodemailer 6.9.7 (notifications), express-rate-limit 7.1.5 (API quotas).Other: Vercel (deployment), Git (version control), Postman (API testing).Changes for Smooth Development: Upgraded react-photo-sphere-viewer to 6.2.3 for compatibility; added Redux/SWR for state/data sync; used dynamic imports for WebGL to avoid SSR conflicts; implemented cleanup in useEffect for memory leaks. This ensures smooth dev (modular code, no major conflicts).Full Code for Entire ProjectBelow is the complete code for the Slate360 project, including the existing scaffold, new Project Hub tab with Procore-like features, backend server, and changes for smooth dev (e.g., Redux for global data, dynamic imports, API quotas). Copy all at once. Structure: Frontend in / (Next.js), Backend in /backend (separate Node.js app).Frontend (Next.js) - package.jsonjsonCollapseWrapCopy{  "name": "slate360-next",  "version": "0.1.0",  "private": true,  "scripts": {"dev": "next dev",
+
+"build": "next build",
+
+"start": "next start",
+
+"lint": "next lint"  },  "dependencies": {"react": "18.3.1",
+
+"react-dom": "18.3.1",
+
+"next": "15.3.1",
+
+"@react-three/fiber": "^8.16.8",
+
+"@react-three/drei": "^9.108.0",
+
+"aos": "^2.3.4",
+
+"framer-motion": "^11.3.28",
+
+"react-scroll-parallax": "^3.4.5",
+
+"react-photo-sphere-viewer": "^6.2.3",
+
+"next-seo": "^6.6.0",
+
+"@photo-sphere-viewer/core": "^5.7.1",
+
+"@googlemaps/react-wrapper": "^1.1.35",
+
+"html2canvas": "^1.4.1",
+
+"jspdf": "^2.5.1",
+
+"redux": "^5.0.1",
+
+"react-redux": "^9.1.2",
+
+"swr": "^2.2.5"  },  "devDependencies": {"eslint": "^9",
+
+"eslint-config-next": "15.3.1",
+
+"@eslint/eslintrc": "^3"  }}Frontend - next.config.jsjsCollapseWrapCopymodule.exports = {  images: {domains: ['your-s3-bucket.s3.amazonaws.com'],  },};Frontend - /styles/globals.csscssCollapseWrapCopy{margin: 0;padding: 0;box-sizing: border-box;
+
+}body {  background: #111827;  color: white;  font-family: 'Orbitron', sans-serif;  overflow-x: hidden;}html {  scroll-behavior: smooth;}Frontend - /pages/_app.js (For Redux and AOS global init)jsxCollapseWrapCopyimport { Provider } from 'react-redux';import store from '../store/store';import 'aos/dist/aos.css';import '../styles/globals.css';export default function App({ Component, pageProps }) {  return (<Provider store={store}>
+
+  <Component {...pageProps} />
+
+</Provider>  );}Frontend - /store/store.js (Redux for global data sharing)jsCollapseWrapCopyimport { configureStore } from '@reduxjs/toolkit';import projectReducer from './projectSlice';export default configureStore({  reducer: {project: projectReducer,  },});Frontend - /store/projectSlice.js (Redux slice for project data)jsCollapseWrapCopyimport { createSlice } from '@reduxjs/toolkit';const projectSlice = createSlice({  name: 'project',  initialState: {projects: [],  },  reducers: {addProject: (state, action) => {
+
+  state.projects.push(action.payload);
+
+},
+
+updateProject: (state, action) => {
+
+  const index = state.projects.findIndex(p => p.id === action.payload.id);
+
+  if (index !== -1) state.projects[index] = action.payload;
+
+},  },});export const { addProject, updateProject } = projectSlice.actions;export default projectSlice.reducer;Frontend - /pages/index.js (Homepage)jsxCollapseWrapCopyimport dynamic from 'next/dynamic';import Head from 'next/head';import { useEffect, useState } from 'react';import { ParallaxProvider } from 'react-scroll-parallax';import AOS from 'aos';import 'aos/dist/aos.css';import { NextSeo } from 'next-seo';import Sidebar from '../components/Sidebar';import Tile from '../components/Tile';import Modal from '../components/Modal';import styles from '../styles/Homepage.module.css';const HeroCanvas = dynamic(() => import('../components/HeroCanvas'), { ssr: false });export default function Home() {  const [modalContent, setModalContent] = useState(null);  useEffect(() => {AOS.init({ duration: 1000 });  }, []);  const openModal = (media) => setModalContent(media);  const closeModal = () => setModalContent(null);  const sections = [{ id: 'overview', title: 'Overview', image: '/slate360-logo.png', component: <HeroCanvas /> },
+
+{ id: 'project-hub', title: 'Project Hub', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'bim-studio', title: 'BIM Studio', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'content-creation', title: 'Content Creation', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'tour-builder', title: '360 Tour Builder', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'geospatial', title: 'Geospatial & Autonomous Robotics', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'virtual-reality', title: 'Virtual & Augmented Reality', image: '/placeholder.jpg', video: '/placeholder.mp4' },
+
+{ id: 'reports', title: 'Reports & Analytics', image: '/placeholder.jpg', video: '/placeholder.mp4' },  ];  return (<ParallaxProvider>
+
+  <NextSeo
+
+    title="Slate360 - Building Industry Platform"
+
+    description="High-end web application for building industry professionals."
+
+    openGraph={{
+
+      url: 'https://slate360.com',
+
+      title: 'Slate360',
+
+      description: 'High-end web application for building industry professionals.',
+
+      images: [{ url: '/slate360-logo.png', alt: 'Slate360 Logo' }],
+
+    }}
+
+  />
+
+  <Head>
+
+    <title>Slate360</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+  </Head>
+
+  <div className={styles.homepage}>
+
+    <Sidebar />
+
+    <div className={styles.tilesSection}>
+
+      {sections.map(({ id, title, image, video, component }) => (
+
+        <Tile
+
+          key={id}
+
+          id={id}
+
+          title={title}
+
+          image={image}
+
+          video={video}
+
+          component={component}
+
+          onMediaClick={openModal}
+
+        />
+
+      ))}
+
+    </div>
+
+    <Modal content={modalContent} onClose={closeModal} />
+
+  </div>
+
+</ParallaxProvider>  );}Frontend - /pages/dashboard/project-hub.js (Project Hub Tab - Main Dashboard)jsxCollapseWrapCopyimport { useSelector } from 'react-redux';import { useState } from 'react';import Link from 'next/link';import styles from '../../styles/Dashboard.module.css';export default function ProjectHub() {  const projects = useSelector((state) => state.project.projects);  const [activeSubTab, setActiveSubTab] = useState('daily-logs');  return (<div className={styles.dashboard}>
+
+  <aside className={styles.sidebar}>
+
+    <ul>
+
+      <li onClick={() => setActiveSubTab('daily-logs')}>Daily Logs</li>
+
+      <li onClick={() => setActiveSubTab('timecards')}>Timecards</li>
+
+      <li onClick={() => setActiveSubTab('observations')}>Observations</li>
+
+      <li onClick={() => setActiveSubTab('punch-lists')}>Punch Lists</li>
+
+      <li onClick={() => setActiveSubTab('rfis')}>RFIs</li>
+
+      <li onClick={() => setActiveSubTab('submittals')}>Submittals</li>
+
+      <li onClick={() => setActiveSubTab('photos-forms')}>Photos & Forms</li>
+
+      <li onClick={() => setActiveSubTab('location-map')}>Location & Map</li>
+
+    </ul>
+
+  </aside>
+
+  <main className={styles.mainContent}>
+
+    {activeSubTab === 'daily-logs' && <DailyLogs />}
+
+    {activeSubTab === 'timecards' && <Timecards />}
+
+    {activeSubTab === 'observations' && <Observations />}
+
+    {activeSubTab === 'punch-lists' && <PunchLists />}
+
+    {activeSubTab === 'rfis' && <RFIs />}
+
+    {activeSubTab === 'submittals' && <Submittals />}
+
+    {activeSubTab === 'photos-forms' && <PhotosForms />}
+
+    {activeSubTab === 'location-map' && <LocationMap />}
+
+  </main>
+
+</div>  );}// Example Sub-Components for Features (Full code below in /components/dashboard/*)const DailyLogs = () => {  // Form for logs, backend fetch/post  return <div><h2>Daily Logs</h2>
+
+<form onSubmit={handleLogSubmit}>
+
+  <input type="date" placeholder="Date" />
+
+  <input type="text" placeholder="Weather" />
+
+  <input type="number" placeholder="Manpower" />
+
+  <button type="submit">Save Log</button>
+
+</form>  </div>;
+
+};// Similar for Timecards, Observations, PunchLists, RFIs, Submittals, PhotosFormsconst LocationMap = () => {  // Google Maps integration  return <div><h2>Project Location</h2>
+
+<GoogleMapWrapper />
+
+<button onClick={handleMarkup}>Markup</button>
+
+<button onClick={handlePDFDownload}>Download PDF</button>  </div>;
+
+};// GoogleMapWrapper component (dynamic import in /components/GoogleMapWrapper.js)Frontend - /components/GoogleMapWrapper.js (For Location Map)jsxCollapseWrapCopyimport dynamic from 'next/dynamic';const GoogleMap = dynamic(() => import('@googlemaps/react-wrapper').then((mod) => mod.Wrapper), { ssr: false });export default function GoogleMapWrapper() {  return <GoogleMap apiKey="YOUR_GOOGLE_API_KEY" />;}Frontend - /components/dashboard/DailyLogs.js (Example for Daily Logs Feature)jsxCollapseWrapCopyimport { useState } from 'react';import axios from 'axios';const DailyLogs = () => {  const [formData, setFormData] = useState({ date: '', weather: '', manpower: 0 });  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });  const handleSubmit = async (e) => {e.preventDefault();
+
+try {
+
+  await axios.post('/api/logs', formData);
+
+  alert('Log saved');
+
+} catch (err) {
+
+  alert('Error saving log');
+
+}  };  return <form onSubmit={handleSubmit}><input name="date" type="date" onChange={handleChange} />
+
+<input name="weather" type="text" onChange={handleChange} />
+
+<input name="manpower" type="number" onChange={handleChange} />
+
+<button type="submit">Save</button>  </form>;
+
+};export default DailyLogs;// Repeat for Timecards, Observations, PunchLists, RFIs, Submittals, PhotosForms (forms/tables with API calls)Frontend - /styles/Dashboard.module.csscssCollapseWrapCopy.dashboard {  display: flex;  height: 100vh;  background: #111827;}.sidebar {  width: 200px;  background: rgba(255, 255, 255, 0.1);  padding: 1rem;  backdrop-filter: blur(10px);}.sidebar ul li {  list-style: none;  margin: 1rem 0;  cursor: pointer;  color: white;}.sidebar ul li:hover {  color: #00ffcc;}.mainContent {  flex: 1;  padding: 2rem;  color: white;}Backend - /backend/package.jsonjsonCollapseWrapCopy{  "name": "slate360-backend",  "version": "1.0.0",  "scripts": {"start": "node server.js"  },  "dependencies": {"express": "4.18.2",
+
+"mongoose": "8.0.3",
+
+"aws-sdk": "2.1470.0",
+
+"jsonwebtoken": "9.0.2",
+
+"nodemailer": "6.9.7",
+
+"express-rate-limit": "7.1.5",
+
+"dotenv": "16.3.1"  }}Backend - /backend/server.js (Full Backend Server)jsCollapseWrapCopyconst express = require('express');const mongoose = require('mongoose');const aws = require('aws-sdk');const jwt = require('jsonwebtoken');const nodemailer = require('nodemailer');const rateLimit = require('express-rate-limit');const dotenv = require('dotenv');dotenv.config();const app = express();app.use(express.json());mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });const s3 = new aws.S3({  accessKeyId: process.env.AWS_ACCESS_KEY,  secretAccessKey: process.env.AWS_SECRET_KEY,});const limiter = rateLimit({  windowMs: 15 * 60 * 1000, // 15 minutes  max: 100, // limit each IP to 100 requests per windowMs});app.use(limiter);// JWT Middleware for Authconst authenticate = (req, res, next) => {  const token = req.headers.authorization;  if (token) {jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+
+  if (err) return res.sendStatus(403);
+
+  req.user = user;
+
+  next();
+
+});  } else {res.sendStatus(401);  }};// Project Schemaconst ProjectSchema = new mongoose.Schema({  id: String,  location: Object,  logs: Array,  timecards: Array,  observations: Array,  punchLists: Array,  rfis: Array,  submittals: Array,  photos: Array,  forms: Array,});const Project = mongoose.model('Project', ProjectSchema);// API for Daily Logsapp.post('/api/logs', authenticate, async (req, res) => {  const { projectId, logData } = req.body;  if (req.user.role === 'trial' && logData.size > 1e6) return res.status(403).send('Quota exceeded');  const project = await Project.findOne({ id: projectId });  project.logs.push(logData);  await project.save();  res.send('Log saved');});// Similar APIs for Timecards, Observations, PunchLists, RFIs, Submittals, PhotosForms// Example for Photos (S3 Upload)app.post('/api/photos', authenticate, async (req, res) => {  const { projectId, file } = req.body;  if (req.user.role === 'trial' && file.size > 1e6) return res.status(403).send('Quota exceeded');  const params = { Bucket: 'slate360-bucket', Key: file.name, Body: file.data };  s3.upload(params, (err, data) => {if (err) return res.status(500).send(err);
+
+// Save URL to MongoDB
+
+res.send(data.Location);  });});// API for Location Map (Global Data)app.post('/api/location', authenticate, async (req, res) => {  const { projectId, location } = req.body;  const project = await Project.findOne({ id: projectId });  project.location = location;  await project.save();  res.send('Location saved');});// Notification Exampleapp.post('/api/notify', (req, res) => {  const transporter = nodemailer.createTransport({service: 'gmail',
+
+auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },  });  transporter.sendMail(req.body, (err, info) => {if (err) return res.status(500).send(err);
+
+res.send(info);  });});app.listen(5000, () => console.log('Backend running on port 5000'));Backend - .env (Place in /backend)textCollapseWrapCopyMONGODB_URI=mongodb+srv://user:pass@cluster0.mongodb.net/slate360AWS_ACCESS_KEY=your_keyAWS_SECRET_KEY=your_secretJWT_SECRET=your_jwt_secretEMAIL_USER=your_emailEMAIL_PASS=your_passThis is the complete code for the frontend and backend. Copy and set up as described. Run backend with node server.js in /backend. For global data, use Redux selectors in other tabs (e.g., Geospatial uses project.location). Let me know if you need adjustments or have issues.
+
+Thoughts
+
+Overview of ReviewSlate360 is a solid foundation for a Procore-inspired platform, with a clean, minimalistic dark theme and modular structure. The Project Hub tab implements basic versions of the requested features (daily logs, timecards, observations, punch lists, RFIs, submittals, photos/forms, map/markup/PDF, and global data sharing via Redux). The tech stack is modern and appropriate, leveraging Next.js for SSR/SSG, Redux for state management, and Express/MongoDB/S3 for backend persistence and storage. The migration from CRA appears successful, with dynamic imports handling SSR conflicts (e.g., for WebGL/3D components).However, there are several bugs, incomplete implementations, and areas for improvement in performance, security, and usability. No major dependency conflicts were found, but some versions are outdated as of July 25, 2025 (e.g., Next.js is at 14.2.5 stable, but your 15.3.1 seems like a typo or pre-release; latest stable is 14.x, with 15 in canary). Performance is generally good due to dynamic imports and caching potential via SWR, but unoptimized data fetching and potential memory leaks in effects could cause issues. Security has basics (JWT auth, rate limiting), but lacks input validation, proper token parsing, and robust quota enforcement. UI is modular but not fully responsive, with fixed layouts that break on mobile.Below, I'll break down the checks, suggestions, and provide updated code snippets where needed. For scalability, consider sharding MongoDB collections or using separate schemas for high-volume data (e.g., logs). To close the gap to Procore (currently ~80-85% as per summary), add features like bidding, financial tracking, drawings management, and change orders.Bugs IdentifiedGoogle Maps Integration (LocationMap): The GoogleMapWrapper component imports Wrapper but renames it to GoogleMap, then renders it without children (e.g., no <Map> component). This will fail to render a map. Additionally, handleMarkup and handlePDFDownload in LocationMap are referenced but undefined.
+API Handling in Backend: No check for project existence before pushing data (e.g., in /api/logs). If project is null, it crashes. Also, logData.size in quota check doesn't exist (logData is an object, not a file).
+JWT Token Parsing: req.headers.authorization assumes raw token, but standard is Bearer <token>. Without splitting, verification fails.
+Form Submissions in Sub-Components: Inline placeholders in project-hub.js reference undefined handlers (e.g., handleLogSubmit). Actual components use Axios, but no error handling or loading states.
+Markup/PDF Features: Buttons exist, but no implementation using html2canvas/jsPDF.
+Photos/Forms Uploads: Backend assumes file.data in body (e.g., base64), but frontend has no upload logic shown. Quota checks use file.size, but not enforced consistently across features.
+Global Data Sharing: Redux is set up, but not used in sub-components (e.g., no dispatching in forms or selectors in maps). Assumes manual integration in other tabs.
+Minor: AOS Init: Global in _app.js, but no cleanup on unmount, potentially leaking in SPA navigation.
+
+No crashes from WebGL/React versions, as dynamic imports prevent SSR issues.Dependency ConflictsWebGL (react-three/fiber, drei): Compatible with React 18. Dynamic imports (e.g., HeroCanvas) avoid SSR conflicts. No issues.
+React Versions: All deps pinned to React 18.3.1 compatibles. No conflicts.
+react-photo-sphere-viewer: Upgraded to 6.2.3 as noted; works with @photo
+-sphere-viewer/core 5.7.1.
+Outdated Versions (as of July 25, 2025): Next.js 15.3.1 doesn't exist (latest is 14.2.5; perhaps meant 14.3.1?). Update to 14.2.5. framer-motion to 11.3.30 (minor bug fixes). SWR to 2.2.6 (perf improvements). @googlemaps
+/react-wrapper is deprecated; switch to @react
+-google-maps/api for better support. No breaking conflicts, but run npm audit for vulns.
+
+Performance IssuesLoading Times: Dynamic imports help, but heavy 3D/maps load on demand. Unoptimized Axios fetches in sub-components (no caching) could cause repeated API calls on tab switches. Suggestion: Wrap with SWR for caching/mutations.
+Memory Leaks: No explicit cleanups in useEffects (e.g., for AOS or 3D). Add return functions in effects.
+Other: MongoDB arrays (e.g., logs: Array) scale poorly for large projects (query perf drops). Use separate collections. Rate limiting is IP-based; for scalability, add user-based via Redis.
+
+SecurityAuth: JWT via Cognito (assumed), but token parsing bug. Role-based checks (e.g., trial quotas) are basic but inconsistent (e.g., no size check for non-file data).
+Quotas: Enforced for trials on uploads, but not for CRUD ops. Add API-level validation with user quotas tracked in DB.
+Vulns: No input sanitization (e.g., Mongo injection via unsanitized logData). Use mongoose validators. S3 uploads lack ACLs (set private by default). Rate limiting good, but combine with auth.
+Improvements: Add CORS, helmet for headers, bcrypt for any passwords (if needed). Validate JWT roles properly.
+
+UI UsabilityModular: Excellent—sub-tabs keep navigation clean. Role-based via auth, but UI doesn't hide features (e.g., trial users see all).
+Responsive: Poor—fixed 200px sidebar and 100vh height don't adapt to mobile (overlaps/scroll issues). Add media queries to stack vertically.
+Improvements: Add tables for listing data (not just forms). Loading spinners/error messages in forms. Better accessibility (e.g., aria labels on sidebar).
+
+Suggestions for Additions/ChangesAdd Procore Features:Bidding: New sub-tab with form for bid creation, vendor invites, comparisons. Backend API for bids storage/notifications.
+Financials: Track budgets, invoices, payments. Integrate Stripe for payments.
+Drawings Management: Upload/view/markup drawings with version history.
+Change Orders: Form for requests/approvals, linked to RFIs.
+
+Functionality Improvements:Use SWR for all data fetching (e.g., fetch logs with caching).
+Implement markup/PDF: Use html2canvas to capture map, jsPDF to export.
+Global sharing: Dispatch Redux actions on API success for real-time updates.
+
+Scalability:Separate Mongo schemas (e.g., Log model linked to Project via ObjectId).
+Add pagination to lists (e.g., for logs).
+
+User Experience:Role-based UI hiding (e.g., use Redux for user role).
+Mobile responsiveness with CSS media.
+Notifications: Use Nodemailer for RFI/submittal alerts.
+Analytics: Track usage in reports tab.
+
+Updated Code SnippetsI'll provide fixes for key bugs and improvements. Replace/add as noted. Full project not rewritten due to size.Fix Google Maps (components/GoogleMapWrapper.js):jsx
+
+import dynamic from 'next/dynamic';
+import { Wrapper } from '@googlemaps/react-wrapper'; // Correct import
+
+const Map = () => <div style={{ height: '400px', width: '100%' }} />; // Placeholder; add actual map logic
+
+export default function GoogleMapWrapper() {
+  return (
+    <Wrapper apiKey="YOUR_GOOGLE_API_KEY">
+      <Map />
+    </Wrapper>
+  );
+}
+
+(Switch to @react
+-google-maps/api if needed for full map controls.)
+Add Markup/PDF to LocationMap (in pages/dashboard/project-hub.js, update const LocationMap):jsx
+
+import { useRef } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+const LocationMap = () => {
+  const mapRef = useRef(null);
+
+  const handleMarkup = () => {
+    // Implement markup logic (e.g., draw on canvas over map)
+    alert('Markup tool opened'); // Placeholder
+  };
+
+  const handlePDFDownload = async () => {
+    if (mapRef.current) {
+      const canvas = await html2canvas(mapRef.current);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('map.pdf');
+    }
+  };
+
+  return (
+    <div>
+      <h2>Project Location</h2>
+      <div ref={mapRef}><GoogleMapWrapper /></div>
+      <button onClick={handleMarkup}>Markup</button>
+      <button onClick={handlePDFDownload}>Download PDF</button>
+    </div>
+  );
+};
+
+Fix JWT Parsing (backend/server.js, update authenticate):js
+
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.sendStatus(401);
+  const token = authHeader.split(' ')[1]; // Handle Bearer
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+Improve API Handling & Quotas (backend/server.js, update /api/logs example):js
+
+app.post('/api/logs', authenticate, async (req, res) => {
+  const { projectId, logData } = req.body;
+  if (!projectId || !logData) return res.status(400).send('Invalid data');
+  // Sanitize logData (e.g., using mongoose validators)
+  const project = await Project.findOne({ id: projectId });
+  if (!project) return res.status(404).send('Project not found');
+  if (req.user.role === 'trial' && JSON.stringify(logData).length > 1e5) { // Approx size check
+    return res.status(403).send('Quota exceeded');
+  }
+  project.logs.push(logData);
+  await project.save();
+  res.send('Log saved');
+});
+
+(Apply similarly to other APIs. For true quotas, track usage in user DB.)
+Add Responsiveness (styles/Dashboard.module.css):css
+
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .sidebar ul li {
+    margin: 0.5rem;
+  }
+}
+
+Use SWR in DailyLogs.js (components/dashboard/DailyLogs.js):jsx
+
+import { useState } from 'react';
+import axios from 'axios';
+import useSWR from 'swr';
+
+const fetcher = url => axios.get(url).then(res => res.data);
+
+const DailyLogs = () => {
+  const { data: logs, mutate } = useSWR('/api/logs?projectId=123', fetcher); // Add listing
+  const [formData, setFormData] = useState({ date: '', weather: '', manpower: 0 });
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/logs', { projectId: '123', logData: formData }); // Add projectId
+      mutate(); // Revalidate cache
+      alert('Log saved');
+    } catch (err) {
+      alert('Error saving log');
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>{/* inputs */}</form>
+      <table>{logs?.map(log => <tr key={log.date}><td>{log.date}</td></tr>)}</table> // Add table for list
+    </div>
+  );
+};
+export default DailyLogs;
+
+(Repeat for other sub-components. Add loading: if (!logs) return <div>Loading...</div>;)
+Memory Leak Fix (pages/index.js, update useEffect):jsx
+
+useEffect(() => {
+  AOS.init({ duration: 1000 });
+  return () => AOS.refreshHard(); // Cleanup
+}, []);
+
+For bidding addition: Create new sub-tab/component similar to others, with form and API.This addresses core issues; test thoroughly post-updates. If needed, deploy to Vercel for perf monitoring.
+

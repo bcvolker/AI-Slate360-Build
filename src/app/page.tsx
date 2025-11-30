@@ -68,19 +68,11 @@ export default function Home() {
                 Subscribe
               </Button>
             </Link>
-            {user ? (
-              <Link href="/dashboard">
-                <Button className="bg-cyan text-obsidian hover:bg-cyan-400">
-                  Dashboard
-                </Button>
-              </Link>
-            ) : (
-              <Link href="/login">
-                <Button className="bg-cyan text-obsidian hover:bg-cyan-400">
-                  Login
-                </Button>
-              </Link>
-            )}
+            <Link href="/login">
+              <Button className="bg-cyan text-obsidian hover:bg-cyan-400">
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -103,9 +95,9 @@ export default function Home() {
               Turn site photos, video, 360 camera captures, drawings, and notes into models, tours, videos, and insights — all of your work, perfectly connected.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-start pointer-events-auto">
-              <Link href="/dashboard">
+              <Link href="/pricing">
                 <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-6 rounded-full bg-cyan text-obsidian hover:bg-cyan-400 transition-all shadow-[0_0_40px_-10px_rgba(0,245,255,0.5)]">
-                  Enter Dashboard <ArrowRight className="ml-2 h-5 w-5" />
+                  View Plans & Pricing <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>

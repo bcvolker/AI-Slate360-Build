@@ -25,20 +25,13 @@ export default function Login() {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (isSignUp && !agreedToTerms) {
-      alert("You must agree to the terms and conditions to create an account.");
-      return;
-    }
 
-    setIsLoading(true);
+    // While we design the dashboard, force demo auth and skip Supabase.
+    const forceDemoMode = true;
 
-    try {
-      // Check if we're using placeholder Supabase credentials
-      const isDemoMode = process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder') ||
-                        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder');
-
-      if (isDemoMode) {
+    if (forceDemoMode) {
+      setIsLoading(true);
+      try {
         // Demo mode - simulate authentication
         await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
 
@@ -74,9 +67,10 @@ export default function Login() {
 
         if (email === 'creator@slate360.com') {
           tier = 'creator';
+          // Creator Bundle: Content Studio & 360 Tour Builder
           entitlements = {
-            'project-hub': true,
-            'design-studio': true,
+            'project-hub': false,
+            'design-studio': false,
             'content-studio': true,
             '360-tour-builder': true,
             'geospatial-robotics': false,
@@ -86,6 +80,7 @@ export default function Login() {
           };
         } else if (email === 'modeling@slate360.com') {
           tier = 'modeling';
+          // Modeling Bundle: Design Studio, Content Studio, 360 Tour Builder, Geospatial & Robotics
           entitlements = {
             'project-hub': true,
             'design-studio': true,
@@ -93,10 +88,11 @@ export default function Login() {
             '360-tour-builder': true,
             'geospatial-robotics': true,
             'virtual-studio': false,
-            'analytics-reports': true,
+            'analytics-reports': false,
             'athlete360': false,
           };
         } else if (email === 'godmode@slate360.com') {
+          // God Mode: all standard tabs; no Athlete360 (top secret)
           tier = 'godmode';
           entitlements = {
             'project-hub': true,
@@ -106,9 +102,10 @@ export default function Login() {
             'geospatial-robotics': true,
             'virtual-studio': true,
             'analytics-reports': true,
-            'athlete360': true,
+            'athlete360': false,
           };
         } else if (email === 'ceo@slate360.com') {
+          // Enterprise / internal: all tabs, including Athlete360 (internal only)
           tier = 'enterprise';
           entitlements = {
             'project-hub': true,
@@ -121,27 +118,46 @@ export default function Login() {
             'athlete360': true,
           };
         } else {
-          // Default to creator tier for demo
-          tier = 'creator';
+          // Default demo: treat as Trial – see all tabs but no deliverables (handled elsewhere)
+          tier = 'trial';
           entitlements = {
             'project-hub': true,
             'design-studio': true,
             'content-studio': true,
             '360-tour-builder': true,
-            'geospatial-robotics': false,
-            'virtual-studio': false,
-            'analytics-reports': false,
+            'geospatial-robotics': true,
+            'virtual-studio': true,
+            'analytics-reports': true,
             'athlete360': false,
           };
         }
-
         setUser(mockUser);
         setTier(tier);
         setEntitlements(entitlements);
-        
+
         // Force navigation
         window.location.href = '/dashboard';
         return;
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (isSignUp && !agreedToTerms) {
+      alert("You must agree to the terms and conditions to create an account.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Check if we're using placeholder Supabase credentials
+      const isDemoMode = process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder') ||
+                        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder');
+
+      if (isDemoMode) {
+        // (Unreached when forceDemoMode is true, kept for future revert.)
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
 
       // Real Supabase authentication
@@ -166,8 +182,8 @@ export default function Login() {
         if (email === 'creator@slate360.com') {
           tier = 'creator';
           entitlements = {
-            'project-hub': true,
-            'design-studio': true,
+            'project-hub': false,
+            'design-studio': false,
             'content-studio': true,
             '360-tour-builder': true,
             'geospatial-robotics': false,
@@ -184,7 +200,7 @@ export default function Login() {
             '360-tour-builder': true,
             'geospatial-robotics': true,
             'virtual-studio': false,
-            'analytics-reports': true,
+            'analytics-reports': false,
             'athlete360': false,
           };
         } else if (email === 'godmode@slate360.com') {
@@ -197,7 +213,7 @@ export default function Login() {
             'geospatial-robotics': true,
             'virtual-studio': true,
             'analytics-reports': true,
-            'athlete360': true,
+            'athlete360': false,
           };
         } else if (email === 'ceo@slate360.com') {
           tier = 'enterprise';
@@ -212,16 +228,16 @@ export default function Login() {
             'athlete360': true,
           };
         } else {
-          // Default to creator tier for demo
-          tier = 'creator';
+          tier = 'trial';
           entitlements = {
             'project-hub': true,
             'design-studio': true,
             'content-studio': true,
             '360-tour-builder': true,
-            'geospatial-robotics': false,
-            'virtual-studio': false,
-            'analytics-reports': false,
+            'geospatial-robotics': true,
+            'virtual-studio': true,
+            'analytics-reports': true,
+            // absolutely no Athlete360 in public / trial
             'athlete360': false,
           };
         }

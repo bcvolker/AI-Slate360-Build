@@ -1,0 +1,399 @@
+Slate360 Homepage Links: Header & Footer Pages
+Below, I've compiled the full details and text for each link from the homepage header and footer, excluding tile "Learn More" links (those tie to /features anchors and will be handled separately). Each section is self-contained as a Markdown block—copy-paste into a file (e.g., "Slate360_Header_Footer_Pages.md" or split into individual .md/.docx files like "Slate360_About.md").
+Details include:
+
+Purpose: Role in user journey/conversion.
+Structure: Next.js path, key components (e.g., form, table), styling notes (light bg-slate-50 for trust pages).
+Full Text/Content: Complete JSX-ready copy (as  blocks for easy paste into page.tsx), with placeholders for forms/Stripe.
+
+All pages use your dark theme variant (bg-slate-50 text-slate-900, Orbitron headings, Roboto body) and funnel to /subscribe. Transparent/protective: AI disclaimers, data quotas, no hard guarantees.
+
+Header: Slate360 (Home - /)
+Purpose: Entry point—teaser for features, hooks visitors with tiles, drives to subscribe/login. High conversion (CTAs in every tile).
+Structure: app/page.tsx—8 snapping tiles (Hero + 7 features) via TileSection.tsx. Navbar fixed top, Footer bottom. Responsive grid (stacks mobile). No form; links to below pages.
+Full Text/Content (Hero Tile Example—Full page.tsx tiles array in repo; paste as component):
+tsx// Hero Tile (id="slate360" in tiles array)
+<div className="flex flex-col md:flex-row h-screen items-center justify-center gap-12 px-4 md:px-8">
+  <div className="flex-1 space-y-6 text-left">
+    <h1 className="text-4xl md:text-5xl font-orbitron mb-4">Slate360: From Design to Reality</h1>
+    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Your vision, instantly realized.</h2>
+    <p className="text-lg text-slate-200 mb-6">Slate360 unifies design, 360 tours, analytics, virtual tools, and geospatial into one command center for the built environment.</p>
+    <ul className="space-y-3 text-slate-300">
+      <li>• Access every workflow in one secure hub.</li>
+      <li>• Connect office and field teams in real time.</li>
+      <li>• Forecast risks, costs, and performance with AI (toggle; verify outputs).</li>
+      <li>• Plug into tools and data you already use.</li>
+    </ul>
+    <button className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg hover:bg-blue-700">Request a Demo</button>
+  </div>
+  <div className="flex-1 flex justify-center items-center">
+    <div className="w-full max-w-md md:max-w-lg bg-slate-800 rounded-xl p-6 text-center">
+      <h3 className="text-xl font-semibold mb-4">Slate360 Viewer</h3>
+      <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span className="text-white text-2xl">▶</span>
+      </div>
+      <p className="text-sm text-slate-400">Tap or click to expand and explore. Future versions will load 3D models, videos, or 360 tours here.</p>
+    </div>
+  </div>
+</div>
+(Full tiles in repo; other 7 follow similar left/right reversal, e.g., Analytics: Text right with "Translate data into decisions" hook.)
+
+Header: About (/about)
+Purpose: Builds trust—mission/story for prospects, roadmap for early adopters. Converts skeptics to waitlist subs.
+Structure: app/about/page.tsx—Grid layout (left text, right cards), CTA to /subscribe. No form; ~800px max-w-7xl.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900 py-20 px-4 md:px-8 max-w-7xl mx-auto">
+  <h1 className="text-4xl md:text-5xl font-orbitron mb-8 text-center">About Slate360</h1>
+  <div className="grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+      <p className="mb-6 text-lg">Slate360 empowers built environment professionals—from contractors and realtors to universities and drone pilots—to bridge administrative chaos and visual workflows in one secure platform. We turn raw data (LiDAR scans, 360 photos, project docs) into actionable insights, designed to streamline multiple tools.</p>
+      
+      <h2 className="text-2xl font-bold mb-4">Who We Serve</h2>
+      <p className="mb-6 text-lg">General contractors managing multi-site chaos, government teams tracking capital projects, trade partners needing quick 360 tours, owners’ reps analyzing risks, and design teams visualizing models. Whether you're a solo freelancer, enterprise with 50+ users, or student testing drone missions, Slate360 scales with you—individual profiles for quick setups, RBAC for teams.</p>
+      
+      <h2 className="text-2xl font-bold mb-4">Why We Built It</h2>
+      <p className="mb-6 text-lg">From years in construction project management and drone tech education, we've seen siloed apps slow decisions and inflate costs. Slate360 is the unified hub we needed: Admin docs flow to geospatial plans, models to virtual tours—all with AI toggles (verify results; we're not liable for errors) and open exports (no lock-in).</p>
+    </div>
+    <div className="space-y-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold mb-2">What Sets Us Apart</h3>
+        <ul className="space-y-2">
+          <li>• Field + office sync: Offline uploads auto-file on reconnect.</li>
+          <li>• Physical-to-virtual: Scans to explorable views, no extra subs.</li>
+          <li>• Your data, your rules: Export anytime; we retain only for service (delete on request).</li>
+          <li>• Transparent AI: Toggle features with disclaimers—built for real workflows.</li>
+        </ul>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold mb-2">Roadmap</h3>
+        <p className="mb-4">Early access: Core hubs (Project Hub, Design Studio, 360 Tour Builder, Analytics). Next: Full AI automation, Athlete 360 add-on ($10/mo), mobile app for missions.</p>
+        <ul className="space-y-1 text-sm">
+          <li>Q4 2025: Beta launch + tiers.</li>
+          <li>Q1 2026: Enterprise RBAC + integrations.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div className="text-center mt-12">
+    <a href="/subscribe" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg hover:bg-blue-700">Join Early Access</a>
+  </div>
+</div>
+
+Header: Contact (/contact)
+Purpose: Lead gen—captures demo requests, industry-specific fields for qualified subs. Low-friction form.
+Structure: app/contact/page.tsx—2-col grid (form left, sidebar right). Use react-hook-form for validation; integrate SendGrid later.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
+    <h1 className="text-4xl md:text-5xl font-orbitron mb-8 text-center">Get in Touch</h1>
+    <p className="text-xl text-center mb-12">Have a question, demo request, or partnership idea? We're here to help bring your workflows to life.</p>
+    <div className="grid md:grid-cols-2 gap-12">
+      <form className="space-y-6">
+        <input type="text" placeholder="Name" required className="w-full p-3 border border-slate-300 rounded-lg" />
+        <input type="text" placeholder="Organization" className="w-full p-3 border border-slate-300 rounded-lg" />
+        <input type="text" placeholder="Role (e.g., Contractor, Designer)" className="w-full p-3 border border-slate-300 rounded-lg" />
+        <input type="email" placeholder="Email" required className="w-full p-3 border border-slate-300 rounded-lg" />
+        <select className="w-full p-3 border border-slate-300 rounded-lg">
+          <option>Project Type</option>
+          <option>Construction Management</option>
+          <option>Design & BIM</option>
+          <option>Drone/Geospatial</option>
+          <option>Real Estate Tours</option>
+          <option>Other</option>
+        </select>
+        <textarea placeholder="Message" rows={4} required className="w-full p-3 border border-slate-300 rounded-lg" />
+        <fieldset className="space-y-2">
+          <legend className="text-sm font-medium">Interested In:</legend>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Project Hub</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Design Studio</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Content Studio</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> 360 Tour Builder</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Geospatial & Robotics</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Virtual Studio</label>
+          <label className="flex items-center"><input type="checkbox" className="mr-2" /> Analytics & Reports</label>
+        </fieldset>
+        <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">Send Message</button>
+      </form>
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Prefer Email?</h2>
+        <p>Drop us a line at <a href="mailto:support@slate360.ai" className="text-blue-600 hover:underline">support@slate360.ai</a> for quick questions or demos.</p>
+        <h2 className="text-2xl font-bold">Follow Us</h2>
+        <p>Stay updated on launches and tips: LinkedIn demos of design-to-virtual workflows coming soon.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+Header: Subscribe (/subscribe)
+Purpose: Conversion engine—tiers/waitlist, data controls to cap free costs. Introductory pricing note.
+Structure: app/subscribe/page.tsx—Grid table for tiers, form for waitlist. Stripe placeholder.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+    <h1 className="text-4xl md:text-5xl font-orbitron mb-8 text-center">Choose Your Plan</h1>
+    <p className="text-xl text-center mb-12">Start free—no card needed. Upgrade anytime. Data controls ensure fair use: Storage overages pause features (no surprise bills); export/delete data freely. Pricing is introductory and may change as new features launch.</p>
+    <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+      <div className="bg-white p-6 rounded-lg shadow-md border-2 border-slate-200 hover:border-blue-600">
+        <h3 className="text-xl font-bold mb-2">Free</h3>
+        <p className="text-2xl font-bold text-blue-600 mb-4">$0</p>
+        <p className="mb-4">Test the waters</p>
+        <ul className="space-y-2 mb-6 text-sm">
+          <li>Storage: 1GB</li>
+          <li>Projects: 5</li>
+          <li>AI: Basic (no exports)</li>
+          <li>Processing: Limited (no heavy AI)</li>
+        </ul>
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Get Started</button>
+        <p className="text-xs mt-2 text-slate-500">Cancel anytime. Access until end of period, no partial refunds.</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md border-2 border-slate-200 hover:border-blue-600">
+        <h3 className="text-xl font-bold mb-2">Trial</h3>
+        <p className="text-2xl font-bold text-blue-600 mb-4">$0 for 14 days</p>
+        <p className="mb-4">Full features preview</p>
+        <ul className="space-y-2 mb-6 text-sm">
+          <li>Storage: 5GB</li>
+          <li>Projects: 10</li>
+          <li>AI: Full with watermarks</li>
+          <li>Processing: Moderate (pause on overage)</li>
+        </ul>
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Start Trial</button>
+        <p className="text-xs mt-2 text-slate-500">Cancel anytime. Access until end of period, no partial refunds.</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md border-2 border-slate-200 hover:border-blue-600">
+        <h3 className="text-xl font-bold mb-2">Starter</h3>
+        <p className="text-2xl font-bold text-blue-600 mb-4">$49/mo</p>
+        <p className="mb-4">Core workflows</p>
+        <ul className="space-y-2 mb-6 text-sm">
+          <li>Storage: 10GB</li>
+          <li>Projects: Unlimited</li>
+          <li>AI: Full</li>
+          <li>Processing: Standard (quota alerts)</li>
+        </ul>
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Subscribe</button>
+        <p className="text-xs mt-2 text-slate-500">Cancel anytime. Access until end of period, no partial refunds.</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md border-2 border-slate-200 hover:border-blue-600">
+        <h3 className="text-xl font-bold mb-2">Pro</h3>
+        <p className="text-2xl font-bold text-blue-600 mb-4">$149/mo</p>
+        <p className="mb-4">Advanced AI + collab</p>
+        <ul className="space-y-2 mb-6 text-sm">
+          <li>Storage: 50GB</li>
+          <li>Projects: Unlimited</li>
+          <li>AI: Full + custom</li>
+          <li>Processing: High (priority queue)</li>
+        </ul>
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Subscribe</button>
+        <p className="text-xs mt-2 text-slate-500">Cancel anytime. Access until end of period, no partial refunds.</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md border-2 border-slate-200 hover:border-blue-600">
+        <h3 className="text-xl font-bold mb-2">Enterprise</h3>
+        <p className="text-2xl font-bold text-blue-600 mb-4">Custom</p>
+        <p className="mb-4">Teams + integrations</p>
+        <ul className="space-y-2 mb-6 text-sm">
+          <li>Storage: Unlimited</li>
+          <li>Projects: Unlimited</li>
+          <li>AI: Full + API</li>
+          <li>Processing: Dedicated</li>
+        </ul>
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Contact Sales</button>
+        <p className="text-xs mt-2 text-slate-500">Cancel anytime. Access until end of period, no partial refunds.</p>
+      </div>
+    </div>
+    <div className="text-center">
+      <h2 className="text-2xl font-bold mb-4">Early Access Perks</h2>
+      <p className="mb-6">Join now for beta pricing (20% off first year) and input on features like Athlete 360.</p>
+      <form className="max-w-md mx-auto space-y-4">
+        <input type="email" placeholder="Your email" required className="w-full p-3 border border-slate-300 rounded-lg" />
+        <input type="text" placeholder="Company/Role" className="w-full p-3 border border-slate-300 rounded-lg" />
+        <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg">Join Waitlist</button>
+      </form>
+    </div>
+    <p className="text-center mt-8 text-sm text-slate-600">Billed monthly. Enterprise: Contact sales@slate360.ai for bulk (10+ users, custom quotas).</p>
+  </section>
+</div>
+
+Header: Login (/login)
+Purpose: Auth gateway—placeholder until Supabase wired; reassures early users.
+Structure: app/login/page.tsx—Centered card, mailto link. Simple, no form.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center">
+  <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-md w-full mx-4">
+    <h1 className="text-3xl font-orbitron mb-4">Welcome Back</h1>
+    <p className="mb-8">Secure login for Slate360 is powering up. Early access users: Check your email for magic link.</p>
+    <a href="mailto:support@slate360.ai" className="block w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 mb-4">Get Access Link</a>
+    <p className="text-sm text-slate-600">New? <a href="/subscribe" className="text-blue-600 hover:underline">Start free trial</a>.</p>
+  </div>
+</div>
+
+Footer: Terms (/terms)
+Purpose: Legal protection—disclaimers for AI/fees, no refunds policy.
+Structure: app/terms/page.tsx—Numbered sections, links to other legals.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
+    <h1 className="text-4xl font-orbitron mb-8">Terms of Service</h1>
+    <p className="text-sm text-slate-600 mb-8">Last Updated: November 15, 2025. These terms govern your use of Slate360. By accessing, you agree. Questions? Contact support@slate360.ai. (Not legal advice—consult a lawyer.)</p>
+    
+    <div className="space-y-8">
+      <section>
+        <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
+        <p>Slate360 ("Service," "we," "us") provides tools for project management, design, geospatial analysis, and more. You ("User") own your data; we provide the platform.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">2. Eligibility & Accounts</h2>
+        <p>18+ or with guardian. Secure your credentials; we're not liable for unauthorized access. RBAC limits features by tier.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">3. Use of the Service</h2>
+        <p>Acceptable: Legitimate business use. Prohibited: Illegal content, reverse-engineering, excessive API calls. AI features: Toggle-only; verify outputs—we disclaim accuracy/liability for decisions based on them.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">4. Intellectual Property</h2>
+        <p>You own uploads/exports. We own platform code/UI. Grant us limited license to host/process your data for service delivery.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">5. Fees & Subscriptions</h2>
+        <p>Tiers: Free (1GB, 5 projects, basic AI—no exports); Trial (14 days, 5GB, watermarked); Paid ($49–$149/mo or custom). Billed monthly via Stripe; auto-renew. Cancel anytime (access to end of period, no refunds/credits). Upgrades immediate; downgrades next cycle. Overages: Pause features until upgraded—no charges. Prices may change with notice.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">6. Disclaimers & Limitation of Liability</h2>
+        <p>Service "as is." No warranties for uptime/AI results. Liability capped at fees paid in last 12 months. No consequential damages (e.g., project delays from AI errors).</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">7. Changes & Governing Law</h2>
+        <p>We may update terms (notice via email). Continued use = acceptance. Governed by Arizona law.</p>
+      </section>
+    </div>
+    <p className="text-sm text-slate-600 mt-12 text-center">Not legal advice—consult a lawyer. <a href="/privacy">Privacy Policy</a> | <a href="/cookies">Cookies</a></p>
+  </section>
+</div>
+
+Footer: Privacy (/privacy)
+Purpose: Compliance/trust—data rights, quotas for free/trial cost protection.
+Structure: app/privacy/page.tsx—Numbered sections, list bullets.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
+    <h1 className="text-4xl font-orbitron mb-8">Privacy Policy</h1>
+    <p className="text-sm text-slate-600 mb-8">Last Updated: November 15, 2025. We respect your privacy. This policy explains data handling.</p>
+    
+    <div className="space-y-8">
+      <section>
+        <h2 className="text-2xl font-bold mb-4">1. Data We Collect</h2>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Account: Name, email, role, org (for support/tier access).</li>
+          <li>Usage: Pages/actions, device info (anonymous analytics).</li>
+          <li>Project: Uploads (models, scans—processed transiently; stored per quota).</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">2. How We Use Data</h2>
+        <p>For service delivery (e.g., AI processing), improvements (aggregated stats), communications (updates), and compliance. No selling/advertising.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">3. Sharing & Controls</h2>
+        <p>With providers (cloud infrastructure and payment processors—contract-bound, encrypted). Law-required only. Controls: Tier quotas (e.g., Free: 1GB cap—no overage costs; pause on excess). Export/delete via dashboard; we retain 30 days post-deletion for backups.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">4. Security</h2>
+        <p>Encryption (TLS at rest/transit), RBAC, audits. Building with industry-standard practices. Report issues to security@slate360.ai.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">5. Your Rights</h2>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Access/correct/delete via support@slate360.ai (14-day response).</li>
+          <li>Object to processing; port data (JSON/CSV).</li>
+          <li>Free/Trial: Limited to avoid costs—upgrade for full.</li>
+        </ul>
+      </section>
+    </div>
+    <p className="text-sm text-slate-600 mt-12 text-center">Questions? privacy@slate360.ai. <a href="/terms">Terms</a> | <a href="/cookies">Cookies</a></p>
+  </section>
+</div>
+
+Footer: Cookies (/cookies)
+Purpose: Compliance—short explainer for trust, future banner note.
+Structure: app/cookies/page.tsx—Short sections, no form.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
+    <h1 className="text-4xl font-orbitron mb-8">Cookies Policy</h1>
+    <p className="mb-8">We use cookies for essential functions and analytics. Manage via browser settings.</p>
+    
+    <div className="space-y-6">
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Types of Cookies</h2>
+        <ul className="space-y-2">
+          <li><strong>Essential</strong>: Login, security (e.g., session tokens)—cannot disable.</li>
+          <li><strong>Preferences</strong>: Theme, language—improve UX.</li>
+          <li><strong>Analytics</strong>: Anonymous usage (e.g., opt-in tools)—help prioritize features.</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Third-Party</h2>
+        <p>No ad trackers. Future: Payment processors (opt-out via them).</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Your Choices</h2>
+        <p>Browser controls or our banner (coming soon). Deleting cookies logs you out—re-login to resume.</p>
+      </section>
+    </div>
+    <p className="text-sm text-slate-600 mt-12 text-center">Updated November 15, 2025. <a href="/privacy">Privacy Policy</a></p>
+  </section>
+</div>
+
+Footer: Security (/security)
+Purpose: Trust booster—high-level reassurances for enterprise/gov users.
+Structure: app/security/page.tsx—Bullet sections, report CTA.
+Full Text/Content:
+tsx<div className="min-h-screen bg-slate-50 text-slate-900">
+  <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
+    <h1 className="text-4xl font-orbitron mb-8">Security at Slate360</h1>
+    <p className="mb-8">Your data's safety is non-negotiable—from field uploads to AI reports.</p>
+    
+    <div className="space-y-8">
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Our Approach</h2>
+        <p>Zero-trust model: Encrypt everything, limit access, audit always. Building with industry-standard practices.</p>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Infrastructure</h2>
+        <ul className="space-y-2">
+          <li>• Cloud hosting: Encrypted at rest (AES-256), in transit (TLS 1.3).</li>
+          <li>• Data controls: Tier quotas prevent overages (e.g., Free: Auto-pause at 1GB—no costs).</li>
+          <li>• Backups: Daily, geo-redundant; recovery <4 hours.</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Access & Controls</h2>
+        <ul className="space-y-2">
+          <li>• RBAC: Basic users see own projects; CEO admins all (owner-only).</li>
+          <li>• AI processing: Transient—deleted post-job; verify outputs (we disclaim errors).</li>
+          <li>• Logs: Anonymized audits; no PII sales.</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Reporting Vulnerabilities</h2>
+        <p>Email security@slate360.ai with details (safe harbor: No liability for good-faith reports). Response <48 hours.</p>
+      </section>
+    </div>
+    <p className="text-sm text-slate-600 mt-12 text-center">Designed for reliable production use. <a href="/privacy">Privacy</a> | Report: security@slate360.ai</p>
+  </section>
+</div>
+Save these as separate files (e.g., "Slate360_About.md") for easy import to Word/PDF. All ready for repo—test with npm run dev. Next: Dashboard details or Athlete360 upload?

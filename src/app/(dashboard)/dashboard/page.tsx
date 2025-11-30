@@ -1,22 +1,35 @@
 "use client";
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { LIVE_PROJECTS } from "@/lib/data/ceo-uploads"
 import { ProjectCard } from "@/components/features/project-hub/ProjectCard"
-import { CreditTopUpModal } from "@/components/features/project-hub/CreditTopUpModal"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Upload, FileBox, Box, Layers, Video, FileText, Activity, Map, Zap, TrendingUp, BarChart3 } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/useAuthStore"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { useCurrentProjectId, useSetCurrentProjectId } from "@/lib/hooks/useCurrentProject";
+import { ProjectHubView } from "@/components/features/project-hub/ProjectHubView";
+import { mockProjects } from "@/lib/mocks/projects";
 
 export default function DashboardPage() {
-  const [data, setData] = useState<any | null>(null)
+  const [data, setData] = useState<any | null>({
+    projects: [],
+    usage: { creditsRemaining: 1250, creditsUsed: 250, storageUsed: 5 }
+  })
   const { tier, entitlements, user, isLoading, _hasHydrated } = useAuthStore()
+  const currentProjectId = useCurrentProjectId();
+  const setCurrentProjectId = useSetCurrentProjectId();
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [activeTab, setActiveTab] = useState('my-account')
   const [showCreateProject, setShowCreateProject] = useState(false)
+  const [newProjectName, setNewProjectName] = useState("")
+  const [newProjectTool, setNewProjectTool] = useState("")
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
 
@@ -41,26 +54,38 @@ export default function DashboardPage() {
 
   const handleCreateProject = () => {
     // Simulate project creation
-    alert('Project creation functionality would be implemented here')
+    if (!newProjectName || !newProjectTool) {
+      alert("Add a name and choose a starting tool")
+      return
+    }
+    alert(`Project "${newProjectName}" starting in ${newProjectTool} would be created here`)
+    setNewProjectName("")
+    setNewProjectTool("")
     setShowCreateProject(false)
   }
 
   useEffect(() => {
-    if (!_hasHydrated) return // Wait for hydration
-
-    if (!isLoading && !user) {
-      router.push('/login')
-      return
+    const tab = searchParams.get('tab')
+    
+    if (tab) {
+      // If a specific tab is requested, check entitlement
+      if (tab !== 'my-account' && tab !== 'ceo' && entitlements && !entitlements[tab]) {
+        // Not entitled? Fallback to first available tool or my-account
+        const firstAvailable = Object.keys(entitlements).find(k => entitlements[k] === true)
+        setActiveTab(firstAvailable || 'my-account')
+      } else {
+        setActiveTab(tab)
+      }
+    } else {
+      // No tab requested? Default to first available tool (e.g. project-hub, content-studio)
+      if (entitlements) {
+        const firstAvailable = Object.keys(entitlements).find(k => entitlements[k] === true)
+        setActiveTab(firstAvailable || 'my-account')
+      } else {
+        setActiveTab('my-account')
+      }
     }
-
-    if (user) {
-      fetch('/api/dashboard')
-        .then(r => r.json())
-        .then((d) => {
-          setData(d)
-        })
-    }
-  }, [user, isLoading, _hasHydrated, router])
+  }, [searchParams, entitlements])
 
   if (!_hasHydrated || isLoading) {
     return <div className="p-6 flex items-center justify-center h-64">
@@ -75,669 +100,313 @@ export default function DashboardPage() {
   }
 
   if (!data) {
-    return <div className="p-6 flex items-center justify-center h-64">
-      <div className="text-slate-500 animate-pulse">Loading dashboard...</div>
-    </div>
+    return (
+      <div className="p-6 flex items-center justify-center h-64">
+        <div className="text-slate-500 animate-pulse">Loading dashboard...</div>
+      </div>
+    )
   }
+
+  const currentProject =
+    mockProjects.find((p) => p.id === currentProjectId) ?? mockProjects[0];
 
   const activeProjects = data.projects.length
   const isCEO = user?.email === 'ceo@slate360.com' // Placeholder for CEO check
   const hasAthleteAccess = entitlements['athlete360'] || isCEO
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background text-foreground">
-      <div className="space-y-6 p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back. Here's what's happening with your projects.</p>
-        </div>
-        <CreditTopUpModal />
+    <div className="bg-background text-foreground h-full flex flex-col max-h-screen overflow-hidden">
+      <div className="space-y-4 p-6 pb-3 flex-shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome back. You’re focused on{" "}
+              <span className="font-medium text-foreground">
+                {currentProject?.name}
+              </span>
+              .
+            </p>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+              <span>
+                Client: <span className="text-foreground">{currentProject.client}</span>
+              </span>
+              <span className="hidden sm:inline">•</span>
+              <span>
+                Org:{" "}
+                <span className="text-foreground">
+                  {currentProject.organization} • {currentProject.region}
+                </span>
+              </span>
+              <span className="hidden sm:inline">•</span>
+              <span>
+                Phase: <span className="text-foreground">{currentProject.phase}</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-stretch sm:items-end gap-3 min-w-[220px]">
+            <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              Active project
+            </div>
+            <select
+              className="w-full sm:w-60 bg-background border border-border text-sm rounded-md px-2 py-1.5 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/70"
+              value={currentProject?.id ?? ""}
+              onChange={(e) => setCurrentProjectId(e.target.value || null)}
+            >
+              {mockProjects.map((project) => (
+                <option key={project.id} value={project.id}>
+                  {project.name} — {project.organization}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      <Tabs defaultValue="project-hub" className="w-full">
-        <div className="overflow-x-auto mb-6">
-          <TabsList className="inline-flex h-12 items-center justify-start rounded-lg bg-muted/50 border border-border p-1 text-muted-foreground w-max min-w-full backdrop-blur-sm">
-            {entitlements['project-hub'] && <TabsTrigger value="project-hub" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Project Hub</TabsTrigger>}
-            {entitlements['design-studio'] && <TabsTrigger value="design-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Design Studio</TabsTrigger>}
-            {entitlements['content-studio'] && <TabsTrigger value="content-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Content Studio</TabsTrigger>}
-            {entitlements['360-tour-builder'] && <TabsTrigger value="360-tour-builder" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">360 Tour Builder</TabsTrigger>}
-            {entitlements['geospatial-robotics'] && <TabsTrigger value="geospatial-robotics" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Geospatial & Robotics</TabsTrigger>}
-            {entitlements['virtual-studio'] && <TabsTrigger value="virtual-studio" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Virtual Studio</TabsTrigger>}
-            {entitlements['analytics-reports'] && <TabsTrigger value="analytics-reports" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Analytics & Reports</TabsTrigger>}
-            <TabsTrigger value="my-account" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">My Account</TabsTrigger>
-            {isCEO && <TabsTrigger value="ceo" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">CEO</TabsTrigger>}
-            {hasAthleteAccess && <TabsTrigger value="athlete360" className="whitespace-nowrap transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Athlete360</TabsTrigger>}
-          </TabsList>
-        </div>
+      <Tabs value={activeTab} className="w-full px-6 pb-4 flex-1 overflow-hidden">
+        <Dialog open={showCreateProject} onOpenChange={setShowCreateProject}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Start a new project</DialogTitle>
+              <DialogDescription>
+                Name your project and choose which Slate360 tool you want to start in.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-3 mt-2">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-muted-foreground" htmlFor="new-project-name">
+                  Project name
+                </label>
+                <Input
+                  id="new-project-name"
+                  placeholder="e.g. Downtown tower fit-out"
+                  value={newProjectName}
+                  onChange={(e) => setNewProjectName(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-1 text-xs">
+                <p className="font-medium text-muted-foreground">Start in</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setNewProjectTool("Project Hub")}
+                    className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                      newProjectTool === "Project Hub"
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                    }`}
+                  >
+                    <span className="block font-medium">Project Hub</span>
+                    <span className="block text-[10px] text-muted-foreground">Core workspace</span>
+                  </button>
+
+                  {entitlements["design-studio"] && (
+                    <button
+                      type="button"
+                      onClick={() => setNewProjectTool("Design Studio")}
+                      className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                        newProjectTool === "Design Studio"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                      }`}
+                    >
+                      <span className="block font-medium">Design Studio</span>
+                      <span className="block text-[10px] text-muted-foreground">3D modeling</span>
+                    </button>
+                  )}
+
+                  {entitlements["content-studio"] && (
+                    <button
+                      type="button"
+                      onClick={() => setNewProjectTool("Content Studio")}
+                      className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                        newProjectTool === "Content Studio"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                      }`}
+                    >
+                      <span className="block font-medium">Content Studio</span>
+                      <span className="block text-[10px] text-muted-foreground">Media workflows</span>
+                    </button>
+                  )}
+
+                  {entitlements["360-tour-builder"] && (
+                    <button
+                      type="button"
+                      onClick={() => setNewProjectTool("360 Tour Builder")}
+                      className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                        newProjectTool === "360 Tour Builder"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                      }`}
+                    >
+                      <span className="block font-medium">360 Tour Builder</span>
+                      <span className="block text-[10px] text-muted-foreground">Guided tours</span>
+                    </button>
+                  )}
+
+                  {entitlements["geospatial-robotics"] && (
+                    <button
+                      type="button"
+                      onClick={() => setNewProjectTool("Geospatial & Robotics")}
+                      className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                        newProjectTool === "Geospatial & Robotics"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                      }`}
+                    >
+                      <span className="block font-medium">Geospatial & Robotics</span>
+                      <span className="block text-[10px] text-muted-foreground">Maps & missions</span>
+                    </button>
+                  )}
+
+                  {entitlements["virtual-studio"] && (
+                    <button
+                      type="button"
+                      onClick={() => setNewProjectTool("Virtual Studio")}
+                      className={`rounded-lg border px-2.5 py-2 text-left text-[11px] transition-colors ${
+                        newProjectTool === "Virtual Studio"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/40 hover:bg-muted/70"
+                      }`}
+                    >
+                      <span className="block font-medium">Virtual Studio</span>
+                      <span className="block text-[10px] text-muted-foreground">VR walkthroughs</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-2 flex justify-end gap-2 text-xs">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setShowCreateProject(false)
+                    setNewProjectName("")
+                    setNewProjectTool("")
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button size="sm" onClick={handleCreateProject}>
+                  Create project
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {entitlements['project-hub'] && (
-          <TabsContent value="project-hub" className="space-y-6 mt-8">
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Active Projects</h3>
-                <p className="text-3xl font-bold text-foreground">{activeProjects}</p>
-              </div>
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Credits Remaining</h3>
-                <p className="text-3xl font-bold text-foreground">{data.usage.creditsRemaining}</p>
-              </div>
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Tier</h3>
-                <Badge variant="outline" className="text-lg px-3 py-1 bg-primary/10 text-primary border-primary/50">{tier}</Badge>
-              </div>
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold text-muted-foreground mb-2">Storage Used</h3>
-                <p className="text-3xl font-bold text-foreground">{data.usage.storageUsed}GB</p>
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <Upload className="h-5 w-5 text-primary" />
-                  Upload Files
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Upload CAD files, images, or documents to start a new project.
-                </p>
-                <input
-                  type="file"
-                  multiple
-                  accept=".obj,.fbx,.gltf,.jpg,.png,.pdf,.dwg"
-                  className="hidden"
-                  id="file-upload"
-                  onChange={handleFileUpload}
-                />
-                <label htmlFor="file-upload">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
-                    <Upload className="h-4 w-4 mr-2" />
-                    Choose Files
-                  </Button>
-                </label>
-              </div>
-
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <FileBox className="h-5 w-5 text-primary" />
-                  New Project
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Create a new project from scratch with templates.
-                </p>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105" onClick={() => setShowCreateProject(true)}>
-                  <FileBox className="h-4 w-4 mr-2" />
-                  Create Project
-                </Button>
-              </div>
-
-              <div className="bg-card/50 border border-border shadow-lg backdrop-blur-sm p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
-                  <Activity className="h-5 w-5 text-primary" />
-                  Recent Activity
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  View processing status and recent uploads.
-                </p>
-                <Button variant="outline" className="w-full border-border text-muted-foreground hover:bg-muted shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
-                  <Activity className="h-4 w-4 mr-2" />
-                  View Activity
-                </Button>
-              </div>
-            </div>
-
-            {/* Projects */}
-            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-slate-50">Recent Projects</h2>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700 shadow-[0_4px_14px_0_rgba(100,116,139,0.1)] transition-all duration-300 hover:scale-105">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Templates
-                  </Button>
-                  <Button size="sm" className="bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)] transition-all duration-300 hover:scale-105">
-                    <Upload className="h-4 w-4 mr-2" />
-                    New Project
-                  </Button>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {LIVE_PROJECTS.map((project: any) => (
-                  <ProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            </div>
-
-            {/* Processing Queue */}
-            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-              <h2 className="text-xl font-semibold mb-4 text-slate-50">Processing Queue</h2>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                    <span className="font-medium text-slate-50">Processing 3D model: office-building.obj</span>
-                  </div>
-                  <span className="text-sm text-slate-400">45% complete</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    <span className="font-medium text-slate-50">Completed: site-survey.pdf</span>
-                  </div>
-                  <span className="text-sm text-slate-400">Ready for review</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Uploads */}
-            {uploadedFiles.length > 0 && (
-              <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                <h2 className="text-xl font-semibold mb-4 text-slate-50">Recent Uploads</h2>
-                <div className="space-y-3">
-                  {uploadedFiles.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-400/30">
-                          <FileText className="h-4 w-4 text-cyan-400" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-slate-50">{file.name}</p>
-                          <p className="text-sm text-slate-400">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {uploadProgress[file.name] < 100 ? (
-                          <div className="w-20 bg-slate-600 rounded-full h-2">
-                            <div
-                              className="bg-cyan-400 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${uploadProgress[file.name] || 0}%` }}
-                            ></div>
-                          </div>
-                        ) : (
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        )}
-                        <span className="text-sm text-slate-400">
-                          {uploadProgress[file.name] === 100 ? 'Complete' : `${Math.round(uploadProgress[file.name] || 0)}%`}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+          <TabsContent value="project-hub" className="h-full overflow-hidden mt-0 pt-2">
+            <ProjectHubView onNewProject={() => setShowCreateProject(true)} />
           </TabsContent>
         )}
 
         {entitlements['design-studio'] && (
-          <TabsContent value="design-studio" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Tools Panel */}
-              <div className="lg:col-span-1 space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Design Tools</h2>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
-                      <Box className="h-4 w-4 mr-2" />
-                      Import Model
-                    </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
-                      <Layers className="h-4 w-4 mr-2" />
-                      Add Primitive
-                    </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
-                      <FileBox className="h-4 w-4 mr-2" />
-                      Boolean Operations
-                    </Button>
-                    <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">
-                      <Activity className="h-4 w-4 mr-2" />
-                      Measurements
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Materials</h2>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="aspect-square bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
-                    <div className="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg cursor-pointer hover:ring-2 ring-cyan-500"></div>
-                  </div>
-                </div>
-
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Export</h2>
-                  <div className="space-y-2">
-                    <Button className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">Export STL (3D Print)</Button>
-                    <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700">Export OBJ</Button>
-                    <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700">Export GLTF</Button>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3D Viewer */}
-              <div className="lg:col-span-2">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-semibold text-slate-50">3D Workspace</h2>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
-                        <Box className="h-4 w-4 mr-2" />
-                        Wireframe
-                      </Button>
-                      <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
-                        <Activity className="h-4 w-4 mr-2" />
-                        Render
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* 3D Canvas Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-600">
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🎨</div>
-                      <p className="text-lg font-semibold text-slate-50">3D Design Canvas</p>
-                      <p className="text-slate-400">Interactive 3D modeling workspace</p>
-                      <p className="text-sm text-slate-500 mt-2">Drag & drop models or use tools to create</p>
-                    </div>
-                  </div>
-
-                  {/* Model Properties */}
-                  <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-50">0</p>
-                      <p className="text-sm text-slate-400">Vertices</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-50">0</p>
-                      <p className="text-sm text-slate-400">Faces</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-50">0MB</p>
-                      <p className="text-sm text-slate-400">File Size</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-50">--</p>
-                      <p className="text-sm text-slate-400">Material</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <TabsContent value="design-studio" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Design Studio</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                Interactive 3D design workspace. This view is being rebuilt for the new dashboard shell.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                You’ll see tools, canvas, and recent designs here once the new layout is in place.
+              </p>
             </div>
           </TabsContent>
         )}
 
         {entitlements['content-studio'] && (
-          <TabsContent value="content-studio" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Content Studio</h2>
-                  <p className="text-slate-400 mb-6">
-                    AI-powered content creation and editing tools for immersive experiences.
-                    Create, edit, and enhance media content with professional tools.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-green-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Video Editor</h3>
-                        <p className="text-sm text-slate-400">Professional video editing</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-green-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Photo Editor</h3>
-                        <p className="text-sm text-slate-400">Advanced image processing</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-400/10 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-green-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">AI Enhancement</h3>
-                        <p className="text-sm text-slate-400">Smart content improvement</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h3 className="font-semibold mb-4 text-slate-50">Media Library</h3>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload Files
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <FileBox className="h-4 w-4 mr-2" />
-                      Create Project
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🎬</div>
-                  <p className="text-lg font-semibold text-slate-50">Content Creation Suite</p>
-                  <p className="text-slate-400">Professional media tools</p>
-                </div>
-              </div>
+          <TabsContent value="content-studio" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Content Studio</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                AI-assisted video and media tools. This tab is parked while we finalize the new dashboard design.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                Expect a calm, single-screen layout with uploads, timelines, and export actions.
+              </p>
             </div>
           </TabsContent>
         )}
 
         {entitlements['360-tour-builder'] && (
-          <TabsContent value="360-tour-builder" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">360° Tour Builder</h2>
-                  <p className="text-slate-400 mb-6">
-                    Create interactive 360-degree tours with drag-and-drop simplicity.
-                    Build immersive virtual experiences for real estate, construction, and more.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-cyan-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Tour Editor</h3>
-                        <p className="text-sm text-slate-400">Visual tour creation</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
-                        <Map className="h-4 w-4 text-cyan-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Hotspots</h3>
-                        <p className="text-sm text-slate-400">Interactive navigation</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-cyan-400/10 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-cyan-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Export Options</h3>
-                        <p className="text-sm text-slate-400">Multiple formats</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h3 className="font-semibold mb-4 text-slate-50">Tour Projects</h3>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload 360° Images
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <FileBox className="h-4 w-4 mr-2" />
-                      New Tour
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🏠</div>
-                  <p className="text-lg font-semibold text-slate-50">360° Tour Builder</p>
-                  <p className="text-slate-400">Immersive virtual tours</p>
-                </div>
-              </div>
+          <TabsContent value="360-tour-builder" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">360 Tour Builder</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                Drag-and-drop tour creation. The final layout will keep a single-screen canvas with hotspots and scenes.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                Placeholder mode while the new non-scrolling tour builder view is designed.
+              </p>
             </div>
           </TabsContent>
         )}
 
         {entitlements['geospatial-robotics'] && (
-          <TabsContent value="geospatial-robotics" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Geospatial & Robotics</h2>
-                  <p className="text-slate-400 mb-6">
-                    Track assets, missions, and robotics on interactive maps with AI insights.
-                    Manage drone operations, geospatial data, and robotic automation.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                        <Map className="h-4 w-4 text-emerald-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Live Maps</h3>
-                        <p className="text-sm text-slate-400">Real-time asset tracking</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-emerald-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Drone Control</h3>
-                        <p className="text-sm text-slate-400">Flight planning & monitoring</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                        <Zap className="h-4 w-4 text-emerald-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Robotics</h3>
-                        <p className="text-sm text-slate-400">Automated systems</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h3 className="font-semibold mb-4 text-slate-50">Mission Control</h3>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload Geospatial Data
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <FileBox className="h-4 w-4 mr-2" />
-                      Plan Mission
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🗺️</div>
-                  <p className="text-lg font-semibold text-slate-50">Geospatial Intelligence</p>
-                  <p className="text-slate-400">Live asset & robotics tracking</p>
-                </div>
-              </div>
+          <TabsContent value="geospatial-robotics" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Geospatial & Robotics</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                Mission planning, live maps, and asset tracking will live here in a compact control surface.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                For now this is a placeholder while we rebuild the experience.
+              </p>
             </div>
           </TabsContent>
         )}
 
         {entitlements['virtual-studio'] && (
-          <TabsContent value="virtual-studio" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Virtual Studio</h2>
-                  <p className="text-slate-400 mb-6">
-                    Immersive virtual reality experiences with haptic feedback.
-                    Step inside your designs and sites in full VR.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
-                        <Zap className="h-4 w-4 text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">VR Viewer</h3>
-                        <p className="text-sm text-slate-400">Full immersion experience</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
-                        <Activity className="h-4 w-4 text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Haptic Feedback</h3>
-                        <p className="text-sm text-slate-400">Tactile interactions</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-400/10 rounded-lg flex items-center justify-center">
-                        <Video className="h-4 w-4 text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Multi-user Sessions</h3>
-                        <p className="text-sm text-slate-400">Collaborative VR</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h3 className="font-semibold mb-4 text-slate-50">VR Sessions</h3>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload VR Content
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <FileBox className="h-4 w-4 mr-2" />
-                      Start Session
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🥽</div>
-                  <p className="text-lg font-semibold text-slate-50">Virtual Reality Studio</p>
-                  <p className="text-slate-400">Immersive experiences</p>
-                </div>
-              </div>
+          <TabsContent value="virtual-studio" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Virtual Studio</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                VR walkthroughs and cinematic views. This tab will become a focused staging area for scenes and camera paths.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                Placeholder content to keep the dashboard lightweight while we design.
+              </p>
             </div>
           </TabsContent>
         )}
 
         {entitlements['analytics-reports'] && (
-          <TabsContent value="analytics-reports" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4 text-slate-50">Reports & Analytics</h2>
-                  <p className="text-slate-400 mb-6">
-                    Comprehensive reporting and analytics for project performance and ROI.
-                    Generate professional reports and analyze project data.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="h-4 w-4 text-orange-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Report Builder</h3>
-                        <p className="text-sm text-slate-400">Custom report templates</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="h-4 w-4 text-orange-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Data Analytics</h3>
-                        <p className="text-sm text-slate-400">Performance insights</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-orange-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-slate-50">Export Options</h3>
-                        <p className="text-sm text-slate-400">Professional formats</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-                  <h3 className="font-semibold mb-4 text-slate-50">Report Templates</h3>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
-                      <FileText className="h-4 w-4 mr-2" />
-                      Project Status Report
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <BarChart3 className="h-4 w-4 mr-2" />
-                      ROI Analysis
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start border-slate-600 text-slate-300 hover:bg-slate-700">
-                      <TrendingUp className="h-4 w-4 mr-2" />
-                      Custom Report
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 rounded-xl p-6 flex items-center justify-center border border-slate-600/50">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">📊</div>
-                  <p className="text-lg font-semibold text-slate-50">Analytics Dashboard</p>
-                  <p className="text-slate-400">Data-driven insights</p>
-                </div>
-              </div>
+          <TabsContent value="analytics-reports" className="mt-2">
+            <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Analytics & Reports</h2>
+              <p className="text-sm text-muted-foreground mb-2">
+                High-level metrics and exportable reports. This will be a single-screen overview with drill-down options.
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                We’re simplifying this area in preparation for the new reporting system.
+              </p>
             </div>
           </TabsContent>
         )}
 
-        <TabsContent value="my-account" className="space-y-6 mt-6">
-          <div className="max-w-2xl space-y-6">
-            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-              <h2 className="text-xl font-semibold mb-4 text-slate-50">Account Settings</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-slate-300">Email</label>
-                  <input type="email" className="w-full p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50 placeholder-slate-400" defaultValue={user?.email} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-slate-300">Name</label>
-                  <input type="text" className="w-full p-2 border border-slate-600 rounded bg-slate-700/50 text-slate-50 placeholder-slate-400" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-slate-300">Theme</label>
-                  <ThemeToggle />
-                </div>
-                <Button className="bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">Save Changes</Button>
-              </div>
-            </div>
-            <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
-              <h2 className="text-xl font-semibold mb-4 text-slate-50">Subscription</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Current Plan:</span>
-                  <Badge variant="outline" className="bg-cyan-400/10 text-cyan-400 border-cyan-400/50">{tier}</Badge>
-                </div>
-                <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700">Manage Subscription</Button>
-              </div>
-            </div>
+        <TabsContent value="my-account" className="mt-2">
+          <div className="max-w-3xl rounded-xl border border-border/70 bg-card/70 p-4 space-y-3">
+            <h2 className="text-lg font-semibold text-foreground">My Account</h2>
+            <p className="text-sm text-muted-foreground">
+              Account settings and theme controls will live here in a compact layout.
+            </p>
+            <p className="text-xs text-muted-foreground/80">
+              You’re logged in as <span className="font-medium text-foreground">{user?.email}</span>. Theme and billing controls will be wired in next.
+            </p>
           </div>
         </TabsContent>
 
         {isCEO && (
-          <TabsContent value="ceo" className="space-y-6 mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TabsContent value="ceo" className="space-y-4 mt-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Business Overview */}
               <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">Business Overview</h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 bg-green-400/10 rounded-lg border border-green-400/30">
@@ -759,7 +428,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">User Management</h2>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg border border-slate-600/50">
@@ -792,8 +461,8 @@ export default function DashboardPage() {
               </div>
 
               {/* Controls */}
-              <div className="space-y-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+              <div className="space-y-4">
+                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">System Controls</h2>
                   <div className="space-y-4">
                     <div>
@@ -824,7 +493,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm p-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-4">
                   <h2 className="text-xl font-semibold mb-4 text-slate-50">Content Management</h2>
                   <div className="space-y-3">
                     <Button className="w-full justify-start bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-slate-600" variant="outline">

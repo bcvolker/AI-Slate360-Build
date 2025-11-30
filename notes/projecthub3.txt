@@ -1,0 +1,643 @@
+1. Project Hub – Simplified Product Spec (Replace the old text file with this)
+
+Name: Project Hub
+Audience: People managing projects, teams, documents, and field activity.
+
+Works for complex capital projects and small shops.
+
+Must stay usable for non-technical users (e.g., small contractors, drone pilots, realtors, students).
+
+Goal:
+Project Hub is the central place to manage projects, tasks, documents, and field issues in Slate360. It should feel lighter and simpler than Procore, but still powerful enough to handle “real” construction workflows.
+
+A. High-Level UX Structure
+
+Project Hub uses a 3-tier structure shared with the rest of Slate360:
+
+Tier 1 – All Projects (Hub Home)
+
+Path: /project-hub
+
+Shows:
+
+Project cards in a grid.
+
+A “My Work” tab for the current user’s RFIs, submittals, tasks, and approvals across all projects.
+
+An “Activity” tab for recent important events.
+
+Tier 2 – Project Home
+
+Path: /project-hub/[projectId]
+
+A simple overview with:
+
+Project header (name, number, status, start/end dates).
+
+3–6 small cards:
+
+Open Items (RFIs, submittals, issues, approvals)
+
+Upcoming Dates (milestones)
+
+Recent Files (drawings, specs, photos)
+
+Optional: Field Notes or Daily Logs
+
+All cards link to detailed views (Tier 3).
+
+Tier 3 – Tool Views
+
+Paths like:
+
+/project-hub/[projectId]/documents
+
+/project-hub/[projectId]/rfis
+
+/project-hub/[projectId]/submittals
+
+/project-hub/[projectId]/schedule
+
+/project-hub/[projectId]/map
+
+/project-hub/[projectId]/photos
+
+Each tool uses the same pattern:
+
+Large main table or canvas (left/center).
+
+A right-side Context Panel with tabs: Details / Comments / Share / History.
+
+B. Core Features (MVP)
+
+1. All Projects (Tier 1)
+
+Grid of project cards:
+
+Name, number, client, status (Active, On Hold, Closed).
+
+Quick stats: Open RFIs, Open Submittals, Upcoming milestone count.
+
+Top-right “New Project” button.
+
+Tabs:
+
+All Projects: default grid.
+
+My Work: unified list of items assigned to the current user (RFIs, submittals, approvals).
+
+Activity: high-level activity feed (new RFIs, approvals, uploads).
+
+2. Project Home (Tier 2)
+
+Header with:
+
+Project name + code.
+
+Status pill.
+
+Budget and %, or simple high-level metric.
+
+Widget cards:
+
+Open Items: e.g., “3 RFIs • 2 Submittals • 5 Tasks” with link.
+
+Schedule Snapshot: next 1–3 milestones.
+
+Recent Files: latest uploads (drawings, models, photos).
+
+Optional extra cards: “Field Notes Today” or “Issues This Week”.
+
+3. RFIs & Submittals (Tier 3)
+
+Simple tables with:
+
+ID, title, status, due date, assignee.
+
+Filter by status and due date.
+
+“New RFI” / “New Submittal” button at top.
+
+New form:
+
+Title, description, assignee, due date.
+
+Optional: “Attach Document / Photo / Map Location”.
+
+Context panel:
+
+Details: fields and status.
+
+Comments: thread with @mentions.
+
+Share: copy link, send email.
+
+History: status changes.
+
+4. Documents / Folders (Tier 3)
+
+Tree or list of folders and files.
+
+Drag-and-drop upload.
+
+Simple actions: rename, move, download, share.
+
+Optional AI helper button in the future (e.g., “Summarize Spec”).
+
+5. Schedule (Tier 3)
+
+Lightweight list (MVP) with task name, start, finish, status.
+
+Upgrade later to Gantt.
+
+6. Map & Photos (Tier 3)
+
+Map view with pins representing:
+
+Issues, RFIs, submittals, or generic “location notes”.
+
+Photos page:
+
+Simple grid of images with filters (by date, tag, project area).
+
+C. Roles & Permissions (Simple RBAC)
+
+Aligns with the global roles we set up in the Dashboard:
+
+Owner / Admin
+
+Can create projects.
+
+Full access to all tools and settings.
+
+Can invite/remove users from a project.
+
+Project Manager
+
+Can create and edit RFIs, submittals, documents, schedule tasks.
+
+Can invite “Project Members” and “External Viewers” for that project.
+
+Project Member
+
+Can see assigned items.
+
+Can upload documents/photos.
+
+Can add comments.
+
+External Viewer (Client/Subcontractor/Consultant)
+
+Can only see what is shared with them.
+
+Can respond to RFIs or submit limited uploads to specific folders.
+
+Permissions should be stored in one place (e.g., Supabase tables) and reused across all tabs.
+
+D. Profiles / Complexity Levels
+
+Project Hub should respect the Dashboard Profile selection (e.g., Basic / Standard / Advanced):
+
+Basic
+
+Show All Projects, My Work, simple Project Home, Documents, Photos.
+
+Hide advanced tools (RFIs/Submittals/Schedule) unless explicitly enabled.
+
+Standard
+
+Full set of tools (RFIs, submittals, schedule, map, documents).
+
+Advanced
+
+Same tools as Standard but can see extra analytics widgets and advanced filters when those are built.
+
+E. “Smart” Helpers (Optional, but planned)
+
+Keep these as small buttons, not their own tabs.
+
+“AI Assist” in RFI/Submittal forms:
+
+Suggest a better subject line or clearer description.
+
+“Suggest Assignee” button:
+
+Suggests who should handle an item based on previous assignments.
+
+“Summarize Document” in Documents:
+
+Quick paragraph summary for long PDFs.
+
+All AI buttons must:
+
+Be optional.
+
+Show a short disclaimer text like “Review before sending.”
+
+F. Design & Consistency
+
+Use the same top header and spacing as Dashboard.
+
+Background: light bg-gray-50 in main content, white cards.
+
+Buttons: primary blue, rounded, 44px min height.
+
+Context panel on the right is reused across tools:
+
+Tabs: Details / Comments / Share / History.
+
+Command Palette (Cmd/Ctrl + K) should find:
+
+Projects by name.
+
+RFIs/Submittals by ID.
+
+Actions like “New RFI”, “Upload document”.
+
+2. Code Skeletons for Copilot (Safe, Flexible)
+
+You can drop these into your codebase and let Copilot fill in details.
+
+2.1 lib/useProjectHubStore.ts
+'use client';
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export type ProjectStatus = 'active' | 'on_hold' | 'closed';
+
+export interface ProjectSummary {
+  id: string;
+  name: string;
+  code: string;
+  client?: string;
+  status: ProjectStatus;
+  openRfis?: number;
+  openSubmittals?: number;
+  upcomingMilestones?: number;
+}
+
+export interface WorkItem {
+  id: string;
+  type: 'rfi' | 'submittal' | 'task';
+  projectId: string;
+  title: string;
+  status: string;
+  dueDate?: string;
+  assigneeId?: string;
+}
+
+interface ProjectHubState {
+  projects: ProjectSummary[];
+  myWork: WorkItem[];
+  isLoading: boolean;
+
+  setProjects: (projects: ProjectSummary[]) => void;
+  setMyWork: (items: WorkItem[]) => void;
+  setLoading: (value: boolean) => void;
+}
+
+export const useProjectHubStore = create<ProjectHubState>()(
+  persist(
+    (set) => ({
+      projects: [],
+      myWork: [],
+      isLoading: false,
+
+      setProjects: (projects) => set({ projects }),
+      setMyWork: (items) => set({ myWork: items }),
+      setLoading: (value) => set({ isLoading: value }),
+    }),
+    { name: 'slate360-project-hub' }
+  )
+);
+
+2.2 Tier 1 – /app/project-hub/page.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useProjectHubStore } from '@/lib/useProjectHubStore';
+
+type TabKey = 'projects' | 'my-work' | 'activity';
+
+export default function ProjectHubPage() {
+  const { projects, myWork, isLoading, setProjects, setMyWork, setLoading } =
+    useProjectHubStore();
+  const [tab, setTab] = useState<TabKey>('projects');
+
+  // TODO: replace with real API call
+  useEffect(() => {
+    setLoading(true);
+    // fetch('/api/project-hub/overview')...
+    setLoading(false);
+  }, [setLoading]);
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-slate-900 flex flex-col">
+      {/* Top bar can be unified with Dashboard header later */}
+      <header className="border-b bg-white px-6 py-4 flex items-center justify-between">
+        <h1 className="font-orbitron font-bold text-xl">Project Hub</h1>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">
+          New Project
+        </button>
+      </header>
+
+      {/* Tab switcher */}
+      <div className="px-6 pt-4 flex gap-2">
+        <TabButton label="All Projects" active={tab === 'projects'} onClick={() => setTab('projects')} />
+        <TabButton label="My Work" active={tab === 'my-work'} onClick={() => setTab('my-work')} />
+        <TabButton label="Activity" active={tab === 'activity'} onClick={() => setTab('activity')} />
+      </div>
+
+      <main className="flex-1 p-6">
+        {isLoading && <p className="text-sm text-slate-500">Loading…</p>}
+
+        {!isLoading && tab === 'projects' && (
+          <ProjectGrid projects={projects} />
+        )}
+
+        {!isLoading && tab === 'my-work' && (
+          <MyWorkList items={myWork} />
+        )}
+
+        {!isLoading && tab === 'activity' && (
+          <ActivityPlaceholder />
+        )}
+      </main>
+    </div>
+  );
+}
+
+function TabButton({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+        active
+          ? 'bg-blue-600 text-white shadow-sm'
+          : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function ProjectGrid({ projects }: { projects: ReturnType<typeof useProjectHubStore>['projects'] }) {
+  if (!projects.length) {
+    return (
+      <div className="border border-dashed border-slate-300 rounded-xl p-8 text-center text-sm text-slate-500 bg-white">
+        No projects yet. Click <span className="font-semibold">New Project</span> to create your first one.
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      {projects.map((p) => (
+        <Link
+          key={p.id}
+          href={`/project-hub/${p.id}`}
+          className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md border border-slate-200 hover:border-blue-400 transition flex flex-col gap-2"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold text-slate-900">
+              {p.name}
+            </h2>
+            <span className="text-xs uppercase tracking-wide px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+              {p.status}
+            </span>
+          </div>
+          <p className="text-xs text-slate-500">{p.code}</p>
+          <div className="flex gap-3 text-xs text-slate-500 mt-1">
+            {typeof p.openRfis === 'number' && (
+              <span>{p.openRfis} RFIs</span>
+            )}
+            {typeof p.openSubmittals === 'number' && (
+              <span>{p.openSubmittals} Submittals</span>
+            )}
+            {typeof p.upcomingMilestones === 'number' && (
+              <span>{p.upcomingMilestones} milestones</span>
+            )}
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function MyWorkList({ items }: { items: ReturnType<typeof useProjectHubStore>['myWork'] }) {
+  if (!items.length) {
+    return (
+      <p className="text-sm text-slate-500">
+        Nothing assigned to you yet.
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div
+          key={item.id}
+          className="bg-white rounded-lg p-4 border border-slate-200 flex items-center justify-between"
+        >
+          <div>
+            <p className="text-sm font-semibold">{item.title}</p>
+            <p className="text-xs text-slate-500">
+              {item.type.toUpperCase()} • Due {item.dueDate ?? '—'}
+            </p>
+          </div>
+          <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+            {item.status}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ActivityPlaceholder() {
+  return (
+    <p className="text-sm text-slate-500">
+      Activity feed coming soon. For now, focus on{" "}
+      <span className="font-semibold">All Projects</span> and{" "}
+      <span className="font-semibold">My Work</span>.
+    </p>
+  );
+}
+
+2.3 Tier 2 – /app/project-hub/[projectId]/page.tsx
+'use client';
+
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useProjectHubStore } from '@/lib/useProjectHubStore';
+import { useMemo } from 'react';
+
+export default function ProjectHomePage() {
+  const params = useParams<{ projectId: string }>();
+  const { projectId } = params;
+  const { projects } = useProjectHubStore();
+
+  const project = useMemo(
+    () => projects.find((p) => p.id === projectId),
+    [projects, projectId]
+  );
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center text-sm text-slate-500">
+        Project not found.
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex">
+      <main className="flex-1 p-6 space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-orbitron font-bold text-slate-900">
+              {project.name}
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">
+              {project.code}
+            </p>
+          </div>
+          <span className="text-xs uppercase tracking-wide px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+            {project.status}
+          </span>
+        </div>
+
+        {/* Widgets */}
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+          <WidgetCard
+            title="Open Items"
+            body={`${project.openRfis ?? 0} RFIs • ${
+              project.openSubmittals ?? 0
+            } Submittals`}
+            href={`/project-hub/${project.id}/rfis`}
+            linkLabel="View RFIs & Submittals"
+          />
+          <WidgetCard
+            title="Upcoming Schedule"
+            body={`${project.upcomingMilestones ?? 0} upcoming milestones`}
+            href={`/project-hub/${project.id}/schedule`}
+            linkLabel="Open Schedule"
+          />
+          <WidgetCard
+            title="Recent Files"
+            body="Latest drawings, specs, and photos."
+            href={`/project-hub/${project.id}/documents`}
+            linkLabel="Open Documents"
+          />
+        </div>
+      </main>
+
+      {/* Simple placeholder for a future Context Panel */}
+      <aside className="hidden lg:block w-80 border-l border-slate-200 bg-white p-4">
+        <h2 className="text-sm font-semibold mb-2">Project Notes</h2>
+        <p className="text-xs text-slate-500">
+          This panel can later show details, comments, or quick sharing tools for
+          the selected item.
+        </p>
+      </aside>
+    </div>
+  );
+}
+
+function WidgetCard({
+  title,
+  body,
+  href,
+  linkLabel,
+}: {
+  title: string;
+  body: string;
+  href: string;
+  linkLabel: string;
+}) {
+  return (
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
+      <div>
+        <h3 className="text-sm font-semibold text-slate-900 mb-1">
+          {title}
+        </h3>
+        <p className="text-xs text-slate-500">{body}</p>
+      </div>
+      <Link
+        href={href}
+        className="mt-3 inline-flex text-xs font-semibold text-blue-600 hover:text-blue-700"
+      >
+        {linkLabel}
+      </Link>
+    </div>
+  );
+}
+
+
+2.1. Client wrapper for the query
+
+Create:
+
+app/project-hub/LinkedTourFromQuery.tsx
+
+// app/project-hub/LinkedTourFromQuery.tsx
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { LinkedTourBanner } from '@/components/tours/LinkedTourBanner';
+
+export function ProjectHubLinkedTourFromQuery() {
+  const params = useSearchParams();
+  const tourId = params.get('tourId');
+
+  if (!tourId) return null;
+
+  return <LinkedTourBanner tourId={tourId} context="project-hub" />;
+}
+
+2.2. Use it in app/project-hub/page.tsx
+
+At the top of your Project Hub page, import and render it.
+
+Example structure (adjust to your existing file):
+
+// app/project-hub/page.tsx
+import type { Metadata } from 'next';
+import { ProjectHubLinkedTourFromQuery } from './LinkedTourFromQuery';
+// import your existing ProjectHubContent / layout components here
+
+export const metadata: Metadata = {
+  title: 'Slate360 – Project Hub',
+};
+
+export default function ProjectHubPage() {
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+      {/* Optional: dashboard shell header here */}
+
+      <main className="flex-1 px-4 py-4 sm:px-6 lg:px-8">
+        {/* NEW: show linked tour (if ?tourId=...) */}
+        <ProjectHubLinkedTourFromQuery />
+
+        {/* Existing Project Hub content */}
+        {/* <ProjectHubShell /> or whatever component you already have */}
+      </main>
+    </div>
+  );
+}
+
+
+Now /project-hub?tourId=123 will show the banner at the top.

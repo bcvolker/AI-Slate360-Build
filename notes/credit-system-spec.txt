@@ -1,0 +1,61 @@
+FILE: credit-system-spec.txt
+TITLE: Slate360 Credit & Data Control System
+DESCRIPTION: Logic for managing usage credits to prevent cost overruns.
+
+1. DATABASE UPDATES (Supabase)
+--------------------------------
+ALTER TABLE organizations 
+ADD COLUMN credits_balance INTEGER DEFAULT 500, -- Base allowance
+ADD COLUMN storage_limit_gb INTEGER DEFAULT 10; -- Tier based limit
+
+CREATE TABLE credit_transactions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID REFERENCES organizations(id),
+  amount INTEGER, -- Negative for usage, Positive for purchase
+  description TEXT, -- "Purchased 1k Pack" or "Processed 3D Model"
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+2. FRONTEND STORES (Zustand)
+--------------------------------
+Add to useDashboardStore:
+- credits: number
+- fetchCredits: () => Promise<void>
+- deductCredits: (amount: number, reason: string) => Promise<boolean>
+
+3. UI COMPONENTS
+--------------------------------
+A. components/billing/CreditDisplay.tsx
+   - Shows "⚡ 4,250 Credits" in the Sidebar.
+   - Color codes: Green (>1000), Yellow (<500), Red (<100).
+   - Click opens TopUpModal.
+
+B. components/billing/CreditTopUpModal.tsx
+   - Displays Stripe Payment Links for:
+     - "Starter Pack" (1,000 Credits - $20)
+     - "Pro Pack" (5,000 Credits - $80)
+   - Shows "History" tab reading from credit_transactions table.
+
+C. components/shared/CostEstimator.tsx
+   - Props: { actionName: string, cost: number, onConfirm: () => void }
+   - Logic: Checks balance. If insufficient, shows "Insufficient Funds" error.
+
+4. API ROUTE LOGIC (Secure Deduction)
+--------------------------------
+/api/credits/deduct (POST)
+Body: { orgId, amount, reason }
+Logic:
+  1. Start SQL Transaction.
+  2. Check if (balance - amount) >= 0.
+  3. If yes: Update org balance, Insert transaction log, Return Success.
+  4. If no: Return 402 Payment Required.
+
+5. PRICING & COSTS (Configuration)
+--------------------------------
+const COST_TABLE = {
+  GENERATE_360_TOUR: 0,    // Client-side processing (Free)
+  UPLOAD_FILE_GB: 10,      // Cost per GB per month
+  PROCESS_PHOTOGRAMMETRY: 100, // WebODM API call
+  AI_ANOMALY_SCAN: 5,      // Per image
+  VIDEO_RENDER_MINUTE: 20  // Per minute of video
+}

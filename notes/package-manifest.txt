@@ -1,0 +1,19 @@
+Build Error
+Next.js (15.0.3) is outdated (learn more)
+Failed to compile
+
+./src/app/(dashboard)/dashboard/page.tsx
+Error:   × Unexpected token `div`. Expected jsx identifier
+     ╭─[/workspaces/AI-Slate360-Build/src/app/(dashboard)/dashboard/page.tsx:97:1]
+  94 │   const hasAthleteAccess = entitlements['athlete360'] || isCEO
+  95 │ 
+  96 │   return (
+  97 │     <div className="bg-background text-foreground h-full flex flex-col max-h-screen overflow-hidden">
+     ·      ───
+  98 │       <div className="space-y-4 p-6 pb-3 flex-shrink-0">
+  99 │         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+ 100 │           <div className="space-y-1">
+     ╰────
+
+Caused by:
+    Syntax Error

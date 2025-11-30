@@ -1,0 +1,76 @@
+# Slate360 Execution Plan & To-Do List
+
+## PHASE 0: PRE-FLIGHT (You do this now)
+Before asking Copilot to code, gather these keys.
+1. [ ] **Domain:** Ensure `slate360.ai` DNS points to Vercel (once deployed).
+2. [ ] **Supabase:** Create Project -> Get `NEXT_PUBLIC_SUPABASE_URL` & `ANON_KEY`.
+3. [ ] **Stripe:**
+    - Create Subscription Products ($49, $99, $199, $499).
+    - Create "Credit Packs" as One-Time Products ($20 for 1k credits).
+    - Get `STRIPE_SECRET_KEY` & `PUBLISHABLE_KEY`.
+4. [ ] **AWS S3:** Create Bucket -> Get `ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `REGION`, `BUCKET_NAME`.
+5. [ ] **Google Maps:**
+    - Go to Google Cloud Console.
+    - Enable "Maps JavaScript API" and "Maps Static API".
+    - Create API Key -> Restrict HTTP Referrer to `*.slate360.ai` (and `localhost:3000` for dev).
+    - Get `NEXT_PUBLIC_GOOGLE_MAPS_KEY`.
+6. [ ] **Environment:** Paste all keys into `.env.local`.
+
+---
+
+## PHASE 1: THE BUILD (Copilot Prompts)
+*Use `Master_Architecture_Spec.txt` as the anchor context for every prompt.*
+
+**Step 1: Foundation**
+> "Initialize the project structure and package.json based on Section 1 & 2 of `Master_Architecture_Spec.txt`. Run the Supabase migration from `db-schema-spec.txt`. Setup the `useAuthStore` and `useProjectContextStore`."
+
+**Step 2: The Credit System (Financial Protection)**
+*Upload `credit-system-spec.txt` (see below).*
+> "Implement the Credit System based on `credit-system-spec.txt`. Update the Organization schema to track `credits_balance`. Create the `CreditTopUpModal` component and the backend API route to consume credits."
+
+**Step 3: Dashboard Shell**
+> "Build the Dashboard Layout (Sidebar, Header). Integrate the `CreditDisplay` component into the Sidebar so users always see their balance. Wire up `useAuthStore` to protect routes."
+
+**Step 4: Project Hub**
+> "Build the Project Hub based on `projecthub3.txt`. Ensure clicking a project sets the Context. Add a 'Storage Used' indicator on the project card derived from file sizes."
+
+**Step 5: Heavy Tabs (The Cost Centers)**
+*Upload `Designstudio3.txt`.*
+> "Build the Design Studio. IMPORTANT: Before allowing a Model Processing job, check if `org.credits_balance > 100`. If yes, deduct 100 credits via API and start job. If no, show `CreditTopUpModal`."
+
+---
+
+## PHASE 2: COST & PROFIT ANALYSIS
+
+**Operating Costs (Monthly Base)**
+- **Hosting (Vercel Pro):** $20/seat (Start on Hobby for free).
+- **Database (Supabase Pro):** $25 (Start on Free).
+- **Domain:** ~$2/mo (amortized).
+- **Total Fixed Cost:** ~$25 - $50/mo.
+
+**Variable Costs (Passed to User via Credits)**
+- **Storage:** You pay AWS $0.023/GB. You charge users ~10 Credits/GB ($0.20 value). **(10x Markup)**
+- **AI Processing:** You pay Replicate ~$0.01 per run. You charge 5 Credits ($0.10 value). **(10x Markup)**
+- **Maps:** Google Maps gives $200 credit/mo free. High volume is covered by subscription margin.
+
+**Revenue Target: "The Quit Job Number"**
+- **Goal:** $11,000/mo profit.
+- **Strategy:** 22 Users @ $499/mo = $10,978.
+- **Safety:** If a user consumes $100 of AWS data, they will have burned through their base credits and paid you extra via Top-Ups. You are protected.
+
+---
+
+## PHASE 3: DATA CONTROLS STRATEGY (Transparency)
+
+1.  **The "Cost Estimator" UI:**
+    - Before any heavy action (3D convert, Video Render), show a modal:
+    - *"This job requires 50 Credits. You have 4,200 remaining."*
+    - Buttons: [Cancel] [Confirm & Deduct].
+
+2.  **The "Storage Thermometer":**
+    - In "My Account", show a bar graph: "45GB / 50GB Included".
+    - At 100%, uploads pause unless they buy "Storage Expansion" (Credit drain).
+
+3.  **The "Whale" Circuit Breaker:**
+    - Set AWS Budgets (in AWS Console) to alert you if total bill > $50.
+    - Set Supabase Spend Cap to prevent runaway DB costs.
