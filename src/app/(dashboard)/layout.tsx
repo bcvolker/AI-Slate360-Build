@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/useAuthStore";
+import { CommandMenu } from "@/components/dashboard/CommandMenu";
+import { Bell } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardLayout({
   children,
@@ -70,56 +73,72 @@ export default function DashboardLayout({
   ].filter(Boolean) as { key: string; label: string; href: string; hint: string }[];
 
   return (
-    <div className="h-screen bg-background text-foreground flex overflow-hidden">
+    <div className="h-screen bg-black text-zinc-100 flex overflow-hidden selection:bg-white/20 font-sans">
       {/* Left rail */}
-      <aside className="hidden md:flex md:flex-col w-56 border-r border-border/60 bg-card/80 backdrop-blur-sm">
-        <div className="h-14 px-4 flex items-center border-b border-border/60">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            Slate360
-          </Link>
+      <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-black/50 backdrop-blur-xl text-zinc-400 z-50">
+        <div className="h-16 px-6 flex items-center border-b border-white/10 bg-white/5">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <Link href="/" className="text-lg font-bold tracking-tight text-white">
+              Slate360
+            </Link>
+          </div>
         </div>
-        <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-1.5 text-[13px]">
-          {navItems.map((item) => {
-            const active =
-              item.href === "/dashboard"
-                ? pathname === "/dashboard"
-                : false;
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                className={`flex items-center rounded-full px-3 py-2 transition-colors border ${
-                  active
-                    ? "bg-background text-foreground border-border/80 shadow-sm"
-                    : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/40 hover:border-border/60"
-                }`}
-              >
-                <span className="inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-border/60 text-[11px] text-muted-foreground/80">
-                  {item.hint?.[0] ?? ""}
-                </span>
-                <span className="ml-2 flex flex-col leading-tight">
-                  <span className="text-[13px] font-medium">{item.label}</span>
-                  <span className="text-[10px] text-muted-foreground/80">{item.hint}</span>
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
-        <div className="px-3 py-2 border-t border-border/60 text-[11px] text-muted-foreground space-y-2">
+        <div className="flex-1 relative min-h-0">
+          {/* Top Fade - Reduced opacity and height */}
+          <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none opacity-50"></div>
+          
+          <nav className="absolute inset-0 overflow-y-auto py-6 px-4 space-y-1.5 sidebar-scrollbar">
+            {navItems.map((item) => {
+              const active =
+                item.href === "/dashboard"
+                  ? pathname === "/dashboard"
+                  : false;
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className={`group flex items-center rounded-xl px-3 py-2.5 transition-all duration-200 border border-transparent ${
+                    active
+                      ? "bg-white/10 text-white border-white/10 shadow-sm"
+                      : "text-zinc-400 hover:text-zinc-100 hover:bg-white/5"
+                  }`}
+                >
+                  <span className={`inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-xs font-medium transition-colors ${
+                      active ? "bg-white/20 text-white" : "bg-white/5 text-zinc-400 group-hover:bg-white/10 group-hover:text-zinc-100"
+                  }`}>
+                    {item.hint?.[0] ?? ""}
+                  </span>
+                  <span className="ml-3 flex flex-col leading-none">
+                    <span className="text-sm font-medium">{item.label}</span>
+                    {active && <span className="text-[10px] text-zinc-300 mt-1 font-normal">{item.hint}</span>}
+                  </span>
+                  {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse" />}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Bottom Fade - Reduced opacity and height */}
+          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none opacity-50"></div>
+        </div>
+        <div className="px-4 py-4 border-t border-white/10 bg-zinc-900/50">
           {/* Workspace / Enterprise / CEO context (compressed) */}
-          <div className="rounded-lg border border-border/70 bg-background/70 px-2.5 py-2 space-y-1">
+          <div className="rounded-xl border border-white/10 bg-black/40 px-3 py-3 space-y-2 backdrop-blur-sm">
             <div className="flex items-center justify-between gap-2">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                 {isCEO ? "Slate360" : "Workspace"}
               </p>
-              <span className="text-[11px] rounded-full border border-border/60 px-2 py-0.5 text-foreground/80">
+              <span className="text-[10px] rounded-full bg-white/10 border border-white/10 px-2 py-0.5 text-zinc-200 font-medium">
                 {tier || "Unknown"}
               </span>
             </div>
 
             {/* Individual license tiers / simple blurb */}
             {!isCEO && tier !== "enterprise" && (
-              <p className="text-[11px] text-muted-foreground/90 truncate">
+              <p className="text-[11px] text-zinc-300 truncate">
                 {tier === "trial"
                   ? "Trial • Core tools"
                   : tier === "creator"
@@ -134,14 +153,14 @@ export default function DashboardLayout({
 
             {/* Enterprise / multi-seat org view */}
             {!isCEO && tier === "enterprise" && (
-              <p className="text-[11px] text-muted-foreground/90 truncate">
+              <p className="text-[11px] text-zinc-300 truncate">
                 Enterprise org • 14 / 20 seats
               </p>
             )}
 
             {/* CEO internal view */}
             {isCEO && (
-              <p className="text-[11px] text-muted-foreground/90 truncate">
+              <p className="text-[11px] text-zinc-300 truncate">
                 Slate360 internal controls
               </p>
             )}
@@ -149,13 +168,13 @@ export default function DashboardLayout({
 
           {/* Signed-in footer */}
           <div>
-            <div className="flex items-center justify-between gap-2">
-              <p className="font-medium text-foreground text-[11px] truncate">
+            <div className="flex items-center justify-between gap-2 mt-3">
+              <p className="font-medium text-zinc-200 text-xs truncate">
                 {user?.email ?? "Guest"}
               </p>
               <Link
                 href="/"
-                className="text-[11px] underline-offset-2 hover:underline"
+                className="text-[10px] text-zinc-400 hover:text-white transition-colors"
               >
                 Home
               </Link>
@@ -167,9 +186,9 @@ export default function DashboardLayout({
                   clear();
                   router.push("/login");
                 }}
-                className="mt-1 text-[11px] text-muted-foreground hover:text-foreground underline-offset-2 hover:underline"
+                className="mt-1 text-[10px] text-zinc-400 hover:text-zinc-200 transition-colors"
               >
-                Logout
+                Sign out
               </button>
             )}
           </div>
@@ -177,7 +196,25 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main content area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-zinc-950 relative">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-zinc-800/20 via-zinc-950 to-zinc-950 pointer-events-none"></div>
+        
+        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-black/50 backdrop-blur-xl flex-shrink-0 z-40 sticky top-0">
+            <div className="flex items-center gap-4 flex-1">
+                <CommandMenu />
+            </div>
+            <div className="flex items-center gap-3">
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-zinc-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
+                    <Bell className="h-5 w-5" />
+                </Button>
+                <div className="h-6 w-px bg-white/10 mx-1"></div>
+                <div className="flex -space-x-2 overflow-hidden pl-1">
+                    <div className="inline-block h-8 w-8 rounded-full ring-2 ring-black bg-zinc-800 flex items-center justify-center text-xs text-white font-bold border border-white/10">JD</div>
+                    <div className="inline-block h-8 w-8 rounded-full ring-2 ring-black bg-zinc-700 flex items-center justify-center text-xs text-white font-bold border border-white/10">AS</div>
+                </div>
+            </div>
+        </header>
         {children}
       </div>
     </div>

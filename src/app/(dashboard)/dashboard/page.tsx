@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { LIVE_PROJECTS } from "@/lib/data/ceo-uploads"
 import { ProjectCard } from "@/components/features/project-hub/ProjectCard"
@@ -16,7 +16,7 @@ import { useCurrentProjectId, useSetCurrentProjectId } from "@/lib/hooks/useCurr
 import { ProjectHubView } from "@/components/features/project-hub/ProjectHubView";
 import { mockProjects } from "@/lib/mocks/projects";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const [data, setData] = useState<any | null>({
     projects: [],
     usage: { creditsRemaining: 1250, creditsUsed: 250, storageUsed: 5 }
@@ -573,4 +573,12 @@ export default function DashboardPage() {
       </Tabs>
     </div>
   );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="p-6 flex items-center justify-center h-64"><div className="text-slate-400 animate-pulse">Loading dashboard...</div></div>}>
+      <DashboardContent />
+    </Suspense>
+  )
 }
