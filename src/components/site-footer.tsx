@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function SiteFooter() {
   const links = [
@@ -13,12 +14,15 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
         
         <div className="flex flex-col gap-4 max-w-xs">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md bg-white/10 border border-white/10 flex items-center justify-center">
-                <span className="text-white font-bold text-xs">S</span>
-            </div>
-            <span className="text-xl font-bold text-white tracking-tighter">Slate360</span>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={120} 
+                height={32} 
+                className="h-8 w-auto object-contain" 
+            />
+          </Link>
           <p className="text-sm text-zinc-500 leading-relaxed">
             The Operating System for the Physical World. Unifying design, construction, and robotics in one platform.
           </p>

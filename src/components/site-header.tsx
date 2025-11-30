@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -38,11 +39,15 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
-             <span className="text-white font-bold text-lg">S</span>
-          </div>
-          Slate360
+        <Link href="/" className="flex items-center gap-2">
+          <Image 
+            src="/logo.png" 
+            alt="Slate360" 
+            width={140} 
+            height={40} 
+            className="h-10 w-auto object-contain" 
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}

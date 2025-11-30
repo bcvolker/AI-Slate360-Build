@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: "Slate360",
   description: "The Operating System for the Physical World",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 

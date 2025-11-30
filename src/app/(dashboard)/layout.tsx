@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/useAuthStore";
 import { CommandMenu } from "@/components/dashboard/CommandMenu";
@@ -77,14 +78,15 @@ export default function DashboardLayout({
       {/* Left rail */}
       <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-black/50 backdrop-blur-xl text-zinc-400 z-50">
         <div className="h-16 px-6 flex items-center border-b border-white/10 bg-white/5">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">S</span>
-            </div>
-            <Link href="/" className="text-lg font-bold tracking-tight text-white">
-              Slate360
-            </Link>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={130} 
+                height={36} 
+                className="h-9 w-auto object-contain" 
+            />
+          </Link>
         </div>
         <div className="flex-1 relative min-h-0">
           {/* Top Fade - Reduced opacity and height */}
