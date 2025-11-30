@@ -1,26 +1,70 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { CEO_UPLOADS } from "@/lib/data/ceo-uploads";
 import { View } from "lucide-react";
+import "pannellum/build/pannellum.css";
+
+declare global {
+  interface Window {
+    pannellum: any;
+  }
+}
 
 export default function LiveTour() {
+  const viewerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let viewer: any = null;
+
+    const initViewer = () => {
+      if (window.pannellum && viewerRef.current) {
+        try {
+            viewer = window.pannellum.viewer(viewerRef.current, {
+                type: "equirectangular",
+                panorama: CEO_UPLOADS.tourImage,
+                autoLoad: true,
+                autoRotate: -2,
+                compass: false,
+                showControls: false
+            });
+        } catch (e) {
+            console.error("Pannellum error:", e);
+        }
+      }
+    };
+
+    // Load script if not present
+    if (!window.pannellum) {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js";
+      script.onload = initViewer;
+      document.head.appendChild(script);
+    } else {
+      initViewer();
+    }
+
+    return () => {
+      if (viewer) {
+        // Pannellum doesn't have a clean destroy method in the global scope easily accessible
+        // but we can clear the container
+        if (viewerRef.current) {
+            viewerRef.current.innerHTML = "";
+        }
+      }
+    };
+  }, []);
+
   return (
     <div className="w-full h-full relative group overflow-hidden bg-zinc-900">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80"
-        style={{ backgroundImage: `url(${CEO_UPLOADS.tourImage})` }}
-      />
+      {/* Pannellum Container */}
+      <div ref={viewerRef} className="w-full h-full absolute inset-0 z-0" />
       
-      {/* Overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="bg-black/50 backdrop-blur-sm p-4 rounded-full border border-white/20 group-hover:scale-110 transition-transform duration-300">
-            <View className="h-8 w-8 text-white" />
-        </div>
-      </div>
+      {/* Overlay (Click blocker for tile view, can be removed if we want interaction in tile) */}
+      <div className="absolute inset-0 z-10 bg-transparent" />
 
-      <div className="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded-md border border-white/10">
-        <p className="text-xs text-white font-mono">360° TOUR</p>
+      <div className="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded-md border border-white/10 z-20 pointer-events-none">
+        <p className="text-xs text-white font-mono">360° TOUR PREVIEW</p>
       </div>
     </div>
   );

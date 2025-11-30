@@ -77,14 +77,14 @@ export default function DashboardLayout({
     <div className="h-screen bg-slate-950 text-zinc-100 flex overflow-hidden selection:bg-white/20 font-sans">
       {/* Left rail */}
       <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-slate-900/50 backdrop-blur-xl text-zinc-400 z-50">
-        <div className="h-16 px-6 flex items-center border-b border-white/10 bg-white/5">
+        <div className="h-20 px-6 flex items-center border-b border-white/10 bg-white/5">
           <Link href="/" className="flex items-center gap-2">
             <Image 
                 src="/logo.png" 
                 alt="Slate360" 
-                width={130} 
-                height={36} 
-                className="h-9 w-auto object-contain" 
+                width={160} 
+                height={45} 
+                className="h-10 w-auto object-contain" 
             />
           </Link>
         </div>

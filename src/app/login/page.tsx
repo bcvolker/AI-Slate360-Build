@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
 import { Home, ArrowLeft } from 'lucide-react';
+import Image from "next/image";
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
@@ -280,8 +281,17 @@ export default function Login() {
 
       <Card className="w-full max-w-md z-10 backdrop-blur-md bg-slate-800/50 border-slate-700/50 shadow-2xl">
         <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={180} 
+                height={50} 
+                className="h-12 w-auto object-contain" 
+            />
+          </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-50 to-slate-300 bg-clip-text text-transparent">
-            Welcome to Slate360
+            Welcome
           </CardTitle>
           <CardDescription className="text-slate-400">
             {isSignUp ? 'Create your account' : 'Sign in to access your dashboard'}
