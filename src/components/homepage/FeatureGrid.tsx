@@ -35,7 +35,7 @@ interface FeatureTileProps {
 
 function FeatureTile({ icon: Icon, title, headline, description, features, link, cta, viewer }: FeatureTileProps) {
   return (
-    <GlassyCard className="p-0 overflow-hidden flex flex-col h-full border-white/10 bg-black/40 backdrop-blur-xl group" hoverEffect>
+    <GlassyCard className="p-0 overflow-hidden flex flex-col h-full border-white/10 bg-slate-900/40 backdrop-blur-xl group" hoverEffect>
       {/* Header */}
       <div className="px-6 py-4 border-b border-white/5 bg-white/5 flex items-center gap-3">
         <div className="p-2 rounded-lg bg-white/10 text-white shadow-inner border border-white/5">
@@ -45,7 +45,7 @@ function FeatureTile({ icon: Icon, title, headline, description, features, link,
       </div>
 
       {/* Viewer Area - The "Unified" part */}
-      <div className="relative w-full h-[300px] lg:h-[350px] bg-zinc-900/50 border-b border-white/5 overflow-hidden">
+      <div className="relative w-full h-[300px] lg:h-[350px] bg-slate-900/50 border-b border-white/5 overflow-hidden">
         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
             <TileErrorBoundary>
             {viewer}

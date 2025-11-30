@@ -7,11 +7,11 @@ import { HeroWrapper } from "@/components/homepage/HeroWrapper";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center pt-20 overflow-hidden bg-zinc-950">
+    <section className="relative w-full min-h-[90vh] flex items-center pt-20 overflow-hidden bg-slate-950">
       {/* Background Gradients */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-zinc-950 to-zinc-950" />
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-emerald-900/10 blur-3xl rounded-full" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-950 to-slate-950" />
+        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-emerald-500/10 blur-3xl rounded-full" />
       </div>
 
       <div className="container mx-auto px-4 z-10 h-full">

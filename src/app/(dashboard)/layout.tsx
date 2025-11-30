@@ -74,9 +74,9 @@ export default function DashboardLayout({
   ].filter(Boolean) as { key: string; label: string; href: string; hint: string }[];
 
   return (
-    <div className="h-screen bg-black text-zinc-100 flex overflow-hidden selection:bg-white/20 font-sans">
+    <div className="h-screen bg-slate-950 text-zinc-100 flex overflow-hidden selection:bg-white/20 font-sans">
       {/* Left rail */}
-      <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-black/50 backdrop-blur-xl text-zinc-400 z-50">
+      <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-slate-900/50 backdrop-blur-xl text-zinc-400 z-50">
         <div className="h-16 px-6 flex items-center border-b border-white/10 bg-white/5">
           <Link href="/" className="flex items-center gap-2">
             <Image 
@@ -89,9 +89,6 @@ export default function DashboardLayout({
           </Link>
         </div>
         <div className="flex-1 relative min-h-0">
-          {/* Top Fade - Reduced opacity and height */}
-          <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none opacity-50"></div>
-          
           <nav className="absolute inset-0 overflow-y-auto py-6 px-4 space-y-1.5 sidebar-scrollbar">
             {navItems.map((item) => {
               const active =
@@ -122,9 +119,6 @@ export default function DashboardLayout({
               );
             })}
           </nav>
-
-          {/* Bottom Fade - Reduced opacity and height */}
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none opacity-50"></div>
         </div>
         <div className="px-4 py-4 border-t border-white/10 bg-zinc-900/50">
           {/* Workspace / Enterprise / CEO context (compressed) */}
@@ -198,11 +192,11 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main content area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-zinc-950 relative">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-950 relative">
         {/* Decorative background elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-zinc-800/20 via-zinc-950 to-zinc-950 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-800/20 via-slate-950 to-slate-950 pointer-events-none"></div>
         
-        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-black/50 backdrop-blur-xl flex-shrink-0 z-40 sticky top-0">
+        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-slate-900/50 backdrop-blur-xl flex-shrink-0 z-40 sticky top-0">
             <div className="flex items-center gap-4 flex-1">
                 <CommandMenu />
             </div>

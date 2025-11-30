@@ -258,7 +258,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-0"></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/20 via-slate-950 to-slate-950 opacity-50 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-slate-950 to-slate-950 opacity-50 z-0"></div>
       
       {/* Navigation Buttons */}
       <div className="absolute top-6 left-6 z-20">
@@ -296,7 +296,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-slate-700/50 border-slate-600/50 focus:ring-cyan-500 text-slate-50 placeholder-slate-400"
+                className="bg-slate-700/50 border-slate-600/50 focus:ring-blue-500 text-slate-50 placeholder-slate-400"
               />
             </div>
             <div>
@@ -306,7 +306,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-slate-700/50 border-slate-600/50 focus:ring-cyan-500 text-slate-50 placeholder-slate-400"
+                className="bg-slate-700/50 border-slate-600/50 focus:ring-blue-500 text-slate-50 placeholder-slate-400"
               />
             </div>
             
@@ -317,31 +317,31 @@ export default function Login() {
                   id="terms"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="mt-1 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500 bg-slate-700"
+                  className="mt-1 rounded border-slate-600 text-blue-500 focus:ring-blue-500 bg-slate-700"
                 />
                 <label htmlFor="terms" className="text-xs text-slate-400">
-                  I agree to the <Link href="/terms" className="text-cyan-400 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-cyan-400 hover:underline">Privacy Policy</Link>. Data rates may apply.
+                  I agree to the <Link href="/terms" className="text-blue-400 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-blue-400 hover:underline">Privacy Policy</Link>. Data rates may apply.
                 </label>
               </div>
             )}
 
-            <Button type="submit" className="w-full bg-cyan-500 text-slate-900 hover:bg-cyan-400 shadow-lg shadow-cyan-500/20" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-500/20" disabled={isLoading}>
               {isLoading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </form>
 
           <div className="mt-4 text-center">
-            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-slate-400 hover:text-cyan-400">
+            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-slate-400 hover:text-blue-400">
               {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
             </Button>
           </div>
           <div className="mt-6 p-4 bg-slate-800/30 rounded-lg border border-slate-700/30">
             <p className="text-sm font-medium text-slate-50 mb-2">Demo Accounts:</p>
             <div className="space-y-1 text-xs text-slate-400">
-              <p><strong className="text-cyan-400">Creator:</strong> creator@slate360.com</p>
-              <p><strong className="text-cyan-400">Modeling:</strong> modeling@slate360.com</p>
-              <p><strong className="text-cyan-400">God Mode:</strong> godmode@slate360.com</p>
-              <p><strong className="text-cyan-400">CEO:</strong> ceo@slate360.com</p>
+              <p><strong className="text-blue-400">Creator:</strong> creator@slate360.com</p>
+              <p><strong className="text-blue-400">Modeling:</strong> modeling@slate360.com</p>
+              <p><strong className="text-blue-400">God Mode:</strong> godmode@slate360.com</p>
+              <p><strong className="text-blue-400">CEO:</strong> ceo@slate360.com</p>
             </div>
             <p className="text-[10px] text-slate-500 mt-2 italic">Any password works for demo</p>
           </div>

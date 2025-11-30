@@ -1,12 +1,12 @@
 export default function Subscribe() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Header */}
-      <header className="bg-primary border-b border-muted/20">
+      <header className="bg-slate-900/50 border-b border-white/10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="text-xl font-bold text-primary-foreground">Slate360</a>
+          <a href="/" className="text-xl font-bold text-white">Slate360</a>
           <div className="flex items-center gap-4">
-            <a href="/" className="text-muted-foreground hover:text-primary-foreground">
+            <a href="/" className="text-slate-400 hover:text-white transition-colors">
               ← Back to Homepage
             </a>
           </div>
@@ -14,8 +14,8 @@ export default function Subscribe() {
       </header>
 
       <div className="p-8 max-w-4xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">Subscribe to Slate360</h1>
-        <p className="text-lg text-slate-600 mb-8">Choose your plan and get started.</p>
+        <h1 className="text-4xl font-bold mb-4 text-white">Subscribe to Slate360</h1>
+        <p className="text-lg text-slate-400 mb-8">Choose your plan and get started.</p>
         {/* Add subscription options here */}
       </div>
     </div>

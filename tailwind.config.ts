@@ -56,6 +56,9 @@ module.exports = {
           400: "#94A3B8",
           950: "#0F172A",
         },
+        electric: {
+            blue: "#3b82f6",
+        },
         cyan: {
           DEFAULT: "#00F5FF",
           400: "#00F5FF",
