@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowRight, Layers, Box, FileText, Video, Map, Zap, BarChart3, Check, LucideIcon } from "lucide-react";
+import { ArrowRight, Layers, Box, FileText, Video, Map, Zap, BarChart3, Check, LucideIcon, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassyCard } from "@/components/ui/glassy-card";
 import { TileErrorBoundary } from "@/components/ui/tile-error-boundary";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 // Loading State
 const LoadingState = () => <div className="w-full h-full bg-white/5 animate-pulse min-h-[300px]" />;
@@ -45,6 +47,33 @@ function FeatureTile({ icon: Icon, title, headline, description, features, link,
             {viewer}
             </TileErrorBoundary>
         </div>
+        
+        {/* Expand Button */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white border border-white/10 backdrop-blur-md z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-[90vw] w-full h-[80vh] p-0 bg-black border-white/10 overflow-hidden">
+            <VisuallyHidden>
+                <DialogTitle>{title} Preview</DialogTitle>
+            </VisuallyHidden>
+            <div className="w-full h-full relative">
+                <TileErrorBoundary>
+                    {viewer}
+                </TileErrorBoundary>
+                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 pointer-events-none">
+                    <h3 className="text-white font-bold">{title}</h3>
+                    <p className="text-xs text-zinc-400">Interactive Preview</p>
+                </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Content Body */}
@@ -56,13 +85,14 @@ function FeatureTile({ icon: Icon, title, headline, description, features, link,
           </p>
         </div>
 
-        <ul className="space-y-3 text-zinc-300 flex-grow">
+        {/* Features Grid - 2 Columns */}
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 text-zinc-300 flex-grow">
           {features.map((feat, i) => (
-            <li key={i} className="flex items-center gap-3 text-sm">
-              <div className="h-5 w-5 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3 w-3 text-emerald-500" />
+            <li key={i} className="flex items-start gap-3 text-sm">
+              <div className="mt-0.5 h-4 w-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <Check className="h-2.5 w-2.5 text-emerald-500" />
               </div>
-              {feat}
+              <span className="leading-tight">{feat}</span>
             </li>
           ))}
         </ul>
@@ -92,7 +122,10 @@ export function FeatureGrid() {
         features={[
             "Gantt charts & punch lists",
             "AI document review",
-            "Real-time team collaboration"
+            "Real-time team collaboration",
+            "RFI & Submittal tracking",
+            "Budget & Cost management",
+            "Field report automation"
         ]}
         link="/features/project-hub"
         cta="Explore Project Hub"
@@ -118,7 +151,10 @@ export function FeatureGrid() {
         features={[
             "AI 2D-to-3D conversion",
             "Parametric component library",
-            "3D print preparation"
+            "3D print preparation",
+            "Real-time collaboration",
+            "Version control for designs",
+            "BIM file compatibility"
         ]}
         link="/features/design-studio"
         cta="Explore Design Studio"
@@ -134,7 +170,10 @@ export function FeatureGrid() {
         features={[
             "Automated timelapse stitching",
             "AI color grading & stabilization",
-            "Social-ready exports"
+            "Social-ready exports",
+            "Auto-generated captions",
+            "Brand asset integration",
+            "Music & SFX library"
         ]}
         link="/features/content-studio"
         cta="Explore Content Studio"
@@ -157,7 +196,10 @@ export function FeatureGrid() {
         features={[
             "Interactive hotspots",
             "Floorplan integration",
-            "VR-ready exports"
+            "VR-ready exports",
+            "Before/After comparisons",
+            "Measurement tools",
+            "Lead generation forms"
         ]}
         link="/features/tour-builder"
         cta="Explore Tour Builder"
@@ -173,7 +215,10 @@ export function FeatureGrid() {
         features={[
             "Drone mission planning",
             "LiDAR volume analysis",
-            "Anomaly detection"
+            "Anomaly detection",
+            "Robot fleet management",
+            "Orthomosaic generation",
+            "Site progress tracking"
         ]}
         link="/features/geospatial-robotics"
         cta="Explore Geospatial"
@@ -189,7 +234,10 @@ export function FeatureGrid() {
         features={[
             "Real-time rendering",
             "WebXR support",
-            "Athlete 360 motion analysis"
+            "Athlete 360 motion analysis",
+            "Physics simulation",
+            "Material library",
+            "4K video export"
         ]}
         link="/features/virtual-studio"
         cta="Explore Virtual Studio"
@@ -213,7 +261,10 @@ export function FeatureGrid() {
             features={[
                 "Cross-project insights",
                 "Automated PDF reports",
-                "Risk forecasting"
+                "Risk forecasting",
+                "Resource allocation",
+                "Budget variance tracking",
+                "Custom KPI dashboards"
             ]}
             link="/features/analytics-reports"
             cta="Explore Analytics"
