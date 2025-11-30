@@ -69,21 +69,15 @@ function DashboardContent() {
     
     if (tab) {
       // If a specific tab is requested, check entitlement
-      if (tab !== 'my-account' && tab !== 'ceo' && entitlements && !entitlements[tab]) {
-        // Not entitled? Fallback to first available tool or my-account
-        const firstAvailable = Object.keys(entitlements).find(k => entitlements[k] === true)
-        setActiveTab(firstAvailable || 'my-account')
+      if (tab !== 'my-account' && tab !== 'ceo' && tab !== 'overview' && entitlements && !entitlements[tab]) {
+        // Not entitled? Fallback to overview
+        setActiveTab('overview')
       } else {
         setActiveTab(tab)
       }
     } else {
-      // No tab requested? Default to first available tool (e.g. project-hub, content-studio)
-      if (entitlements) {
-        const firstAvailable = Object.keys(entitlements).find(k => entitlements[k] === true)
-        setActiveTab(firstAvailable || 'my-account')
-      } else {
-        setActiveTab('my-account')
-      }
+      // No tab requested? Default to overview
+      setActiveTab('overview')
     }
   }, [searchParams, entitlements])
 
@@ -298,6 +292,86 @@ function DashboardContent() {
             </div>
           </DialogContent>
         </Dialog>
+
+        <TabsContent value="overview" className="mt-2">
+          <div className="max-w-4xl rounded-xl border border-border/70 bg-slate-900 p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">Welcome to Slate360</h2>
+                <p className="text-muted-foreground mt-1">
+                  Your central command for digital construction and robotics.
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-foreground">{new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className="text-xs text-muted-foreground">System Status: <span className="text-emerald-400 font-medium">Operational</span></p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-lg bg-slate-800/50 border border-white/5">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-md bg-blue-500/10 text-blue-400">
+                    <Layers className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">Active Projects</h3>
+                </div>
+                <p className="text-2xl font-bold text-white">{activeProjects}</p>
+                <p className="text-xs text-muted-foreground mt-1">Across 3 organizations</p>
+              </div>
+              
+              <div className="p-4 rounded-lg bg-slate-800/50 border border-white/5">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-md bg-purple-500/10 text-purple-400">
+                    <Zap className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">Compute Usage</h3>
+                </div>
+                <p className="text-2xl font-bold text-white">85%</p>
+                <p className="text-xs text-muted-foreground mt-1">150 credits remaining</p>
+              </div>
+
+              <div className="p-4 rounded-lg bg-slate-800/50 border border-white/5">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-md bg-emerald-500/10 text-emerald-400">
+                    <Activity className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">System Health</h3>
+                </div>
+                <p className="text-2xl font-bold text-emerald-400">99.9%</p>
+                <p className="text-xs text-muted-foreground mt-1">All systems nominal</p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-white/10">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Quick Access</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {entitlements['project-hub'] && (
+                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2 bg-slate-800/30 border-white/10 hover:bg-slate-800 hover:border-blue-500/30" onClick={() => router.push('/dashboard?tab=project-hub')}>
+                    <Box className="h-6 w-6 text-blue-400" />
+                    <span>Project Hub</span>
+                  </Button>
+                )}
+                {entitlements['design-studio'] && (
+                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2 bg-slate-800/30 border-white/10 hover:bg-slate-800 hover:border-blue-500/30" onClick={() => router.push('/dashboard?tab=design-studio')}>
+                    <Map className="h-6 w-6 text-purple-400" />
+                    <span>Design Studio</span>
+                  </Button>
+                )}
+                {entitlements['content-studio'] && (
+                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2 bg-slate-800/30 border-white/10 hover:bg-slate-800 hover:border-blue-500/30" onClick={() => router.push('/dashboard?tab=content-studio')}>
+                    <Video className="h-6 w-6 text-pink-400" />
+                    <span>Content Studio</span>
+                  </Button>
+                )}
+                <Button variant="outline" className="h-auto py-4 flex flex-col gap-2 bg-slate-800/30 border-white/10 hover:bg-slate-800 hover:border-blue-500/30" onClick={() => setShowCreateProject(true)}>
+                  <Upload className="h-6 w-6 text-emerald-400" />
+                  <span>New Project</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </TabsContent>
 
         {entitlements['project-hub'] && (
           <TabsContent value="project-hub" className="h-full overflow-hidden mt-0 pt-2">

@@ -21,6 +21,7 @@ export default function DashboardLayout({
   const hasAthleteAccess = entitlements["athlete360"] || isCEO;
 
   const navItems = [
+    { key: "overview", label: "Overview", hint: "Home", href: "/dashboard?tab=overview" },
     entitlements["project-hub"] && {
       key: "project-hub",
       label: "Project Hub",

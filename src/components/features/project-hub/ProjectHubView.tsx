@@ -6,7 +6,8 @@ import { LIVE_PROJECTS } from "@/lib/data/ceo-uploads";
 import { mockProjects } from "@/lib/mocks/projects";
 import { useCurrentProjectId } from "@/lib/hooks/useCurrentProject";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ChevronRight, ChevronLeft, Layers, Maximize2, ZoomIn, ZoomOut, MousePointer2, Clock, FileText, MessageSquare, User } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ChevronRight, ChevronLeft, Layers, Maximize2, ZoomIn, ZoomOut, MousePointer2, Clock, FileText, MessageSquare, User, CreditCard } from "lucide-react";
 
 interface ProjectHubViewProps {
   onNewProject: () => void;
@@ -14,11 +15,47 @@ interface ProjectHubViewProps {
 
 export function ProjectHubView({ onNewProject }: ProjectHubViewProps) {
   const [isRailCollapsed, setIsRailCollapsed] = useState(false);
+  const [showBuyCredits, setShowBuyCredits] = useState(false);
   const currentProjectId = useCurrentProjectId();
   const currentProject = mockProjects.find((p) => p.id === currentProjectId) ?? mockProjects[0];
 
   return (
     <div className="h-full flex flex-col gap-4 overflow-hidden">
+      <Dialog open={showBuyCredits} onOpenChange={setShowBuyCredits}>
+        <DialogContent className="max-w-md bg-slate-900 border border-white/10 text-slate-50">
+          <DialogHeader>
+            <DialogTitle>Purchase Credits</DialogTitle>
+            <DialogDescription className="text-slate-400">
+              Add more credits to your account to continue processing high-resolution models and exports.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="border border-white/10 rounded-xl p-4 bg-slate-800/50 hover:bg-slate-800 hover:border-blue-500/50 cursor-pointer transition-all text-center group">
+                <div className="text-2xl font-bold text-white mb-1">500</div>
+                <div className="text-xs text-slate-400 mb-3">Credits</div>
+                <div className="text-lg font-bold text-blue-400">$50</div>
+              </div>
+              <div className="border border-blue-500/50 rounded-xl p-4 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer transition-all text-center relative">
+                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-[10px] font-bold px-2 py-0.5 rounded-full text-white">POPULAR</div>
+                <div className="text-2xl font-bold text-white mb-1">1,200</div>
+                <div className="text-xs text-slate-400 mb-3">Credits</div>
+                <div className="text-lg font-bold text-blue-400">$100</div>
+              </div>
+              <div className="border border-white/10 rounded-xl p-4 bg-slate-800/50 hover:bg-slate-800 hover:border-purple-500/50 cursor-pointer transition-all text-center group">
+                <div className="text-2xl font-bold text-white mb-1">5,000</div>
+                <div className="text-xs text-slate-400 mb-3">Credits</div>
+                <div className="text-lg font-bold text-blue-400">$350</div>
+              </div>
+            </div>
+            <Button className="w-full bg-blue-600 hover:bg-blue-500 text-white mt-2">
+              <CreditCard className="mr-2 h-4 w-4" />
+              Proceed to Checkout
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Top Section: Viewer + Project List */}
       <div className="flex-1 min-h-0 flex gap-4 transition-all duration-300 ease-in-out">
         {/* Main Viewer Area */}
@@ -263,7 +300,11 @@ export function ProjectHubView({ onNewProject }: ProjectHubViewProps) {
                         <div className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 w-[45%] shadow-[0_0_10px_rgba(59,130,246,0.3)]"></div>
                     </div>
                 </div>
-                <Button size="sm" className="h-8 text-xs bg-white text-slate-900 hover:bg-slate-200 shadow-lg shadow-black/20 whitespace-nowrap px-4 rounded-lg">
+                <Button 
+                  size="sm" 
+                  className="h-8 text-xs bg-white text-slate-900 hover:bg-slate-200 shadow-lg shadow-black/20 whitespace-nowrap px-4 rounded-lg"
+                  onClick={() => setShowBuyCredits(true)}
+                >
                     Buy Credits
                 </Button>
               </div>
