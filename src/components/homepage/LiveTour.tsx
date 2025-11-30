@@ -60,9 +60,6 @@ export default function LiveTour() {
       {/* Pannellum Container */}
       <div ref={viewerRef} className="w-full h-full absolute inset-0 z-0" />
       
-      {/* Overlay (Click blocker for tile view, can be removed if we want interaction in tile) */}
-      <div className="absolute inset-0 z-10 bg-transparent" />
-
       <div className="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded-md border border-white/10 z-20 pointer-events-none">
         <p className="text-xs text-white font-mono">360° TOUR PREVIEW</p>
       </div>
