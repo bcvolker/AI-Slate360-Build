@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Check, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,8 +36,14 @@ export function LearnLayout({ page }: LearnLayoutProps) {
       {/* Header */}
       <header className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-slate-50 hover:text-cyan-400 transition-colors">
-            ← Back to Slate360
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
+            />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/pricing">
@@ -45,7 +52,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               </Button>
             </Link>
             <Link href="/login">
-              <Button className="bg-cyan text-slate-900 hover:bg-cyan-500">
+              <Button className="bg-blue-500 text-slate-900 hover:bg-blue-500-500">
                 Try Free
               </Button>
             </Link>
@@ -56,7 +63,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
       <main className="max-w-7xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-cyan-400/10 text-cyan-400 px-3 py-1 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 bg-blue-500-400/10 text-blue-500-400 px-3 py-1 rounded-full text-sm font-medium mb-4">
             <Zap className="h-4 w-4" />
             {page.subtitle}
           </div>
@@ -64,7 +71,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
             {page.title}
           </h1>
           {page.tiersHighlight && (
-            <p className="mt-3 text-xs text-cyan-400">
+            <p className="mt-3 text-xs text-blue-500-400">
               Available in: {page.tiersHighlight.join(" • ")}
             </p>
           )}
@@ -73,7 +80,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/login">
-              <Button size="lg" className="bg-cyan text-slate-900 hover:bg-cyan-500 px-8 py-3 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
+              <Button size="lg" className="bg-blue-500 text-slate-900 hover:bg-blue-500-500 px-8 py-3 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                 Start Free Trial
               </Button>
             </Link>
@@ -90,8 +97,8 @@ export function LearnLayout({ page }: LearnLayoutProps) {
           {page.features.map((feature, index) => (
             <Card key={index} className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
               <CardHeader>
-                <div className="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center mb-4">
-                  <Check className="h-6 w-6 text-cyan-400" />
+                <div className="w-12 h-12 bg-blue-500-500/10 rounded-lg flex items-center justify-center mb-4">
+                  <Check className="h-6 w-6 text-blue-500-400" />
                 </div>
                 <CardTitle className="text-slate-50">{feature.title}</CardTitle>
               </CardHeader>
@@ -112,13 +119,13 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
                 <CardHeader>
                   <CardTitle className="text-slate-50">Creator</CardTitle>
-                  <div className="text-3xl font-bold text-cyan-400">${page.pricing?.starter?.price || 49}<span className="text-lg text-slate-400">/month</span></div>
+                  <div className="text-3xl font-bold text-blue-500-400">${page.pricing?.starter?.price || 49}<span className="text-lg text-slate-400">/month</span></div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {(page.pricing?.starter?.features || ["Project Hub", "Design Studio", "Content Studio", "360 Tour Builder"]).map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-slate-300">
-                        <Check className="h-4 w-4 text-cyan-400" />
+                        <Check className="h-4 w-4 text-blue-500-400" />
                         {feature}
                       </li>
                     ))}
@@ -126,21 +133,21 @@ export function LearnLayout({ page }: LearnLayoutProps) {
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800/50 border-cyan-400/50 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,245,255,0.2)] relative">
+              <Card className="bg-slate-800/50 border-blue-500-400/50 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,245,255,0.2)] relative">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-cyan-400 text-slate-900 px-3 py-1 text-sm font-medium">
+                  <Badge className="bg-blue-500-400 text-slate-900 px-3 py-1 text-sm font-medium">
                     Most Popular
                   </Badge>
                 </div>
                 <CardHeader>
                   <CardTitle className="text-slate-50">Modeling</CardTitle>
-                  <div className="text-3xl font-bold text-cyan-400">${page.pricing?.pro?.price || 149}<span className="text-lg text-slate-400">/month</span></div>
+                  <div className="text-3xl font-bold text-blue-500-400">${page.pricing?.pro?.price || 149}<span className="text-lg text-slate-400">/month</span></div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {(page.pricing?.pro?.features || ["All Creator features", "Geospatial & Robotics", "Analytics & Reports"]).map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-slate-300">
-                        <Check className="h-4 w-4 text-cyan-400" />
+                        <Check className="h-4 w-4 text-blue-500-400" />
                         {feature}
                       </li>
                     ))}
@@ -151,13 +158,13 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
                 <CardHeader>
                   <CardTitle className="text-slate-50">God Mode</CardTitle>
-                  <div className="text-3xl font-bold text-cyan-400">${page.pricing?.enterprise?.price || 399}<span className="text-lg text-slate-400">/month</span></div>
+                  <div className="text-3xl font-bold text-blue-500-400">${page.pricing?.enterprise?.price || 399}<span className="text-lg text-slate-400">/month</span></div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {(page.pricing?.enterprise?.features || ["All features", "Virtual Studio", "Athlete360", "White-label"]).map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-slate-300">
-                        <Check className="h-4 w-4 text-cyan-400" />
+                        <Check className="h-4 w-4 text-blue-500-400" />
                         {feature}
                       </li>
                     ))}
@@ -168,24 +175,24 @@ export function LearnLayout({ page }: LearnLayoutProps) {
               <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
                 <CardHeader>
                   <CardTitle className="text-slate-50">Enterprise</CardTitle>
-                  <div className="text-3xl font-bold text-cyan-400">Custom</div>
+                  <div className="text-3xl font-bold text-blue-500-400">Custom</div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-slate-300">
-                      <Check className="h-4 w-4 text-cyan-400" />
+                      <Check className="h-4 w-4 text-blue-500-400" />
                       All features included
                     </li>
                     <li className="flex items-center gap-2 text-slate-300">
-                      <Check className="h-4 w-4 text-cyan-400" />
+                      <Check className="h-4 w-4 text-blue-500-400" />
                       Custom integrations
                     </li>
                     <li className="flex items-center gap-2 text-slate-300">
-                      <Check className="h-4 w-4 text-cyan-400" />
+                      <Check className="h-4 w-4 text-blue-500-400" />
                       Dedicated support
                     </li>
                     <li className="flex items-center gap-2 text-slate-300">
-                      <Check className="h-4 w-4 text-cyan-400" />
+                      <Check className="h-4 w-4 text-blue-500-400" />
                       White-label options
                     </li>
                   </ul>
@@ -203,7 +210,7 @@ export function LearnLayout({ page }: LearnLayoutProps) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/login">
-              <Button className="bg-cyan text-slate-900 hover:bg-cyan-500 px-8 py-3 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
+              <Button className="bg-blue-500 text-slate-900 hover:bg-blue-500-500 px-8 py-3 shadow-[0_4px_14px_0_rgba(0,245,255,0.3)]">
                 Start Free Trial
               </Button>
             </Link>

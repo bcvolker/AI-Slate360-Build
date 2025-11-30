@@ -11,9 +11,9 @@ export default function Subscribe() {
             <Image 
                 src="/logo.png" 
                 alt="Slate360" 
-                width={160} 
-                height={45} 
-                className="h-10 w-auto object-contain" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
             />
           </Link>
           <div className="flex items-center gap-4">

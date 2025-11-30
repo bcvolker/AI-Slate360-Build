@@ -285,9 +285,9 @@ export default function Login() {
             <Image 
                 src="/logo.png" 
                 alt="Slate360" 
-                width={180} 
-                height={50} 
-                className="h-12 w-auto object-contain" 
+                width={240} 
+                height={60} 
+                className="h-16 w-auto object-contain" 
             />
           </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-50 to-slate-300 bg-clip-text text-transparent">

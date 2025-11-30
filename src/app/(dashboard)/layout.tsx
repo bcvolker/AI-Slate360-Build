@@ -76,15 +76,15 @@ export default function DashboardLayout({
   return (
     <div className="h-screen bg-slate-950 text-zinc-100 flex overflow-hidden selection:bg-white/20 font-sans">
       {/* Left rail */}
-      <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-slate-900/50 backdrop-blur-xl text-zinc-400 z-50">
-        <div className="h-20 px-6 flex items-center border-b border-white/10 bg-white/5">
+      <aside className="hidden md:flex md:flex-col w-64 border-r border-white/10 bg-slate-900 text-zinc-400 z-50">
+        <div className="h-20 px-6 flex items-center border-b border-white/10 bg-slate-900">
           <Link href="/" className="flex items-center gap-2">
             <Image 
                 src="/logo.png" 
                 alt="Slate360" 
-                width={160} 
-                height={45} 
-                className="h-10 w-auto object-contain" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
             />
           </Link>
         </div>
@@ -193,10 +193,8 @@ export default function DashboardLayout({
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-950 relative">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-800/20 via-slate-950 to-slate-950 pointer-events-none"></div>
         
-        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-slate-900/50 backdrop-blur-xl flex-shrink-0 z-40 sticky top-0">
+        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-slate-900 flex-shrink-0 z-40 sticky top-0">
             <div className="flex items-center gap-4 flex-1">
                 <CommandMenu />
             </div>

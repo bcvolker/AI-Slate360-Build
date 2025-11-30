@@ -1,6 +1,7 @@
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function PricingPage() {
   return (
@@ -8,8 +9,14 @@ export default function PricingPage() {
       {/* Header - Compact */}
       <header className="border-b border-white/10 bg-obsidian/80 backdrop-blur-md z-50 flex-shrink-0">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-slate-50 hover:text-cyan transition-colors text-sm">
-            ← Back
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
+            />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-slate-400 hover:text-white transition-colors text-sm">
@@ -31,10 +38,10 @@ export default function PricingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
           {/* Creator Plan */}
-          <div className="bg-obsidian-900/50 border border-white/10 hover:border-cyan/50 transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm rounded-xl p-5 flex flex-col">
+          <div className="bg-obsidian-900/50 border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm rounded-xl p-5 flex flex-col">
             <div className="text-center mb-4">
               <h2 className="text-xl font-bold mb-1 text-white">Creator</h2>
-              <div className="text-3xl font-bold text-cyan mb-0.5">$79<span className="text-base text-slate-500 font-normal">/mo</span></div>
+              <div className="text-3xl font-bold text-blue-500 mb-0.5">$79<span className="text-base text-slate-500 font-normal">/mo</span></div>
               <p className="text-slate-500 text-xs">Annual: $63/mo (save 20%)</p>
             </div>
             <ul className="space-y-3 mb-6 text-sm">
@@ -43,11 +50,11 @@ export default function PricingPage() {
                 Project Hub
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 Content Studio
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 360 Tour Builder
               </li>
               <li className="flex items-center gap-2 text-slate-600">
@@ -64,22 +71,22 @@ export default function PricingPage() {
               </li>
             </ul>
             <Link href="/login">
-                <Button className="w-full bg-cyan text-obsidian hover:bg-cyan-400 h-9 text-sm font-medium">
+                <Button className="w-full bg-blue-500 text-obsidian hover:bg-blue-500-400 h-9 text-sm font-medium">
                 Start Free Trial
                 </Button>
             </Link>
           </div>
 
           {/* Modeling Plan */}
-          <div className="bg-obsidian-900/80 border border-cyan/50 transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm rounded-xl p-5 relative flex flex-col shadow-[0_0_40px_-10px_rgba(0,245,255,0.2)]">
+          <div className="bg-obsidian-900/80 border border-blue-500/50 transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm rounded-xl p-5 relative flex flex-col shadow-[0_0_40px_-10px_rgba(0,245,255,0.2)]">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <div className="bg-cyan text-obsidian px-3 py-0.5 rounded-full text-[10px] font-bold shadow-lg uppercase tracking-wider">
+              <div className="bg-blue-500 text-obsidian px-3 py-0.5 rounded-full text-[10px] font-bold shadow-lg uppercase tracking-wider">
                 Most Popular
               </div>
             </div>
             <div className="text-center mb-4 mt-1">
               <h2 className="text-xl font-bold mb-1 text-white">Modeling</h2>
-              <div className="text-3xl font-bold text-cyan mb-0.5">$199<span className="text-base text-slate-500 font-normal">/mo</span></div>
+              <div className="text-3xl font-bold text-blue-500 mb-0.5">$199<span className="text-base text-slate-500 font-normal">/mo</span></div>
               <p className="text-slate-500 text-xs">Annual: $159/mo (save 20%)</p>
             </div>
             <ul className="space-y-3 mb-6 text-sm">
@@ -88,19 +95,19 @@ export default function PricingPage() {
                 Project Hub
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 Design Studio
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 Content Studio
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 360 Tour Builder
               </li>
               <li className="flex items-center gap-2 text-slate-300">
-                <Check className="h-4 w-4 text-cyan shrink-0" />
+                <Check className="h-4 w-4 text-blue-500 shrink-0" />
                 Geospatial & Robotics
               </li>
               <li className="flex items-center gap-2 text-slate-600">
@@ -113,7 +120,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Link href="/login">
-                <Button className="w-full bg-cyan text-obsidian hover:bg-cyan-400 h-9 text-sm font-medium">
+                <Button className="w-full bg-blue-500 text-obsidian hover:bg-blue-500-400 h-9 text-sm font-medium">
                 Start Free Trial
                 </Button>
             </Link>
@@ -214,7 +221,7 @@ export default function PricingPage() {
             Join thousands of teams already using Slate360.
           </p>
           <div className="flex gap-3 justify-center">
-            <Link href="/login" className="text-cyan hover:text-cyan-400 text-xs font-medium hover:underline">
+            <Link href="/login" className="text-blue-500 hover:text-blue-500-400 text-xs font-medium hover:underline">
               Start Free Trial
             </Link>
           </div>

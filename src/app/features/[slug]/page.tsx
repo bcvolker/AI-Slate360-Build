@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from "next/image";
 
 const features = {
   'design-studio': {
@@ -40,13 +41,21 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Header */}
-      <header className="bg-primary border-b border-muted/20">
+      <header className="bg-slate-900/50 border-b border-white/10 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="text-xl font-bold text-primary-foreground">Slate360</a>
+          <a href="/" className="flex items-center gap-2">
+            <Image 
+                src="/logo.png" 
+                alt="Slate360" 
+                width={200} 
+                height={55} 
+                className="h-12 w-auto object-contain" 
+            />
+          </a>
           <div className="flex items-center gap-4">
-            <a href="/" className="text-muted-foreground hover:text-primary-foreground">
+            <a href="/" className="text-slate-400 hover:text-white transition-colors">
               ← Back to Homepage
             </a>
           </div>
@@ -54,9 +63,9 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
       </header>
 
       <div className="p-8 max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">{feature.title}</h1>
-        <p className="text-lg text-slate-600 mb-8">{feature.description}</p>
-        <p>More details coming soon...</p>
+        <h1 className="text-4xl font-bold mb-4 text-white">{feature.title}</h1>
+        <p className="text-lg text-slate-400 mb-8">{feature.description}</p>
+        <p className="text-slate-500">More details coming soon...</p>
       </div>
     </div>
   );
